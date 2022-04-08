@@ -1,5 +1,5 @@
 [color]
-	ui = true
+    ui = true
 [core]
     editor = nvim
     pager = diff-so-fancy | less --tabs=4 -RFX
@@ -9,26 +9,26 @@
 # requires Fugitive
 #    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [user]
-	email = private
+    email = private
     name = urob
 [push]
     default = matching
 [credential]
-	helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+    helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
 [interactive]
-	diffFilter = diff-so-fancy --patch
+    diffFilter = diff-so-fancy --patch
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
+    meta = 11
+    frag = magenta bold
+    func = 146 bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
     whitespace = red reverse
 [alias]
     # add all new/modified/deleted files and then commit
@@ -38,6 +38,6 @@
     tree = git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --topo-order --abbrev-commit --decorate
 
     # remove tracking information of all local branches no longer found upstream + delete them from local machine
-	prune = git remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
+    prune = git remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
 
 
