@@ -9,8 +9,8 @@
 # requires Fugitive
 #    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [user]
-#	email = roulbricht@gmail.com
-    name = Robert U
+	email = private
+    name = urob
 [push]
     default = matching
 [credential]
