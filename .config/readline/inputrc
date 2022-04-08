@@ -1,0 +1,13 @@
+# .inputrc: startup file for GNU Readline used by Bash, Python interactive,
+# and many other shells (but notably not by zsh)
+
+# Respect default shortcuts.
+$include /etc/inputrc
+
+# Filename completion/expansion
+set completion-ignore-case on
+set show-all-if-ambiguous on
+
+# search history with arrow up and down
+"\e[A": history-search-backward
+"\e[B": history-search-forward

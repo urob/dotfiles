@@ -1,0 +1,94 @@
+# +-----+
+# | Zsh |
+# +-----+
+
+# if [[ -n ${ZSH_EVAL_CONTEXT+x} ]]; then
+#   source .zsh_aliases
+# fi
+
+# navigate directory stack
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+# backdir shortcuts
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+
+# directory aliases
+hash -d dx=$DROPBOX
+hash -d uni=$DROPBOX/Uni
+hash -d ab=$DROPBOX/Privat/Ablage
+hash -d win=/mnt/c/Users/rober
+
+# +----+
+# | ls |
+# +----+
+
+# if [[ -x "$(command -v exa)" ]]; then  # bash compliant
+if (( $+commands[exa] )); then
+  alias exa='exa --color=auto --group-directories-first'
+  alias ls='exa'
+  alias ll='exa -la'
+  alias la='exa -a'
+  alias lt='exa -T'
+else
+  alias ls='ls --color=auto --group-directories-first'
+  alias ll='ls -lah'
+  alias la='ls -A'
+fi
+
+# +------+
+# | grep |
+# +------+
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# +-----------+
+# | df and du |
+# +-----------+
+
+alias df='df -h'  # make df human readable
+alias du='du -h'  # make du human readable
+
+# +--------+
+# | Neovim |
+# +--------+
+
+if (( $+commands[exa] )); then
+    alias vim='nvim'
+    alias vi='nvim'
+    alias svim='sudoedit'
+fi
+
+# +--------+
+# | python |
+# +--------+
+
+# create virtual environment and add dependencies from requirements.txt (if exists)
+alias ve='python3 -m venv ./venv \
+    && [[ -f "requirements.txt" ]] \
+    && python -m pip install -r requirements.txt'
+alias va='source ./venv/bin/activate'  # activate venv in current shell
+
+# +-----+
+# | apt |
+# +-----+
+
+# install packages from packages.lst (must have unix line endings!)
+alias apt_install_list='sudo apt-get update \
+     && sudo apt-get install $(cat $XDG_CONFIG_HOME/packages.lst)'
+
+# +-----+
+# | wsl |
+# +-----+
+
+alias ee='explorer.exe .'  # run explorer in current directory
+
+# +-----+
+# | ssh |
+# +-----+
+
+alias bc='ssh -p 22022 ulbricht@sirius.bc.edu'

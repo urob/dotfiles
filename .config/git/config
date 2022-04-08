@@ -1,0 +1,43 @@
+[color]
+	ui = true
+[core]
+    editor = nvim
+    pager = diff-so-fancy | less --tabs=4 -RFX
+[merge]
+    tool = nvim
+[mergetool "nvim"]
+# requires Fugitive
+#    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[user]
+#	email = roulbricht@gmail.com
+    name = Robert U
+[push]
+    default = matching
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+    whitespace = red reverse
+[alias]
+    # add all new/modified/deleted files and then commit
+    ac = !git add -A && git commit -m
+
+    # show pretty log of commits
+    tree = git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --topo-order --abbrev-commit --decorate
+
+    # remove tracking information of all local branches no longer found upstream + delete them from local machine
+	prune = git remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
+
+

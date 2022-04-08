@@ -1,0 +1,21 @@
+# channel configuration
+channels:
+  - defaults
+
+# strict only use lower priority channels if package is not found elsewhere,
+# flexible allows to reach into lower priorities to resolve conflicts
+channel_priority: flexible
+
+# verify ssl certificates for https requests
+ssl_verify: true
+
+# also update dependencies to newest compatible version
+update_dependencies: True
+
+# include in every environment
+# create_default_packages:
+#  - pip
+#  - ipython
+
+# don't activate base during shell initialization
+auto_activate_base: false

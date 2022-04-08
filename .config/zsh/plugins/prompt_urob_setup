@@ -1,0 +1,127 @@
+# zsh prompt configuration
+
+# TODO: adopt async git status updates + prevent locking (maybe use below fn)
+# function __git_prompt_git() {
+#   GIT_OPTIONAL_LOCKS=0 command git "$@"
+# }
+
+# location of https://github.com/romkatv/gitstatus
+source $GITSTATUSDIR/gitstatus.plugin.zsh
+
+# Sets GITSTATUS_PROMPT to reflect the state of the current git repository. Empty if not
+# in a git repository. In addition, sets GITSTATUS_PROMPT_LEN to the number of columns
+# $GITSTATUS_PROMPT will occupy when printed.
+function gitstatus_prompt_update() {
+  emulate -L zsh
+  typeset -g  GITSTATUS_PROMPT=''
+  typeset -gi GITSTATUS_PROMPT_LEN=0
+
+  # Call gitstatus_query synchronously. Note that gitstatus_query can also be called
+  # asynchronously; see documentation in gitstatus.plugin.zsh.
+  gitstatus_query 'MY'                  || return 1  # error
+  [[ $VCS_STATUS_RESULT == 'ok-sync' ]] || return 0  # not a git repo
+
+  # system colors: color / brightcolor
+  # black:    0 / 8
+  # red:      1 / 9
+  # green:    2 / 10
+  # yellow:   3 / 11
+  # blue:     4 / 12
+  # magenta:  5 / 13
+  # green:    6 / 14
+  # white:    7 / 15
+
+  local      clean='%240F'   # gray foreground
+  local   upstream='%F{13}'
+  local   modified='%F{15}'
+  local  untracked='%F{12}'
+  local conflicted='%F{red}'
+  local lambda='%F{12}'
+
+  local ref
+
+  local where  # branch name, tag or commit
+  if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
+    where=$VCS_STATUS_LOCAL_BRANCH
+  elif [[ -n $VCS_STATUS_TAG ]]; then
+    ref+='%f#'
+    where=$VCS_STATUS_TAG
+  else
+    ref+='%f@'
+    where=${VCS_STATUS_COMMIT[1,8]}
+  fi
+
+  (( $#where > 32 )) && where[13,-13]="…"  # truncate long branch names and tags
+  ref+="${clean}${where//\%/%%}"             # escape %
+
+
+  local gstatus
+
+  # ⇣42 if behind the remote.
+  (( VCS_STATUS_COMMITS_BEHIND )) && gstatus+=" ${upstream}⇣"
+  # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
+  (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && gstatus+=" "
+  (( VCS_STATUS_COMMITS_AHEAD  )) && gstatus+="${upstream}⇡"
+  # ⇠42 if behind the push remote.
+  (( VCS_STATUS_PUSH_COMMITS_BEHIND )) && gstatus+=" ${upstream}⇠"
+  (( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && gstatus+=" "
+  # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
+  (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && gstatus+="${upstream}⇢"
+  # *42 if have stashes.
+  (( VCS_STATUS_STASHES        )) && gstatus+=" ${upstream}*${VCS_STATUS_STASHES}"
+  # 'merge' if the repo is in an unusual state.
+  [[ -n $VCS_STATUS_ACTION     ]] && gstatus+=" ${conflicted}${VCS_STATUS_ACTION}"
+  # ~42 if have merge conflicts.
+  (( VCS_STATUS_NUM_CONFLICTED )) && gstatus+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
+  # +42 if have staged changes.
+  (( VCS_STATUS_NUM_STAGED     )) && gstatus+=" ${modified}+"
+  # !42 if have unstaged changes.
+  (( VCS_STATUS_NUM_UNSTAGED   )) && gstatus+=" ${modified}!"
+  # ?42 if have untracked files. It's really a question mark, your font isn't broken.
+  (( VCS_STATUS_NUM_UNTRACKED  )) && gstatus+=" ${untracked}?"
+
+  # put status in brackets if non-empty
+  [[ -n ${gstatus} ]] && gstatus="${clean} [${gstatus} ${clean}]%f"
+
+  # assemble the final git prompt
+  GITSTATUS_PROMPT="${lambda}λ${clean}:${ref}${gstatus}"
+
+  # The length of GITSTATUS_PROMPT after removing %f and %F.
+  GITSTATUS_PROMPT_LEN="${(m)#${${GITSTATUS_PROMPT//\%\%/x}//\%(f|<->F)}}"
+}
+
+# Start gitstatusd instance with name "MY". The same name is passed to
+# gitstatus_query in gitstatus_prompt_update. The flags with -1 as values
+# enable staged, unstaged, conflicted and untracked counters.
+#gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
+gitstatus_stop 'MY' && gitstatus_start 'MY'  # report at most 1 change per type
+
+# On every prompt, fetch git status and set GITSTATUS_PROMPT.
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd gitstatus_prompt_update
+
+# Enable/disable the right prompt options.
+setopt no_prompt_bang prompt_percent prompt_subst
+
+# prompt:
+# %F => color dict
+# %f => reset color
+# %~ => current path
+# %* => time
+# %n => username
+# %m => shortname host
+# %(?..) => prompt conditional - %(condition.true.false)
+
+# local prompt
+#PROMPT='%F{240}%2~%f ${GITSTATUS_PROMPT}%B%F{yellow}»%f%b '
+PROMPT='%F{240}%2~%f %B%F{yellow}»%f%b '
+RPROMPT='${GITSTATUS_PROMPT}'
+ZLE_RPROMPT_INDENT=0  # don't indent right prompt
+
+# add users@host in remote sessions only
+if [[ -n $SSH_CONNECTION ]]; then
+  PROMPT='%F{240}[%n@%m]%f '$PROMPT
+fi
+
+# see here for more inspiration
+# https://github.com/agkozak/agkozak-zsh-prompt
