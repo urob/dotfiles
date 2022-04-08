@@ -7,7 +7,7 @@ source $DOTFILES/.zshenv
 
 # could do something like the following to skip files in win directory
 # -path "$DOTILES/win" -prune -or -type f ! -path "$DOTFILES/install.sh" -print | sort
-files=$(find $DOTFILES -type f ! -path "$DOTFILES/install.sh" | sort)
+files=$(find $DOTFILES -type d -name .git -prune -or -type f ! -path "$DOTFILES/install.sh" -print | sort)
 
 for f in $files; do
     destination="$HOME/${f#$DOTFILES/}"
