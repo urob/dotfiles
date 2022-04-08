@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
+# get environment variables
 DOTFILES=$HOME/dotfiles
-
-# source 
 source $DOTFILES/.zshenv
 
-# could do something like the following to skip files in win directory
-# -path "$DOTILES/win" -prune -or -type f ! -path "$DOTFILES/install.sh" -print | sort
-files=$(find $DOTFILES -type d -name .git -prune -or -type f ! -path "$DOTFILES/install.sh" -print | sort)
+# replicate dotfiles in local home using softlinks
+files=$(find $DOTFILES -type d -name .git -prune \
+    -or -type f ! -path "$DOTFILES/install.sh" -print | sort)
 
 for f in $files; do
     destination="$HOME/${f#$DOTFILES/}"
@@ -16,20 +15,26 @@ for f in $files; do
     ln -sf "$f" "$destination"
 done
 
-# make directories that won't necessarily be created automatically
+# create necessary directories
 mkdir -p $XDG_BIN_HOME
 mkdir -p $XDG_LIB_HOME
 mkdir -p $XDG_STATE_HOME/zsh
 mkdir -p $XDG_CACHE_HOME/zsh
 mkdir -p $XDG_STATE_HOME/nvim/sessions
 
-# install diff-so-fancy
-rm -rf $XDG_LIB_HOME/diffsofancy/ $XDG_BIN_HOME/diff-so-fancy
-git clone --depth=1 https://github.com/so-fancy/diff-so-fancy $XDG_LIB_HOME/diffsofancy
-chmod +x $XDG_LIB_HOME/diffsofancy/diff-so-fancy
-ln -s $XDG_LIB_HOME/diffsofancy/diff-so-fancy $XDG_BIN_HOME/diff-so-fancy
+# install 3rd party tools
+function get_git() {
+    # usage: get_git user project install_dir
+    rm -rf ${3}
+    mkdir -p ${3}
+    git clone --depth=1 https://github.com/${1}/${2} ${3}
+}
 
-# install gitstatus
-rm -rf $GITSTATUSDIR
-mkdir -p $GITSTATUSDIR
-git clone --depth=1 https://github.com/romkatv/gitstatus.git $GITSTATUSDIR
+# diff-so-fancy
+get_git so-fancy diff-so-fancy $XDG_LIB_HOME/diffsofancy
+chmod +x $XDG_LIB_HOME/diffsofancy/diff-so-fancy
+ln -sf $XDG_LIB_HOME/diffsofancy/diff-so-fancy $XDG_BIN_HOME/diff-so-fancy
+
+# gitstatus
+get_git romkatv gitstatus $GITSTATUSDIR
+
