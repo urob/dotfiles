@@ -15,16 +15,15 @@ for f in $files; do
     ln -sf "$f" "$destination"
 done
 
-# create necessary directories
+# create required directories
 mkdir -p $XDG_BIN_HOME
 mkdir -p $XDG_LIB_HOME
 mkdir -p $XDG_STATE_HOME/zsh
 mkdir -p $XDG_CACHE_HOME/zsh
 mkdir -p $XDG_STATE_HOME/nvim/sessions
 
-# install 3rd party tools
+# install 3rd party tools, usage: get_git user project install_dir
 function get_git() {
-    # usage: get_git user project install_dir
     rm -rf ${3}
     mkdir -p ${3}
     git clone --depth=1 https://github.com/${1}/${2} ${3}
