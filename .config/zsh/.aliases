@@ -38,6 +38,17 @@ else
   alias la='ls -A'
 fi
 
+# +-----+
+# | bat |
+# +-----+
+
+if (( $+commands[batcat] )); then
+    alias bat='batcat'
+    alias cat='batcat --pager=never --style=plain'
+elif (( $+commands[bat] )); then
+    alias cat='bat --pager=never --style=plain'
+fi
+
 # +------+
 # | grep |
 # +------+
