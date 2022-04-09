@@ -35,9 +35,9 @@
     ac = !git add -A && git commit -m
 
     # show pretty log of commits
-    tree = git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --topo-order --abbrev-commit --decorate
+    tree = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --topo-order --abbrev-commit --decorate
 
     # remove tracking information of all local branches no longer found upstream + delete them from local machine
-    prune = git remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
+    prune = remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
 
 
