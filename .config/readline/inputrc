@@ -8,6 +8,6 @@ $include /etc/inputrc
 set completion-ignore-case on
 set show-all-if-ambiguous on
 
-# search history with arrow up and down
+# Search history with arrow up and down
 "\e[A": history-search-backward
 "\e[B": history-search-forward

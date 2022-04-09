@@ -92,3 +92,4 @@ alias ee='explorer.exe .'  # run explorer in current directory
 # +-----+
 
 alias bc='ssh -p 22022 ulbricht@sirius.bc.edu'
+

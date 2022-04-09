@@ -8,7 +8,6 @@ export PATH=$PATH:$XDG_BIN_HOME
 
 fpath=($ZDOTDIR/plugins $fpath)
 
-
 # +------------+
 # | NAVIGATION |
 # +------------+

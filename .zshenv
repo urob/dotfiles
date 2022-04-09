@@ -23,7 +23,8 @@ export SAVEHIST=10000                   # Maximum events in history file, should
 export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
 
 # other software
-export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # gitstatus location, used for zsh prompt
-export VIMCONFIG="$XDG_CONFIG_HOME/nvim"  # used in my init.vim
+export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # used for zsh prompt
+export VIMCONFIG="$XDG_CONFIG_HOME/nvim"       # used in init.vim
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+
