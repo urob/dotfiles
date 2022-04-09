@@ -14,7 +14,7 @@ endif
 
 " Brief help:
 " :PlugInstall      - install plugins
-" :PlugUpdate       - install and update plugins
+" :PlugUpdate       - update plugins
 " :PlugClean[!]     - remove unlisted plugins (! will skip confirmation)
 " :PlugUpgade       - upgrade vim-plug itself
 " :PlugStatus       - check status of plugins
@@ -22,15 +22,14 @@ endif
 call plug#begin("$VIMCONFIG/plugged")
 
 " Vundle plugins
-"Plug 'tomasr/molokai'
 Plug 'morhetz/gruvbox'
 Plug 'dhruvasagar/vim-zoom'  " zoom in vim splits
-Plug 'jlanzarotta/bufexplorer', { 'on':  'BufExplorer' }
+Plug 'junegunn/fzf.vim'
+"Plug 'jlanzarotta/bufexplorer', { 'on':  'BufExplorer' }
 
 "Plugin 'tpope/vim-surround' " surrounding text objects with paranthesis, quotes, html tags...
 "Plugin 'tpope/Vim-repeat' " the . command can repeat whatever you want! See http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
 
-"Plugin 'ctrlpvim/ctrlp.vim' " fuzzy file buffer tag etc finder
 "Plugin 'w0rp/ale' " Linting platform
 
 " Snippets
@@ -292,4 +291,46 @@ function! Dos2Unix()
     exe 'e ++ff=dos'
     exe 'w ++ff=unix'
 endfunction
+
+" +-----+
+" | FZF |
+" +-----+
+
+" Debian location for fzf interface for vim (need both this and fzf.vim plugin)
+source /usr/share/doc/fzf/examples/fzf.vim
+
+" History of file opened
+nnoremap <leader>h :History<cr>
+
+" Buffers opens
+nnoremap <leader>b :Buffers<cr>
+
+" Files recursively from pwd
+" Everything except gitignore files
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>F :GFiles --cached --others --exclude-standard<cr>
+
+" Ex commands
+nnoremap <leader>c :Commands<cr>
+" Ex command history. <C-e> to modify the command
+nnoremap <leader>: :History:<cr>
+
+nnoremap <leader>a :Rg<space>
+nnoremap <leader>A :exec "Rg ".expand("<cword>")<cr>
+
+" Customize fzf colors to match the current color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Search'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Visual'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'StatusLineNC'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
