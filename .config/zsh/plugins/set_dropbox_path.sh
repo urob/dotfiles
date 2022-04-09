@@ -1,8 +1,9 @@
-# Exports an environment variable DROPBOX containing the location of the dropbox folder.
-# Intended to be *sourced* during the shell initialization. Works with both bash and zsh.
+# Search for dropbox location and export environment variable with its location
+# if found. Invoke by sourcing it during the shell initialization.
 
 # list of candidate paths
 candidate_paths=(
+  "${HOME}/Dropbox"
   "/mnt/c/Users/rober/Dropbox"
   "/mnt/d/Dropbox"
 )
@@ -10,9 +11,9 @@ candidate_paths=(
 # loop over candidate paths
 flag=false
 for dir in "${candidate_paths[@]}"; do
-  if [[ -d "$dir" ]]; then
+  if [[ -d "${dir}" ]]; then
     flag=true
-    export DROPBOX="$dir"
+    export DROPBOX="${dir}"
     break
   fi
 done
@@ -20,6 +21,6 @@ done
 # print error message if no match was found
 "$flag" || echo "Dropbox location not found"
 
-# cleaning up
+# clean up
 unset candidate_paths dir flag
 
