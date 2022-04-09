@@ -41,7 +41,7 @@ Plug 'jlanzarotta/bufexplorer', { 'on':  'BufExplorer' }
 "Plugin 'simnalamburt/vim-mundo' " Undo tree display
 
 " Git
-"Plugin 'tpope/vim-fugitive' "wrapper for git
+Plug 'tpope/vim-fugitive' "wrapper for git
 "Plugin 'mhinz/vim-signify' "  display git diff in the left gutter
 "Plugin 'junegunn/gv.vim' " Display commits for project / file
 

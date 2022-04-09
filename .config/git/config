@@ -6,8 +6,7 @@
 [merge]
     tool = nvim
 [mergetool "nvim"]
-# requires Fugitive
-#    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [user]
     email = private
     name = urob
@@ -34,10 +33,12 @@
     # add all new/modified/deleted files and then commit
     ac = !git add -A && git commit -m
 
-    # show pretty log of commits
-    tree = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --topo-order --abbrev-commit --decorate
+    # graph history
+    tree = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s \
+        %Cgreen(%cr) %C(bold blue)<%an>%Creset' \
+        --graph --topo-order --abbrev-commit --decorate
 
-    # remove tracking information of all local branches no longer found upstream + delete them from local machine
-    prune = remote update --prune && git branch -vv | awk \"/: gone]/{print $1}\" | xargs git branch -d
-
+    # prune local branches that aren't found upstream
+    prune = !git remote update --prune && git branch -vv | \
+        awk \"/: gone]/{print $1}\" | xargs git branch -d
 
