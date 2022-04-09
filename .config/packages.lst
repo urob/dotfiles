@@ -7,6 +7,6 @@ git
 git-filter-repo
 man
 neovim
-silversearcher-ag
+ripgrep
 tmux
 zsh
