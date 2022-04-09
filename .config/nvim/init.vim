@@ -7,31 +7,25 @@ if has("win32")
     let $DROPBOX='D:/Dropbox'
     let $VIMCONFIG=$USERPROFILE . '/AppData/Local/nvim'
 endif
-let $VIMFILES=$DROPBOX . '/home/nvim'
 
-
-" +--------+
-" | Vundle |
-" +--------+
+" +----------+
+" | VIM-PLUG |
+" +----------+
 
 " Brief help:
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" :PlugInstall      - install plugins
+" :PlugUpdate       - install and update plugins
+" :PlugClean[!]     - remove unlisted plugins (! will skip confirmation)
+" :PlugUpgade       - upgrade vim-plug itself
+" :PlugStatus       - check status of plugins
 
-" Set runtime path to include Vundle and initialize
-set rtp+=$VIMFILES/bundle/Vundle.vim/
-call vundle#begin('$VIMFILES/bundle/')
-
-" Let Vundle manage itself, required
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin("$VIMCONFIG/plugged")
 
 " Vundle plugins
-Plugin 'tomasr/molokai'
-Plugin 'morhetz/gruvbox'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'dhruvasagar/vim-zoom'  " zoom in vim splits
+"Plug 'tomasr/molokai'
+Plug 'morhetz/gruvbox'
+Plug 'dhruvasagar/vim-zoom'  " zoom in vim splits
+Plug 'jlanzarotta/bufexplorer', { 'on':  'BufExplorer' }
 
 "Plugin 'tpope/vim-surround' " surrounding text objects with paranthesis, quotes, html tags...
 "Plugin 'tpope/Vim-repeat' " the . command can repeat whatever you want! See http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
@@ -59,8 +53,8 @@ Plugin 'dhruvasagar/vim-zoom'  " zoom in vim splits
 "Plugin 'JamshedVesuna/vim-markdown-preview'
 
 " All plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
+filetype plugin indent on
 
 
 " +------------------+
@@ -76,7 +70,7 @@ let g:bufExplorerShowRelativePath=1
 " +--------------+
 
 syntax on
-colorscheme gruvbox         " choose a colorscheme
+silent! colorscheme gruvbox  " don't choke if colorscheme does not exist
 "language en                 " ignore system language
 
 set mouse=a                 " terminal mouse support
@@ -236,9 +230,9 @@ nnoremap <silent> <F5> :set spell!<cr>
 " <F5>-<F8> reserved for filetype mappings
 
 " Save session
-nnoremap <leader>ss :mksession! $XDG_STATE_HOME/nvim/sessions/
+nnoremap <leader>ss :mksession! $VIMCONFIG/sessions/
 " Reload session
-nnoremap <leader>sl :source $XDG_STATE_HOME/nvim/sessions/
+nnoremap <leader>sl :source $VIMCONFIG/sessions/
 
 " Source sets of macros
 "nnoremap <leader>ml :source $VIMCONFIG/macros/
@@ -246,6 +240,9 @@ nnoremap <leader>sl :source $XDG_STATE_HOME/nvim/sessions/
 "nmap <F10> :wa<Bar>exe "mksession! " . v:this_session<CR>:so $VIMFILES/sessions/
 "nnoremap <F10> :wa<Bar>exe "mksession! " . v:this_session<CR>
 "nnoremap <silent><F12> :call MySpellLang()<CR>
+
+" Add shebang with #!!
+inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
 " navigate Tabs
 nnoremap tl :tabnext<CR>

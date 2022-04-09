@@ -20,7 +20,7 @@ mkdir -p $XDG_BIN_HOME
 mkdir -p $XDG_LIB_HOME
 mkdir -p $XDG_STATE_HOME/zsh
 mkdir -p $XDG_CACHE_HOME/zsh
-mkdir -p $XDG_STATE_HOME/nvim/sessions
+mkdir -p $VIMCONFIG/sessions
 
 # install 3rd party tools, usage: get_git user project install_dir
 function get_git() {
@@ -36,4 +36,9 @@ ln -sf $XDG_LIB_HOME/diffsofancy/diff-so-fancy $XDG_BIN_HOME/diff-so-fancy
 
 # gitstatus
 get_git romkatv gitstatus $GITSTATUSDIR
+
+# plug-vim
+curl -fLo "${VIMCONFIG}"/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+nvim --headless +PlugUpdate +qall
 
