@@ -40,5 +40,5 @@ get_git romkatv gitstatus $GITSTATUSDIR
 # plug-vim
 curl -fLo "${VIMCONFIG}"/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-nvim --headless +PlugUpdate +qall
+nvim --headless +PlugInstall +qall
 
