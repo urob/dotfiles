@@ -1,7 +1,7 @@
 # .zshrc
 
 # set dropbox directory unless remote
-[[ -n $SSH_CONNECTION ]] || source $ZDOTDIR/plugins/set_dropbox_path.sh
+[[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
 
 # set path to include local bin
 export PATH=$PATH:$XDG_BIN_HOME
@@ -62,31 +62,11 @@ source $ZDOTDIR/scripts.zsh
 
 source $ZDOTDIR/plugins/prompt_urob_setup
 
-# +------------+
-# | COMPLETION |
-# +------------+
-
-source $ZDOTDIR/completion.zsh
-
-# +-----+
-# | FZF |
-# +-----+
-
-if [ $(command -v "fzf") ]; then
-    # ^R completes from history, !C from dirs, ^T from files
-    source $FZF_PLUG_DIR/key-bindings.zsh
-    source $FZF_PLUG_DIR/completion.zsh
-    # source $DOTFILES/zsh/scripts_fzf.zsh # fzf Scripts
-
-    # Search with fzf and open selected file with Vim
-    # bindkey -s '^v' 'vim $(fzf);^M'
-fi
-
 # +---------+
 # | BINDING |
 # +---------+
 
-# Use emacs bindings
+# Use emacs bindings (resets any bindings issued before that line!)
 bindkey -e
 
 # Bind up/down to incremental history-search
@@ -102,6 +82,26 @@ bindkey ";5C" forward-word         # Ctrl + Right
 bindkey ";5D" backward-word        # Ctrl + Left
 bindkey "^[[1~" beginning-of-line  # Ctrl + Home
 bindkey "^[[4~" end-of-line        # Ctrl + End
+
+# +------------+
+# | COMPLETION |
+# +------------+
+
+source $ZDOTDIR/completion.zsh
+
+# +-----+
+# | FZF |
+# +-----+
+
+if (( $+commands[fzf] )); then
+    # ^R completes from history, !C from dirs, ^T from files
+    source $FZF_PLUG_DIR/key-bindings.zsh
+    source $FZF_PLUG_DIR/completion.zsh
+    # source $DOTFILES/zsh/scripts_fzf.zsh # fzf Scripts
+
+    # Search with fzf and open selected file with Vim
+    bindkey -s '^V' 'vim $(fzf);^M'
+fi
 
 # +---------+
 # | MODULES |
