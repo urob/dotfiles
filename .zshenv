@@ -33,6 +33,7 @@ marker:red,\
 prompt:gray,\
 hl+:red"
 
+export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc, init.vim
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS="--height 60% \
 --border sharp \

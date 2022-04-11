@@ -344,7 +344,7 @@ nnoremap <silent> <M-o> :TmuxNavigatePrevious<cr>
 " +-----+
 
 " Debian location for fzf interface for vim (need both this and fzf.vim plugin)
-source /usr/share/doc/fzf/examples/fzf.vim
+source $FZF_PLUG_DIR/fzf.vim
 
 " History of file opened
 nnoremap <leader>h :History<cr>

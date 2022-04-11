@@ -74,8 +74,8 @@ source $ZDOTDIR/completion.zsh
 
 if [ $(command -v "fzf") ]; then
     # ^R completes from history, !C from dirs, ^T from files
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-    source /usr/share/doc/fzf/examples/completion.zsh
+    source $FZF_PLUG_DIR/key-bindings.zsh
+    source $FZF_PLUG_DIR/completion.zsh
     # source $DOTFILES/zsh/scripts_fzf.zsh # fzf Scripts
 
     # Search with fzf and open selected file with Vim
