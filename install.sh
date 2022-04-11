@@ -34,7 +34,7 @@ function command_exists () {
 function get_git() {
     rm -rf ${3}
     mkdir -p ${3}
-    gituu clone --depth=1 https://github.com/${1}/${2} ${3}
+    git clone --depth=1 https://github.com/${1}/${2} ${3}
 }
 
 # diff-so-fancy
