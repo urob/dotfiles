@@ -1,6 +1,6 @@
 " File location: ~/AppData/Local/nvim
-set nocompatible    " be iMproved, required
-filetype off        " required
+"set nocompatible           " be iMproved, default in neovim
+"filetype plugin indent on  " activate filetype detection, default in neovim
 
 " Path to Vimfiles, set by shell under unix
 if has("win32")
@@ -21,85 +21,72 @@ endif
 
 call plug#begin("$VIMCONFIG/plugged")
 
-" Vundle plugins
-Plug 'morhetz/gruvbox'
-Plug 'dhruvasagar/vim-zoom'  " zoom in vim splits
-Plug 'junegunn/fzf.vim'
-"Plug 'jlanzarotta/bufexplorer', { 'on':  'BufExplorer' }
-
-"Plugin 'tpope/vim-surround' " surrounding text objects with paranthesis, quotes, html tags...
-"Plugin 'tpope/Vim-repeat' " the . command can repeat whatever you want! See http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
-
-"Plugin 'w0rp/ale' " Linting platform
-
-" Snippets
-"Plugin 'SirVer/ultisnips'
-"Plugin 'honza/vim-snippets' " snippets
-
-" Undo tree
-"Plugin 'simnalamburt/vim-mundo' " Undo tree display
+Plug 'morhetz/gruvbox'                 " my default colorscheme
+Plug 'junegunn/fzf.vim'                " fzf wrapper
+Plug 'tpope/vim-commentary'            " easy commenting
+Plug 'andymass/vim-matchup'            " match more stuff with %
+Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
+Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
+Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
 
 " Git
-Plug 'tpope/vim-fugitive' "wrapper for git
-"Plugin 'mhinz/vim-signify' "  display git diff in the left gutter
-"Plugin 'junegunn/gv.vim' " Display commits for project / file
+Plug 'tpope/vim-fugitive'              " git wrapper
+Plug 'mhinz/vim-signify'               " show git diff in the left gutter
 
-" Writing
-"Plugin 'godlygeek/tabular' " Align stuff (useful for markdown tables for example)
-"Plugin 'lervag/vimtex' " latex
-"Plugin 'reedes/vim-wordy' " Verify quality of writting (see :Wordy)
-"Plugin 'rhysd/vim-grammarous', { 'for': 'markdown' } " Show grammar mistakes
+" Navigate undo tree
+Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
+
+" File navigation
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+
+"Plugin 'tpope/vim-surround' " surround text with paranthesis, quotes etc
+"Plugin 'tpope/Vim-repeat'   " see http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
+"Plugin 'w0rp/ale'           " linting platform
+"Plugin 'SirVer/ultisnips'   " snippets stuff
+"Plugin 'honza/vim-snippets' " snippets stuff
+"Plugin 'godlygeek/tabular'  " align stuff (eg markdown tables)
+"Plugin 'lervag/vimtex'      " modern latex plugin
+"Plugin 'reedes/vim-wordy'   " verify quality of writting (see :Wordy)
+"Plugin 'rhysd/vim-grammarous', { 'for': 'markdown' } " show grammar mistakes
 "Plugin 'JamshedVesuna/vim-markdown-preview'
 
-" All plugins must be added before the following line
 call plug#end()
-filetype plugin indent on
 
-
-" +------------------+
-" | Global variables |
-" +------------------+
-
-" BufExplorer
-let g:bufExplorerShowRelativePath=1
-
-
-" +--------------+
-" | Set  options |
-" +--------------+
+" +----------------+
+" | Global options |
+" +----------------+
 
 syntax on
 silent! colorscheme gruvbox  " don't choke if colorscheme does not exist
-"language en                 " ignore system language
+"language en                  " ignore system language
 
-set mouse=a                 " terminal mouse support
-set title number            " show title and linenumber
-set colorcolumn=+1          " color column at textwidth+1
-set scrolloff=3             " keep cursor 3 lines of edge when scrolling
-set textwidth=79            " default textwidth of 79 columns
+set mouse=a                  " terminal mouse support
+set title number             " show title and linenumber
+set colorcolumn=+1           " color column at textwidth+1
+set scrolloff=3              " keep cursor 3 lines of edge when scrolling
+set textwidth=80             " default textwidth of 80 columns
+
+set autoindent smartindent   " automatic indentation based on cinwords
+set et sw=4 sts=4 ts=4       " expand all tabs to spaces and set tabwidth
+set ignorecase smartcase     " search ignores cases unless uppercase
+set completeopt+=longest     " completion insert longest common matched text
+
+set autowrite                " write automatically when quitting buffer
+set undofile                 " persistent undo
+set fileformats=unix,dos     " default to unix fileformat on all platforms
+
+set keymodel=startsel        " shift + movement starts visual mode
+set clipboard+=unnamed       " use global clipboard
+"set spelllang=en_us          " make English default spelling language
 
 " Formatting symbols
 set list
-set listchars+=eol:⏎        " end-of-line
-set listchars+=tab:▸\       " tab
-set listchars+=trail:·      " trailing spaces, leading spaces are blank
-set listchars+=extends:>    " last col of long lines when line wrap is off
-set listchars+=precedes:<   " first col of long lines when line wrap is off
-set listchars+=nbsp:%       " non-breakable space character
-
-set autoindent smartindent  " Automatic indentation based on cinwords
-set et sw=4 sts=4 ts=4      " Expand all tabs to spaces and set tabwidth
-set ignorecase smartcase    " Search ignores cases unless uppercase
-set completeopt+=longest    " completion insert longest common matched text
-
-set autowrite               " Write automatically when quitting buffer
-set undofile                " Persistent undo
-set fileformats=unix,dos    " always use unix fileformats as default
-
-set keymodel=startsel       " shift-arrows starts visual mode
-set clipboard+=unnamed      " use global clipboard
-"set spelllang=en_us         " make English default spelling language
-
+set listchars+=eol:⏎         " end-of-line
+set listchars+=tab:▸\        " tab
+set listchars+=trail:·       " trailing spaces, leading spaces are blank
+set listchars+=extends:>     " last col of long lines when line wrap is off
+set listchars+=precedes:<    " first col of long lines when line wrap is off
+set listchars+=nbsp:%        " non-breakable space character
 
 " +---------+
 " | autocmd |
@@ -109,7 +96,7 @@ au FileType markdown setlocal spell spelllang=en_us
 au FileType gitcommit setlocal spell spelllang=en_us
 
 " Return to last edit position when opening files
-au BufReadPost * 
+au BufReadPost *
             \ if line("'\"") > 1 && line("'\"") <= line("$") |
             \       exe "normal! g`\"" |
             \ endif
@@ -123,21 +110,20 @@ autocmd FileChangedShellPost *
             \ echohl WarningMsg |
             \ echo "File changed on disk. Buffer reloaded." | echohl None
 
-
 " +------------+
 " | statusline |
 " +------------+
 
+" TODO: add fugitative gitstatus
 set laststatus=2
-set statusline=%<                        " truncate here if needed
-set statusline+=%f\                      " file + path relative to current dir
-set statusline+=%h%w%m%r                 " help, preview, modified, readonly
-set statusline+=%=                       " hfill
-set statusline+=%{&fenc?&fenc:&enc}\     " file encoding
-set statusline+=%-11.([%{&ff}]%)\        " [file format], minimum width = 11
-set statusline+=%-12.(%l/%L%)\           " line/total, minimum width = 12
-set statusline+=%P                       " top/bottom
-
+set statusline=%<                     " truncate here if needed
+set statusline+=%f\                   " file + path relative to current dir
+set statusline+=%h%w%m%r              " help, preview, modified, readonly
+set statusline+=%=                    " hfill
+set statusline+=%{&fenc?&fenc:&enc}\  " file encoding
+set statusline+=%-11.([%{&ff}]%)\     " [file format], minimum width = 11
+set statusline+=%-12.(%l/%L%)\        " line/total, minimum width = 12
+set statusline+=%P                    " top/bottom
 
 " +-----------------+
 " | General mapping |
@@ -147,20 +133,20 @@ set statusline+=%P                       " top/bottom
 let mapleader = ","
 let maplocalleader = ","
 
-" indent without killing the selection in VISUAL mode
+" Indent without killing the selection in VISUAL mode
 vmap < <gv
 vmap > >gv
 
 " toggle between absolute -> relative line number
-nnoremap <C-n> :set relativenumber! <CR>
+nnoremap <leader>n :set relativenumber! <CR>
 
-" escape to normal mode and write unsaved changes with <S-CR>
+" escape to normal mode and write unsaved changes with <S-CR>, won't work in VT
 "inoremap <s-cr> <esc>
 "nnoremap <silent><s-cr> :update<CR>
 
 " turn off highlighting of search results
-" nnoremap <silent> <leader><space> :noh<cr>
 nnoremap <silent> <esc> <Cmd>noh<cr>
+"nnoremap <silent> <leader><space> :noh<cr>
 
 " toggle folding
 nnoremap <space> za
@@ -170,17 +156,8 @@ noremap . .`[
 vnoremap <silent> . :normal .<CR>
 
 " split windows vertically/horizontally
-nnoremap <leader>h <C-w>s<C-w>j
+nnoremap <leader>x <C-w>s<C-w>j
 nnoremap <leader>v <C-w>v<C-w>l
-
-" navigate around split using <leader> + arrow
-nnoremap <leader><Up> <C-w>k
-nnoremap <leader><Down> <C-w>j
-nnoremap <leader><Left> <C-w>h
-nnoremap <leader><Right> <C-w>l
-
-" Zoom / restore windows (like Tmux), requires vim-zoom plugin
-nmap <leader>z <Plug>(zoom-toggle)
 
 " Ex Command to cd to current file, don't run it so it can be modified
 nnoremap <leader>cd :cd %:p:h
@@ -206,7 +183,7 @@ nnoremap <leader>P "0P
 
 " use F1 to escape to normal, count words in visual, quit help, and pastetoggle
 inoremap <F1> <Esc>
-" TODO: why does the shortcut not pause after display?
+" TODO: why is output cleared when using vmap?
 vnoremap <F1> g<C-g>
 nnoremap <silent><F1> :call MapF1()<CR>
 
@@ -219,12 +196,8 @@ function! MapF1()
   endif
 endfunction
 
-nnoremap <silent> <F2> :BufExplorer<CR>
-"nnoremap <silent> <F3> :GundoToggle<CR>
-"nnoremap <silent> <F4> :TagbarToggle<CR>
-
 " toggle spelling
-nnoremap <silent> <F5> :set spell!<cr>
+nnoremap <silent> <F4> :set spell!<cr>
 
 " <F5>-<F8> reserved for filetype mappings
 
@@ -232,13 +205,6 @@ nnoremap <silent> <F5> :set spell!<cr>
 nnoremap <leader>ss :mksession! $VIMCONFIG/sessions/
 " Reload session
 nnoremap <leader>sl :source $VIMCONFIG/sessions/
-
-" Source sets of macros
-"nnoremap <leader>ml :source $VIMCONFIG/macros/
-
-"nmap <F10> :wa<Bar>exe "mksession! " . v:this_session<CR>:so $VIMFILES/sessions/
-"nnoremap <F10> :wa<Bar>exe "mksession! " . v:this_session<CR>
-"nnoremap <silent><F12> :call MySpellLang()<CR>
 
 " Add shebang with #!!
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
@@ -254,11 +220,6 @@ nnoremap <C-S-Tab> :tabprev<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-d> :tabclose<CR>
 
-"" automatically close "(" and "["
-"inoremap ( ()<ESC>i
-"inoremap [ []<ESC>i
-""inoremap { {}<ESC>i
-"
 "" in visual mode, use "((" etc, to enclose selection
 "vnoremap (( <esc>`>a)<esc>`<i(<esc>
 "vnoremap [[ <esc>`>a]<esc>`<i[<esc>
@@ -281,7 +242,6 @@ nnoremap <C-d> :tabclose<CR>
 "inoremap <C-F> <C-O>:promptrepl<CR>
 "cnoremap <C-F> <C-C>:promptrepl<CR>
 
-
 " +--------+
 " | Macros |
 " +--------+
@@ -291,6 +251,97 @@ function! Dos2Unix()
     exe 'e ++ff=dos'
     exe 'w ++ff=unix'
 endfunction
+
+" +----------+
+" | VIM-ZOOM |
+" +----------+
+
+" Zoom / restore windows (like Tmux)
+nmap <leader>z <Plug>(zoom-toggle)
+nmap <leader>j <Plug>(zoom-toggle)
+
+" +---------+
+" | MATCHUP |
+" +---------+
+
+let g:matchup_transmute_enabled = 1
+
+" +--------------+
+" | EDITORCONFIG |
+" +--------------+
+
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" +-------+
+" | MUNDO |
+" +-------+
+
+"let g:mundo_playback_delay=180
+let g:mundo_auto_preview=1
+
+nnoremap <silent> <F3> :MundoToggle<CR>
+nnoremap <leader>U :MundoToggle<cr>
+
+" +---------+
+" | SIGNIFY |
+" +---------+
+
+" default updatetime 4000ms is not good for async update
+set updatetime=100
+
+" +----------+
+" | NERDtree |
+" +----------+
+
+function! NERDTreeToggleInCurDir()
+  " If NERDTree is open in the current buffer
+  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+    exe ":NERDTreeClose"
+  else
+    if (expand("%:t") != '')
+      exe ":NERDTreeFind"
+    else
+      exe ":NERDTreeToggle"
+    endif
+  endif
+endfunction
+
+" don't display informations (type ? for help and so on)
+let g:NERDTreeMinimalUI = 1
+
+"let g:NERDTreeHijackNetrw = 1
+"let g:NERDTreeChDirMode = 2
+"let g:NERDTreeAutoDeleteBuffer = 1
+"let g:NERDTreeShowBookmarks = 0
+"let g:NERDTreeCascadeOpenSingleChildDir = 1
+"let g:NERDTreeCascadeSingleChildDir = 0
+"let g:NERDTreeQuitOnOpen = 1
+
+" remapping - see nerdtree.txt and search for "NERDTreeMappings"
+let NERDTreeMapOpenSplit = 'x'
+let NERDTreeMapPreviewSplit='gx'
+
+let NERDTreeMapOpenVSplit = 'v'
+let NERDTreeMapPreviewVSplit='gv'
+
+nnoremap <silent> <F2> :call NERDTreeToggleInCurDir()<CR>
+nmap <leader>e :call NERDTreeToggleInCurDir()<CR>
+
+" +----------------+
+" | TMUX-NAVIGATOR |
+" +----------------+
+
+" Note: config here has no effect on actual behavior as long as the send-keys in
+" tmux match the vim config. So we can just leave the default here and only
+" change the settings in the tmux configuration.
+"
+" let g:tmux_navigator_no_mappings = 1
+"
+" nnoremap <silent> C-n :TmuxNavigateLeft<cr>
+" nnoremap <silent> C-e :TmuxNavigateDown<cr>
+" nnoremap <silent> C-u :TmuxNavigateUp<cr>
+" nnoremap <silent> C-i :TmuxNavigateRight<cr>
+" nnoremap <silent> C-o :TmuxNavigatePrevious<cr>
 
 " +-----+
 " | FZF |
