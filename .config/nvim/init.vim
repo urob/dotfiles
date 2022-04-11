@@ -331,17 +331,13 @@ nmap <leader>e :call NERDTreeToggleInCurDir()<CR>
 " | TMUX-NAVIGATOR |
 " +----------------+
 
-" Note: config here has no effect on actual behavior as long as the send-keys in
-" tmux match the vim config. So we can just leave the default here and only
-" change the settings in the tmux configuration.
-"
-" let g:tmux_navigator_no_mappings = 1
-"
-" nnoremap <silent> C-n :TmuxNavigateLeft<cr>
-" nnoremap <silent> C-e :TmuxNavigateDown<cr>
-" nnoremap <silent> C-u :TmuxNavigateUp<cr>
-" nnoremap <silent> C-i :TmuxNavigateRight<cr>
-" nnoremap <silent> C-o :TmuxNavigatePrevious<cr>
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> M-n :TmuxNavigateLeft<cr>
+nnoremap <silent> M-e :TmuxNavigateDown<cr>
+nnoremap <silent> M-u :TmuxNavigateUp<cr>
+nnoremap <silent> M-i :TmuxNavigateRight<cr>
+nnoremap <silent> M-o :TmuxNavigatePrevious<cr>
 
 " +-----+
 " | FZF |
