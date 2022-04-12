@@ -22,6 +22,14 @@ setopt CORRECT              # Spelling correction
 setopt CDABLE_VARS          # Change directory to a path stored in a variable.
 # setopt EXTENDED_GLOB        # Use extended globbing syntax.
 
+# +----------------------+
+# | BRACKETED PASTE MODE |
+# +----------------------+
+
+set zle_bracketed_paste      # Explicitly restore this zsh default
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+
 # +---------+
 # | HISTORY |
 # +---------+

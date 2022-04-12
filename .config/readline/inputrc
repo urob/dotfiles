@@ -4,6 +4,9 @@
 # Respect default shortcuts.
 $include /etc/inputrc
 
+# Enable bracketed paste mode
+set enable-bracketed-paste on
+
 # Filename completion/expansion
 set completion-ignore-case on
 set show-all-if-ambiguous on
