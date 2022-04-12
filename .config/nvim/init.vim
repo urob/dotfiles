@@ -65,6 +65,7 @@ set title number             " show title and linenumber
 set colorcolumn=+1           " color column at textwidth+1
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
 set textwidth=80             " default textwidth of 80 columns
+set diffopt+=vertical        " use vertical splits for diff
 
 set autoindent smartindent   " automatic indentation based on cinwords
 set et sw=4 sts=4 ts=4       " expand all tabs to spaces and set tabwidth
