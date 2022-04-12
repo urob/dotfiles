@@ -116,16 +116,16 @@ autocmd FileChangedShellPost *
 " | statusline |
 " +------------+
 
-" TODO: add fugitative gitstatus
 set laststatus=2
-set statusline=%<                     " truncate here if needed
-set statusline+=%f\                   " file + path relative to current dir
-set statusline+=%h%w%m%r              " help, preview, modified, readonly
-set statusline+=%=                    " hfill
-set statusline+=%{&fenc?&fenc:&enc}\  " file encoding
-set statusline+=%-11.([%{&ff}]%)\     " [file format], minimum width = 11
-set statusline+=%-12.(%l/%L%)\        " line/total, minimum width = 12
-set statusline+=%P                    " top/bottom
+set statusline=%<                        " truncate here if needed
+set statusline+=%f\                      " file + path relative to current dir
+set statusline+=%h%w%m%r                 " help, preview, modified, readonly
+set statusline+=%{FugitiveStatusline()}  " git status
+set statusline+=%=                       " hfill
+set statusline+=%{&fenc?&fenc:&enc}\     " file encoding
+set statusline+=%-11.([%{&ff}]%)\        " [file format], minimum width = 11
+set statusline+=%-12.(%l/%L%)\           " line/total, minimum width = 12
+set statusline+=%P                       " top/bottom
 
 " +-----------------+
 " | General mapping |
@@ -273,6 +273,17 @@ let g:matchup_transmute_enabled = 1
 " +--------------+
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" +------------+
+" | FUGITITIVE |
+" +------------+
+
+" dummy func so statusline still works if fugititive isn't found
+if !exists('*FugitiveStatusline')
+  function! FugitiveStatusline()
+      return ''
+  endfunction
+endif
 
 " +-------+
 " | MUNDO |
