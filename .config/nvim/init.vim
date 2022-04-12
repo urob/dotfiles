@@ -62,6 +62,7 @@ silent! colorscheme gruvbox  " don't choke if colorscheme does not exist
 
 set mouse=a                  " terminal mouse support
 set title number             " show title and linenumber
+set relativenumber           " show relative linenumbers
 set colorcolumn=+1           " color column at textwidth+1
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
 set textwidth=80             " default textwidth of 80 columns
