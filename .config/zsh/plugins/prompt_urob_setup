@@ -1,10 +1,10 @@
 # zsh prompt configuration
 
-# Inspired by: 
+# Inspired by:
 # https://github.com/Phantas0s/purification
 # https://github.com/agkozak/agkozak-zsh-prompt
 #
-# TODO: 
+# TODO:
 # - adopt async git status updates
 # - fix locking issue, maybe implement something like this:
 # function __git_prompt_git() {
@@ -15,7 +15,7 @@
 source $GITSTATUSDIR/gitstatus.plugin.zsh
 
 # Sets GITSTATUS_PROMPT to reflect the state of the current git repository.
-# Empty if not in a git repository. In addition, sets GITSTATUS_PROMPT_LEN to 
+# Empty if not in a git repository. In addition, sets GITSTATUS_PROMPT_LEN to
 # the number of columns $GITSTATUS_PROMPT will occupy when printed.
 function gitstatus_prompt_update() {
     emulate -L zsh
