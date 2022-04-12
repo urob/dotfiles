@@ -1,6 +1,6 @@
 # useful scripts
 
-dotfiles() {
+backup_dotfiles() {
   # location of backup files/dirs relative to $HOME
   CONFIG=.config
   files=(
