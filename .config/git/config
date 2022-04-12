@@ -34,9 +34,7 @@
     ac = !git add -A && git commit -m
 
     # graph history
-    tree = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s \
-        %Cgreen(%cr) %C(bold blue)<%an>%Creset' \
-        --graph --topo-order --abbrev-commit --decorate
+    tree = log --graph --abbrev-commit --oneline --decorate
 
     # prune local branches that aren't found upstream
     prune = !git remote update --prune && git branch -vv | \
