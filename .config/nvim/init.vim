@@ -114,6 +114,11 @@ autocmd vimrc FileChangedShellPost *
             \ echohl WarningMsg |
             \ echo "File changed on disk. Buffer reloaded." | echohl None
 
+" Highlight current line in insert mode
+autocmd vimrc InsertEnter * set cursorline
+autocmd vimrc InsertLeave * set nocursorline
+
+
 " Writing settings
 autocmd vimrc FileType markdown, latex, gitcommit, text
             \ setlocal spell spelllang=en_us norelativenumber
