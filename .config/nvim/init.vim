@@ -120,7 +120,7 @@ autocmd vimrc InsertLeave * set nocursorline
 
 
 " Writing settings
-autocmd vimrc FileType markdown, latex, gitcommit, text
+autocmd vimrc FileType markdown,latex,gitcommit,text
             \ setlocal spell spelllang=en_us norelativenumber
 
 " +------------+
