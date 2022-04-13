@@ -94,23 +94,29 @@ set listchars+=nbsp:%        " non-breakable space character
 " | autocmd |
 " +---------+
 
-au FileType markdown setlocal spell spelllang=en_us
-au FileType gitcommit setlocal spell spelllang=en_us
+" Clear all autocmds created in vimrc
+augroup vimrc
+    autocmd!
+augroup END
 
 " Return to last edit position when opening files
-au BufReadPost *
+autocmd vimrc BufReadPost *
             \ if line("'\"") > 1 && line("'\"") <= line("$") |
-            \       exe "normal! g`\"" |
+            \       exec "normal! g`\"" |
             \ endif
 
 " Trigger 'autoread' when files change on disk
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+autocmd vimrc FocusGained,BufEnter,CursorHold,CursorHoldI *
             \ if mode() != 'c' | checktime | endif
 
 " Notification after file change
-autocmd FileChangedShellPost *
+autocmd vimrc FileChangedShellPost *
             \ echohl WarningMsg |
             \ echo "File changed on disk. Buffer reloaded." | echohl None
+
+" Writing settings
+autocmd vimrc FileType markdown, latex, gitcommit, text
+            \ setlocal spell spelllang=en_us norelativenumber
 
 " +------------+
 " | statusline |
@@ -140,15 +146,15 @@ vmap < <gv
 vmap > >gv
 
 " toggle between absolute -> relative line number
-nnoremap <leader>n :set relativenumber! <CR>
+nnoremap <leader>n <Cmd>set relativenumber!<CR>
 
 " escape to normal mode and write unsaved changes with <S-CR>, won't work in VT
 "inoremap <s-cr> <esc>
-"nnoremap <silent><s-cr> :update<CR>
+"nnoremap <silent><s-cr> <Cmd>update<CR>
 
 " turn off highlighting of search results
 nnoremap <silent> <esc> <Cmd>noh<cr>
-"nnoremap <silent> <leader><space> :noh<cr>
+"nnoremap <silent> <leader><space> <Cmd>noh<cr>
 
 " toggle folding
 nnoremap <space> za
@@ -164,9 +170,9 @@ nnoremap <leader>v <C-w>v<C-w>l
 " Ex Command to cd to current file, don't run it so it can be modified
 nnoremap <leader>cd :cd %:p:h
 
-" scroll down faster
-"noremap J 2<c-e>
-"noremap K 3<c-y>
+" scroll faster
+noremap U 3<c-y>
+noremap E 3<c-e>
 
 " increment/decrement numbers
 nnoremap + <c-a>
@@ -200,8 +206,6 @@ endfunction
 
 " toggle spelling
 nnoremap <silent> <F4> :set spell!<cr>
-
-" <F5>-<F8> reserved for filetype mappings
 
 " Save session
 nnoremap <leader>ss :mksession! $VIMCONFIG/sessions/
@@ -250,8 +254,8 @@ nnoremap <C-d> :tabclose<CR>
 
 " Convert file endings from dos to unix
 function! Dos2Unix()
-    exe 'e ++ff=dos'
-    exe 'w ++ff=unix'
+    exec 'e ++ff=dos'
+    exec 'w ++ff=unix'
 endfunction
 
 " +----------+
@@ -278,7 +282,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " | FUGITITIVE |
 " +------------+
 
-" dummy func so statusline still works if fugititive isn't found
+" dummy func so statusline still works if fugititive isn't loaded
 if !exists('*FugitiveStatusline')
   function! FugitiveStatusline()
       return ''
@@ -307,16 +311,16 @@ set updatetime=100
 " +----------+
 
 function! NERDTreeToggleInCurDir()
-  " If NERDTree is open in the current buffer
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-    exe ":NERDTreeClose"
-  else
-    if (expand("%:t") != '')
-      exe ":NERDTreeFind"
+    " If NERDTree is open in the current buffer
+    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+        exec ":NERDTreeClose"
     else
-      exe ":NERDTreeToggle"
+        if (expand("%:t") != '')
+            exec ":NERDTreeFind"
+        else
+            exec ":NERDTreeToggle"
+        endif
     endif
-  endif
 endfunction
 
 " don't display informations (type ? for help and so on)
@@ -356,7 +360,7 @@ nnoremap <silent> <M-o> :TmuxNavigatePrevious<cr>
 " | FZF |
 " +-----+
 
-" Debian location for fzf interface for vim (need both this and fzf.vim plugin)
+" Location of fzf interface for vim (need both this and fzf.vim plugin)
 source $FZF_PLUG_DIR/fzf.vim
 
 " History of file opened
