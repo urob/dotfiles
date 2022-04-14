@@ -69,8 +69,10 @@ zstyle ':completion:*' list-colors ''
 # Only display some tags for the command cd
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
 
-# Try case insensitive search if there is no exact match 
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
+
+# Ignore windows binaries when completing commands
+zstyle ':completion:*:*:-command-:*:*' ignored-patterns '*.???|*.ax|*.conf|*.config|*.h|*.json|*.Manifest|*.\(old\)|*.ps1xml|*.rs|*.sbin|*.so|*.uninstall|*.xslt'
 
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
