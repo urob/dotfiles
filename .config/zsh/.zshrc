@@ -3,10 +3,15 @@
 # set dropbox directory unless remote
 [[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
 
-# set path to include local bin
-export PATH=$PATH:$XDG_BIN_HOME
+# set path to include local bin if not yet included
+if [ -d "$XDG_BIN_HOME" ] && [[ ! $PATH =~ "(^|:)$XDG_BIN_HOME(:|$)" ]]; then
+        export PATH=$PATH:$XDG_BIN_HOME
+fi
 
-fpath=($ZDOTDIR/plugins $fpath)
+fpath=($ZDOTDIR/plugins $fpath)  # TODO: do we need this?
+
+# TODO: use zsh-defer to source slow plugins
+# https://github.com/romkatv/zsh-defer
 
 # +------------+
 # | NAVIGATION |
