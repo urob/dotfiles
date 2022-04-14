@@ -16,35 +16,17 @@ _comp_options+=(globdots)
 # | Options |
 # +---------+
 
-# setopt GLOB_COMPLETE      # Show autocompletion menu with globs
-setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
-setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
-setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
-
-
-# +--------------+
-# | fzf-complete |
-# +--------------+
-
-# # use fzf to filter through tab completion
-# source ~/.zfunctions/fzf-tab/fzf-tab.plugin.zsh
-# # preview directory's content with exa when completing cd
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# # switch group using `,` and `.`
-# zstyle ':fzf-tab:*' switch-group ',' '.'
-# #zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup  # requires tmux version 3.2
-# zstyle ':fzf-tab:*' single-group color header
-# zstyle ':fzf-tab:*' prefix ''
-
-# zstyle ':completion:*:descriptions' format '[%d]'  # use this with fzf-tab
-# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # use this with fzf-tab
+setopt GLOB_COMPLETE     # Show autocompletion menu with globs
+setopt MENU_COMPLETE     # Automatically highlight first element of completion menu
+setopt AUTO_LIST         # Automatically list choices on ambiguous completion.
+setopt COMPLETE_IN_WORD  # Complete from both ends of a word.
 
 # +---------+
 # | zstyles |
 # +---------+
 
 # Completion modes
-zstyle ':completion:*' completer _expand _extensions _complete _correct _approximate
+zstyle ':completion:*' completer _extensions _complete _approximate
 
 # Use cache for commands which use it
 zstyle ':completion:*' use-cache on
@@ -66,8 +48,12 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 
-# Only display some tags for the command cd
+# Try case insensitive search if there is no exact match
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+
+# Only display some tags for the command cd, complete 'cd -' with options
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*' complete-options true
 
 zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions commands
 
