@@ -118,10 +118,14 @@ autocmd vimrc FileChangedShellPost *
 autocmd vimrc InsertEnter * set cursorline
 autocmd vimrc InsertLeave * set nocursorline
 
-
-" Writing settings
-autocmd vimrc FileType markdown,latex,gitcommit,text
+" Writing
+autocmd vimrc FileType markdown,latex,text
             \ setlocal spell spelllang=en_us norelativenumber
+
+" Git commits
+autocmd vimrc FileType gitcommit
+            \ setlocal spell spelllang=en_us norelativenumber
+            \ textwidth=72 colorcolumn=51,+1
 
 " +------------+
 " | statusline |
