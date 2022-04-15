@@ -65,7 +65,7 @@ set title number             " show title and linenumber
 set relativenumber           " show relative linenumbers
 set colorcolumn=+1           " color column at textwidth+1
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
-set textwidth=80             " default textwidth of 80 columns
+set textwidth=88             " default textwidth of 80 columns
 set diffopt+=vertical        " use vertical splits for diff
 
 set autoindent smartindent   " automatic indentation based on cinwords
@@ -101,18 +101,15 @@ augroup END
 
 " Return to last edit position when opening files
 autocmd vimrc BufReadPost *
-            \ if line("'\"") > 1 && line("'\"") <= line("$") |
-            \       exec "normal! g`\"" |
-            \ endif
+    \ if line("'\"") > 1 && line("'\"") <= line("$") | exec "normal! g`\"" | endif
 
 " Trigger 'autoread' when files change on disk
 autocmd vimrc FocusGained,BufEnter,CursorHold,CursorHoldI *
-            \ if mode() != 'c' | checktime | endif
+    \ if mode() != 'c' | checktime | endif
 
 " Notification after file change
 autocmd vimrc FileChangedShellPost *
-            \ echohl WarningMsg |
-            \ echo "File changed on disk. Buffer reloaded." | echohl None
+    \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " Highlight current line in insert mode
 autocmd vimrc InsertEnter * set cursorline
@@ -120,12 +117,11 @@ autocmd vimrc InsertLeave * set nocursorline
 
 " Writing
 autocmd vimrc FileType markdown,latex,text
-            \ setlocal spell spelllang=en_us norelativenumber
+    \ setlocal spell spelllang=en_us norelativenumber
 
 " Git commits
 autocmd vimrc FileType gitcommit
-            \ setlocal spell spelllang=en_us norelativenumber
-            \ textwidth=72 colorcolumn=51,+1
+    \ setlocal spell spelllang=en_us norelativenumber textwidth=72 colorcolumn=51,+1
 
 " +------------+
 " | statusline |
@@ -205,12 +201,12 @@ vnoremap <F1> g<C-g>
 nnoremap <silent><F1> :call MapF1()<CR>
 
 function! MapF1()
-  if &buftype == "help"
-    exec 'quit'
-  else
-    exec 'set invpaste'
-    exec 'set paste?'
-  endif
+    if &buftype == "help"
+        exec 'quit'
+    else
+        exec 'set invpaste'
+        exec 'set paste?'
+    endif
 endfunction
 
 " toggle spelling
@@ -293,9 +289,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " dummy func so statusline still works if fugititive isn't loaded
 if !exists('*FugitiveStatusline')
-  function! FugitiveStatusline()
-      return ''
-  endfunction
+    function! FugitiveStatusline()
+        return ''
+    endfunction
 endif
 
 " +-------+
