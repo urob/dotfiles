@@ -1,14 +1,13 @@
 # .zshrc
 
-# set dropbox directory unless remote
+# set dropbox directory on local machines
 [[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
 
 # set path to include local bin if not yet included
-if [ -d "$XDG_BIN_HOME" ] && [[ ! $PATH =~ "(^|:)$XDG_BIN_HOME(:|$)" ]]; then
-        export PATH=$PATH:$XDG_BIN_HOME
-fi
+[[ -d "$XDG_BIN_HOME" ]] && [[ ! $PATH =~ "(^|:)$XDG_BIN_HOME(:|$)" ]] \
+    && export PATH=$PATH:$XDG_BIN_HOME
 
-fpath=($ZDOTDIR/plugins $fpath)  # TODO: do we need this?
+#fpath=($ZDOTDIR/plugins $fpath)
 
 # TODO: use zsh-defer to source slow plugins
 # https://github.com/romkatv/zsh-defer
@@ -83,6 +82,24 @@ source $ZDOTDIR/plugins/prompt_urob_setup
 # Use emacs bindings (resets any bindings issued before that line!)
 bindkey -e
 
+typeset -gA key
+
+key[Backspace]="^?"
+key[Ctrl+Backspace]="^H"
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+key[Insert]="${terminfo[kich1]}"
+key[Delete]="${terminfo[kdch1]}"
+key[PageUp]="${terminfo[kpp]}"
+key[PageDown]="${terminfo[knp]}"
+key[Up]="${terminfo[kcuu1]}"
+key[Down]="${terminfo[kcud1]}"
+key[Left]="${terminfo[kcub1]}"
+key[Right]="${terminfo[kcuf1]}"
+key[Ctrl+Left]="${terminfo[kLFT5]}"
+key[Ctrl+Right]="${terminfo[kRIT5]}"
+key[Shift-Tab]="${terminfo[kcbt]}"
+
 # Bind up/down to incremental history-search
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -91,11 +108,11 @@ bindkey "$key[Up]" history-beginning-search-backward-end
 bindkey "$key[Down]" history-beginning-search-forward-end
 
 # Microsoft word navigation
-bindkey '^H' backward-kill-word    # Ctrl + Backspace
-bindkey ";5C" forward-word         # Ctrl + Right
-bindkey ";5D" backward-word        # Ctrl + Left
-bindkey "^[[1~" beginning-of-line  # Ctrl + Home
-bindkey "^[[4~" end-of-line        # Ctrl + End
+bindkey "$key[Ctrl+Backspace]" backward-kill-word
+bindkey "$key[Ctrl+Left]" backward-word
+bindkey "$key[Ctrl+Right]" forward-word
+bindkey "$key[Home]" beginning-of-line
+bindkey "$key[End]" end-of-line
 
 # +------------+
 # | COMPLETION |
