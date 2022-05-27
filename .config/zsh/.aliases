@@ -21,6 +21,9 @@ hash -d uni=$DROPBOX/Uni
 hash -d ab=$DROPBOX/Privat/Ablage
 hash -d win=/mnt/c/Users/rober
 
+# zcalc
+alias bc=zcalc
+
 # +----+
 # | ls |
 # +----+
@@ -102,5 +105,5 @@ alias ee='explorer.exe .'  # run explorer in current directory
 # | ssh |
 # +-----+
 
-alias bc='ssh -p 22022 ulbricht@sirius.bc.edu'
+alias sirius='ssh -p 22022 ulbricht@sirius.bc.edu'
 
