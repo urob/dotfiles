@@ -123,6 +123,9 @@ autocmd vimrc FileType markdown,latex,text
 autocmd vimrc FileType gitcommit
     \ setlocal spell spelllang=en_us norelativenumber textwidth=72 colorcolumn=51,+1
 
+" ZMK keymaps
+autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
+
 " +------------+
 " | statusline |
 " +------------+
