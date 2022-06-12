@@ -8,7 +8,7 @@
 [mergetool "nvim"]
     cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [user]
-    email = private
+    email = 978080+urob@users.noreply.github.com
     name = urob
 [push]
     default = matching
