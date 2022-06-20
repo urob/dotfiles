@@ -16,7 +16,7 @@ endif
 " :PlugInstall      - install plugins
 " :PlugUpdate       - update plugins
 " :PlugClean[!]     - remove unlisted plugins (! will skip confirmation)
-" :PlugUpgade       - upgrade vim-plug itself
+" :PlugUpgrade      - upgrade vim-plug itself
 " :PlugStatus       - check status of plugins
 
 call plug#begin("$VIMCONFIG/plugged")
@@ -28,6 +28,7 @@ Plug 'andymass/vim-matchup'            " match more stuff with %
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
 Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
+Plug 'Yggdroot/indentLine'             " display indentation lines
 
 " Git
 Plug 'tpope/vim-fugitive'              " git wrapper
@@ -279,6 +280,13 @@ nmap <leader>j <Plug>(zoom-toggle)
 " +---------+
 
 let g:matchup_transmute_enabled = 1
+
+" +------------+
+" | INDENTLINE |
+" +------------+
+
+" use more beautiful lines (only works with UTF-8 encoded files)
+let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
 
 " +--------------+
 " | EDITORCONFIG |
