@@ -6,7 +6,7 @@
 [merge]
     tool = nvim
 [mergetool "nvim"]
-    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+    cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
 [user]
     email = 978080+urob@users.noreply.github.com
     name = urob
