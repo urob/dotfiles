@@ -79,7 +79,7 @@ set undofile                 " persistent undo
 set fileformats=unix,dos     " default to unix fileformat on all platforms
 
 set keymodel=startsel        " shift + movement starts visual mode
-set clipboard+=unnamedplus   " use global clipboard
+"set clipboard+=unnamedplus   " use global clipboard
 "set spelllang=en_us          " make English default spelling language
 
 " Formatting symbols
