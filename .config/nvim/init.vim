@@ -23,7 +23,7 @@ call plug#begin("$VIMCONFIG/plugged")
 
 Plug 'morhetz/gruvbox'                 " my default colorscheme
 Plug 'junegunn/fzf.vim'                " fzf wrapper
-Plug 'tpope/vim-commentary'            " easy commenting
+Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
 Plug 'andymass/vim-matchup'            " match more stuff with %
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
@@ -33,6 +33,7 @@ Plug 'Yggdroot/indentLine'             " display indentation lines
 " Git
 Plug 'tpope/vim-fugitive'              " git wrapper
 Plug 'mhinz/vim-signify'               " show git diff in the left gutter
+"Plug 'rhysd/conflict-marker.vim'       " highlight and navigate conflicts
 
 " Navigate undo tree
 Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
