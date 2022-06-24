@@ -295,7 +295,7 @@ let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " +------------+
-" | FUGITITIVE |
+" | FUGITIVE |
 " +------------+
 
 " dummy func so statusline still works if fugititive isn't loaded
@@ -304,6 +304,11 @@ if !exists('*FugitiveStatusline')
         return ''
     endfunction
 endif
+
+" fugitive conflict resolution
+nnoremap <leader>gd :Gvdiffsplit!<CR>
+nnoremap gdl :diffget //2<CR>
+nnoremap gdr :diffget //3<CR>
 
 " +-------+
 " | MUNDO |
