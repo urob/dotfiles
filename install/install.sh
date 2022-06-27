@@ -5,8 +5,16 @@ DOTFILES=$HOME/dotfiles
 source $DOTFILES/.zshenv
 
 # replicate dotfiles in local home using softlinks
-files=$(find $DOTFILES -type d -name .git -prune \
-    -or -type f ! -path "$DOTFILES/install.sh" -print | sort)
+files=$(find $DOTFILES \
+    -type d \( \
+            -path "$DOTFILES/install" \
+        -or -path "$DOTFILES/ignore" \
+        -or -path "$DOTFILES/win" \
+        -or -name .git \
+        \) -prune \
+    -or -type f ! \( \
+            -path "$DOTFILES/install.sh" \
+        \) -print | sort)
 
 for f in $files; do
     destination="$HOME/${f#$DOTFILES/}"
