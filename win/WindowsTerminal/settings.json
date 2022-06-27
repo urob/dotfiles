@@ -1,7 +1,7 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "find",
@@ -15,7 +15,7 @@
             "command": "paste"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -23,7 +23,7 @@
             "keys": "ctrl+c"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -36,7 +36,7 @@
             "keys": "f12"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
@@ -48,10 +48,10 @@
     "copyOnSelect": true,
     "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
     "launchMode": "default",
-    "profiles": 
+    "profiles":
     {
         "defaults": {},
-        "list": 
+        "list":
         [
             {
                 "colorScheme": "Gruvbox",
@@ -73,7 +73,7 @@
             },
             {
                 "colorScheme": "Gruvbox",
-                "font": 
+                "font":
                 {
                     "face": "Consolas",
                     "size": 12,
@@ -87,7 +87,7 @@
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.Wsl",
-                "startingDirectory": "D:\\Dropbox"
+                "startingDirectory": "~"
             },
             {
                 "colorScheme": "Gruvbox",
@@ -100,7 +100,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
