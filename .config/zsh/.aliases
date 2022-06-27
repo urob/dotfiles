@@ -89,14 +89,6 @@ alias ve='python3 -m venv ./venv \
 alias va='source ./venv/bin/activate'  # activate venv in current shell
 
 # +-----+
-# | apt |
-# +-----+
-
-# install packages from packages.lst (must have unix line endings!)
-alias apt_install_list='sudo apt-get update \
-     && sudo apt-get install $(cat $XDG_CONFIG_HOME/packages.lst)'
-
-# +-----+
 # | wsl |
 # +-----+
 

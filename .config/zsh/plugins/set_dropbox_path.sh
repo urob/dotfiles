@@ -5,6 +5,7 @@
 candidate_paths=(
   "${HOME}/Dropbox"
   "/mnt/c/Users/rober/Dropbox"
+  "/mnt/c/Users/ulbricht/Dropbox"
   "/mnt/d/Dropbox"
 )
 
