@@ -40,19 +40,19 @@ function command_exists () {
 
 # install 3rd party tools, usage: get_git user project install_dir
 function get_git() {
-    rm -rf ${3}
-    mkdir -p ${3}
-    git clone --depth=1 https://github.com/${1}/${2} ${3}
+    rm -rf ${2}
+    mkdir -p ${2}
+    git clone --depth=1 https://github.com/${1} ${2}
 }
 
 # diff-so-fancy
 $(command_exists git) || exit 1
-get_git so-fancy diff-so-fancy $XDG_LIB_HOME/diffsofancy
+get_git so-fancy/diff-so-fancy $XDG_LIB_HOME/diffsofancy
 chmod +x $XDG_LIB_HOME/diffsofancy/diff-so-fancy
 ln -sf $XDG_LIB_HOME/diffsofancy/diff-so-fancy $XDG_BIN_HOME/diff-so-fancy
 
 # gitstatus
-get_git romkatv gitstatus $GITSTATUSDIR
+get_git romkatv/gitstatus $GITSTATUSDIR
 
 # plug-vim
 $(command_exists curl) || exit 1
