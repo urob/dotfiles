@@ -1,29 +1,31 @@
 #!/usr/bin/env bash
 
-# usage:
+## Run the following to bootstrap environment in a fresh Debian installation:
 # curl -fLo ~/wsl_install.sh https://raw.githubusercontent.com/urob/dotfiles/main/install/wsl_install.sh
 # chmod +x ~/wsl_install.sh && ~/wsl_install.sh
 
-# local and remote location of dotfiles
+# location of dotfiles
 DOTFILES=$HOME/dotfiles
 DOTFILES_REMOTE=https://github.com/urob/dotfiles
 
-# get git
-sudo apt-get update
-sudo apt-get install git
+# make sure git is installed
+if ! command -v git &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get install git
+fi
 
-# clone remote dotfiles dir
+# clone remote dotfiles repository
 rm -rf ${DOTFILES}
 mkdir -p ${DOTFILES}
 git clone ${DOTFILES_REMOTE} ${DOTFILES}
 
-# upgrade to bookworm
+# upgrade Debian to bookworm
 sudo cp ${DOTFILES}/install/sources.list /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt autoremove
 
-# install packages from packages.lst (must have unix file endings)
+# install Debian packages (packages.lst must have unix file endings)
 sudo apt-get install $(cat $DOTFILES/install/packages.lst)
 
 # clean up existing dotfiles
@@ -33,7 +35,7 @@ for f in $files; do
     [[ ${YN} =~ ^[Yy]$ ]] && rm -rf ${f}
 done
 
-# link dotfiles to home directory
+# install dotfiles
 source $DOTFILES/install/install.sh
 
 # make zsh the default shell
