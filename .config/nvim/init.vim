@@ -1,10 +1,9 @@
-" File location: ~/AppData/Local/nvim
+" File location: ~/.config/nvim/ | ~/AppData/Local/nvim/
 "set nocompatible           " be iMproved, default in neovim
 "filetype plugin indent on  " activate filetype detection, default in neovim
 
 " Path to Vimfiles, set by shell under unix
 if has("win32")
-    let $DROPBOX='D:/Dropbox'
     let $VIMCONFIG=$USERPROFILE . '/AppData/Local/nvim'
 endif
 
