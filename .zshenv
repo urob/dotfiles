@@ -11,7 +11,7 @@ export XDG_CACHE_HOME=$HOME/.local/cache
 # Windows home path
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
     pushd /mnt/c  # avoid UNC path error, current path restored below
-    export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
+    export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%" | tr -d '\r'))
     popd
 fi
 
