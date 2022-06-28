@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# usage:
+# curl -fLo ~/wsl_install.sh https://raw.githubusercontent.com/urob/dotfiles/main/install/wsl_install.sh
+# chmod +x ~/wsl_install.sh && ~/wsl_install.sh
+
 # local and remote location of dotfiles
 DOTFILES=$HOME/dotfiles
 DOTFILES_REMOTE=https://github.com/urob/dotfiles
