@@ -4,8 +4,7 @@
 # list of candidate paths
 candidate_paths=(
   "${HOME}/Dropbox"
-  "/mnt/c/Users/rober/Dropbox"
-  "/mnt/c/Users/ulbricht/Dropbox"
+  "${WINHOME}/Dropbox"
   "/mnt/d/Dropbox"
 )
 
