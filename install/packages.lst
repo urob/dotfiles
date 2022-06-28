@@ -8,5 +8,6 @@ git-filter-repo
 man
 neovim
 ripgrep
+tig
 tmux
 zsh

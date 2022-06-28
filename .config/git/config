@@ -39,4 +39,9 @@
     # prune local branches that aren't found upstream
     prune = !git remote update --prune && git branch -vv | \
         awk \"/: gone]/{print $1}\" | xargs git branch -d
-
+[tig "bind"]
+    # Colemak-friendly bindings to navigate diff window
+    diff = <Down> move-down
+    diff = <Up> move-up
+    generic = <Right> next
+    generic = <Left> previous
