@@ -16,7 +16,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 
 # directory aliases
-hash -d dx=$DROPBOX
+hash -d box=$DROPBOX
 hash -d win=$WINHOME
 hash -d git=/mnt/d/git_repos
 
