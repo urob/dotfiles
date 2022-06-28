@@ -8,6 +8,13 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.local/cache
 
+# Windows home path
+if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
+    pushd /mnt/c  # avoid UNC path error
+    export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
+    popd  # restore working directory
+fi
+
 # editor
 export EDITOR="nvim"
 export VISUAL="nvim"
