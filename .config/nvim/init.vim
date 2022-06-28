@@ -1,10 +1,15 @@
-" File location: ~/.config/nvim/ | ~/AppData/Local/nvim/
+" File location: ~/.config/nvim/ | %USERPROFILE%/Local/nvim/
 "set nocompatible           " be iMproved, default in neovim
 "filetype plugin indent on  " activate filetype detection, default in neovim
 
 " Path to Vimfiles, set by shell under unix
 if has("win32")
     let $VIMCONFIG=$USERPROFILE . '/AppData/Local/nvim'
+    " *** Setup steps on Windows:
+    " * run in powershell: choco fzf
+    " * create 'autoload', 'fzf_plugin', 'plugged' dirs in %USERPROFILE%/Local/nvim/
+    " * save https://github.com/junegunn/fzf/blob/master/plugin/fzf.vim to fzf_plugin
+    let $FZF_PLUG_DIR=$VIMCONFIG . '/fzf_plugin'
 endif
 
 " +----------+
