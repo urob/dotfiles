@@ -31,8 +31,8 @@ sudo apt-get install $(cat $DOTFILES/install/packages.lst)
 # clean up existing dotfiles
 files=$(find $HOME -maxdepth 1 -name ".*" -print | sort)$
 for f in $files; do
-    read -e -p "Delete ${f/$HOME/\~}? [y/N] " YN
-    [[ ${YN} =~ ^[Yy]$ ]] && rm -rf ${f}
+    read -e -p "Delete ${f/$HOME/\~}? [y/N] " key
+    [[ $key =~ ^[Yy]$ ]] && rm -rf ${f}
 done
 
 # install dotfiles
@@ -41,3 +41,6 @@ source $DOTFILES/install/install.sh
 # make zsh the default shell
 chsh -s $(which zsh)
 
+# install miniconda
+# curl -fLo ~/conda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# bash ~/conda_install.sh

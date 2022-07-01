@@ -52,10 +52,33 @@ files=$(find $DOTFILES \
 # create links to dotfiles folder
 for f in $files; do
     destination="$HOME/${f#$DOTFILES/}"
-    echo installing $destination
+    echo installing ${destination/$HOME/\~}
     mkdir -p "${destination%/*}"
     ln -sf "$f" "$destination"
 done
+
+# +---------------------+
+# | INSTALL CLOUD FILES |
+# +---------------------+
+
+# search for cloud location
+[[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
+if [[ -n $DROPBOX ]]; then
+    read -e -p "Install cloud files from $DROPBOX? [Y/n] " key
+    if [[ $key =~ ^[Yy]$ || -z $key ]]; then
+
+        # declare associative array that assigns each file a source
+        declare -A SOURCE
+        SOURCE["$HISTFILE"]="$DROPBOX"/home/dotfiles_cloud/zsh_history
+
+        # for each file, backup up old copy unless it's a sym link, then link to cloud
+        for f in "${!SOURCE[@]}"; do
+            echo installing ${f/$HOME/\~}
+            [[ -f $f ]] && [[ ! -L $f ]] && mv "$f" "$f".bak
+            ln -sf "${SOURCE["$f"]}" "$f"
+        done
+    fi
+fi
 
 # +-----+
 # | GIT |
