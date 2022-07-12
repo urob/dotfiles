@@ -49,9 +49,12 @@ export FZF_DEFAULT_OPTS="--height 60% \
 --pointer ▶ \
 --marker ⇒"
 
+# git
+export GIT_REVIEW_BASE=main  # see gitconfig
+
 # other software
-export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # used for zsh prompt
-export VIMCONFIG="${XDG_DATA_HOME}/nvim"       # vim-plug, sessions, etc
+export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # see zshprompt
+export VIMCONFIG="${XDG_DATA_HOME}/nvim"       # see vim-plug, sessions, etc
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 
