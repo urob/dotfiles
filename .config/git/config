@@ -11,7 +11,7 @@
     email = 978080+urob@users.noreply.github.com
     name = urob
 [push]
-    default = matching
+    default = current
 [credential]
     helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
 [interactive]
