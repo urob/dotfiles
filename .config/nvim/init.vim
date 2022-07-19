@@ -25,7 +25,10 @@ endif
 
 call plug#begin("$VIMCONFIG/plugged")
 
-Plug 'morhetz/gruvbox'                 " my default colorscheme
+Plug 'morhetz/gruvbox'                 " colorscheme
+Plug 'joshdick/onedark.vim'            " colorscheme
+Plug 'romainl/apprentice'              " colorscheme
+
 Plug 'junegunn/fzf.vim'                " fzf wrapper
 Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
 Plug 'andymass/vim-matchup'            " match more stuff with %
@@ -37,7 +40,7 @@ Plug 'Yggdroot/indentLine'             " display indentation lines
 " Git
 Plug 'tpope/vim-fugitive'              " git wrapper
 Plug 'mhinz/vim-signify'               " show git diff in the left gutter
-"Plug 'rhysd/conflict-marker.vim'       " highlight and navigate conflicts
+Plug 'rhysd/conflict-marker.vim'       " highlight and navigate conflicts
 
 " Navigate undo tree
 Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
@@ -45,16 +48,37 @@ Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 " File navigation
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
-"Plugin 'tpope/vim-surround' " surround text with paranthesis, quotes etc
-"Plugin 'tpope/Vim-repeat'   " see http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
-"Plugin 'w0rp/ale'           " linting platform
-"Plugin 'SirVer/ultisnips'   " snippets stuff
-"Plugin 'honza/vim-snippets' " snippets stuff
-"Plugin 'godlygeek/tabular'  " align stuff (eg markdown tables)
-"Plugin 'lervag/vimtex'      " modern latex plugin
-"Plugin 'reedes/vim-wordy'   " verify quality of writting (see :Wordy)
-"Plugin 'rhysd/vim-grammarous', { 'for': 'markdown' } " show grammar mistakes
-"Plugin 'JamshedVesuna/vim-markdown-preview'
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" if install error, run after installing :call mkdp#util#install()
+" Plug 'preservim/vim-markdown'       " enhanced syntax + more
+
+" Python
+" Plug 'numirias/semshi'                " semantic syntax highlighting
+" Plug 'Vimjas/vim-python-pep8-indent'  " PEP8 compliant indenting
+" Plug 'neovim/nvim-lspconfig'          " native lsp server
+" Plug 'dense-analysis/ale'             " linting platform, note: nvim has new builtin support
+
+" Python integration
+" Plug 'jpalardy/vim-slime'         " send code to terminal
+" Plug 'dccsillag/magma-nvim'       " modern full integration of Jupyter
+
+" Latex
+" Use texlab-lsp server: https://github.com/latex-lsp/texlab
+" Checkout nvim's lsp config: https://github.com/neovim/nvim-lspconfig
+"                             https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
+" Give tectonic a try? https://tectonic-typesetting.github.io/en-US/
+" Plug 'lervag/vimtex'              " modern latex plugin
+
+" Misc
+" Plug 'tpope/vim-surround'         " surround text with paranthesis, quotes etc
+" Plug 'tpope/Vim-repeat'           " see http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
+" Plug 'w0rp/ale'                   " linting platform
+" Plug 'SirVer/ultisnips'           " snippets stuff
+" Plug 'honza/vim-snippets'         " snippets stuff
+" Plug 'godlygeek/tabular'          " align stuff (eg markdown tables)
+" Plug 'reedes/vim-wordy'           " verify quality of writting (see :Wordy)
+" Plug 'rhysd/vim-grammarous', { 'for': 'markdown' } " show grammar mistakes
 
 call plug#end()
 
@@ -62,9 +86,12 @@ call plug#end()
 " | Global options |
 " +----------------+
 
+if (has("termguicolors"))
+    set termguicolors        " truecolor support
+endif
 syntax on
 silent! colorscheme gruvbox  " don't choke if colorscheme does not exist
-"language en                  " ignore system language
+" language en                  " ignore system language
 
 set mouse=a                  " terminal mouse support
 set title number             " show title and linenumber
@@ -84,8 +111,8 @@ set undofile                 " persistent undo
 set fileformats=unix,dos     " default to unix fileformat on all platforms
 
 set keymodel=startsel        " shift + movement starts visual mode
-"set clipboard+=unnamedplus   " use global clipboard
-"set spelllang=en_us          " make English default spelling language
+" set clipboard+=unnamedplus   " use global clipboard
+" set spelllang=en_us          " make English default spelling language
 
 " Formatting symbols
 set list
@@ -290,8 +317,28 @@ let g:matchup_transmute_enabled = 1
 " | INDENTLINE |
 " +------------+
 
-" use more beautiful lines (only works with UTF-8 encoded files)
+" more beautiful lines (only works with UTF-8 encoded files)
 let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
+
+" do not conceal cursor line in insert mode
+let g:indentLine_concealcursor = 'n'
+
+" do not conceal markdown/json files (indent lines still work)
+" let g:markdown_syntax_conceal=0
+" let g:vim_json_conceal=0
+
+" +------------------+
+" | MARKDOWN-PREVIEW |
+" +------------------+
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+" file from: https://github.com/hyrious/github-markdown-css
+" edited to include: style content in https://github.com/sindresorhus/github-markdown-css#usage
+let g:mkdp_markdown_css = expand('~/github-markdown.css')
+
+" Toggle browser preview
+nmap <C-p> <Plug>MarkdownPreviewToggle
 
 " +--------------+
 " | EDITORCONFIG |
