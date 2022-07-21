@@ -116,12 +116,12 @@ set keymodel=startsel        " shift + movement starts visual mode
 
 " Formatting symbols
 set list
-set listchars+=eol:⏎         " end-of-line
 set listchars+=tab:▸\        " tab
 set listchars+=trail:·       " trailing spaces, leading spaces are blank
 set listchars+=extends:>     " last col of long lines when line wrap is off
 set listchars+=precedes:<    " first col of long lines when line wrap is off
 set listchars+=nbsp:%        " non-breakable space character
+" set listchars+=eol:⏎         " end-of-line
 
 " +---------+
 " | autocmd |
