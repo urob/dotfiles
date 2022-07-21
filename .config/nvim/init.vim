@@ -54,7 +54,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " Plug 'preservim/vim-markdown'       " enhanced syntax + more
 
 " Python
-" Plug 'numirias/semshi'                " semantic syntax highlighting
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }    " semantic syntax highlighting
 " Plug 'Vimjas/vim-python-pep8-indent'  " PEP8 compliant indenting
 " Plug 'neovim/nvim-lspconfig'          " native lsp server
 " Plug 'dense-analysis/ale'             " linting platform, note: nvim has new builtin support
