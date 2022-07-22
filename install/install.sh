@@ -7,6 +7,7 @@
 # source the environment
 DOTFILES=$HOME/dotfiles
 source $DOTFILES/.zshenv
+DOTFILES_CONFIG_HOME=$DOTFILES/${XDG_CONFIG_HOME/$HOME\/}
 
 # create all necessary folder
 mkdir -p $XDG_CONFIG_HOME
@@ -43,6 +44,7 @@ files=$(find $DOTFILES \
             -path "$DOTFILES/install" \
         -or -path "$DOTFILES/ignore" \
         -or -path "$DOTFILES/win" \
+        -or -path "$DOTFILES_CONFIG_HOME/nvim/autoload" \
         -or -name .git \
         \) -prune \
     -or -type f ! \( \
@@ -109,6 +111,9 @@ mkdir -p $VIMCONFIG/sessions
 curl -fLo "${VIMCONFIG}"/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim --headless +PlugInstall +qall
+
+# link contents of autoload folder
+ln -sf "$DOTFILES_CONFIG_HOME/nvim/autoload/general.vim" "$VIMCONFIG/site/autoload"
 
 # +-------------+
 # | WRAPPING UP |
