@@ -203,7 +203,7 @@ nnoremap <silent> <esc> <Cmd>noh<cr>
 "nnoremap <silent> <leader><space> <Cmd>noh<cr>
 
 " toggle folding
-nnoremap <space> za
+" nnoremap <space> za
 
 " fix cursor position with . and apply to all selected lines in visual mode
 noremap . .`[
