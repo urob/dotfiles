@@ -178,11 +178,16 @@ set statusline+=%P                       " top/bottom
 " | General mapping |
 " +-----------------+
 
-" Configure leader key
+" configure leader key
 let mapleader = ","
 let maplocalleader = ","
 
-" Indent without killing the selection in VISUAL mode
+" better movements with Colemak DH
+noremap j h
+noremap k j
+noremap h k
+
+" indent without killing the selection in VISUAL mode
 vmap < <gv
 vmap > >gv
 
