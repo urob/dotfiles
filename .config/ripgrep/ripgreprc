@@ -1,0 +1,11 @@
+# Include hidden files
+--hidden
+
+# Include files in .gitignore etc files
+--no-ignore
+
+# Follow symbolic links
+--follow
+
+# Using glob patterns to include/exclude files or folders
+--glob=!.git/*

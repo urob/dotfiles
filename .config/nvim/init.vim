@@ -36,6 +36,7 @@ Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
 Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
 Plug 'Yggdroot/indentLine'             " display indentation lines
+Plug 'stefandtw/quickfix-reflector.vim' " make quickfix window editable
 
 " Git
 Plug 'tpope/vim-fugitive'              " git wrapper
@@ -131,8 +132,24 @@ set listchars+=nbsp:%        " non-breakable space character
 
 " Set ripgrep for grep program
 if executable('rg')
-    set grepprg=rg\ --vimgrep\ --smart-case
+    set grepprg=rg\ --vimgrep\ --smart-case\ --no-ignore\ --hidden\ --follow\ --glob="!.git/*"
 endif
+
+function! Grep(...)
+    return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
+endfunction
+
+command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>) | cfirst
+command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>) | lfirst
+
+cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
+cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
+
+" augroup quickfix
+"     autocmd!
+"     autocmd QuickFixCmdPost cgetexpr cwindow
+"     autocmd QuickFixCmdPost lgetexpr lwindow
+" augroup END
 
 " +---------+
 " | autocmd |
