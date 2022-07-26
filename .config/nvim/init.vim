@@ -356,7 +356,7 @@ let g:indentLine_concealcursor = 'n'
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
 " file from: https://github.com/hyrious/github-markdown-css
 " edited to include: style content in https://github.com/sindresorhus/github-markdown-css#usage
-let g:mkdp_markdown_css = expand('~/github-markdown.css')
+let g:mkdp_markdown_css = expand($XDG_DATA_HOME . '/markdown.css')
 
 " Toggle browser preview
 nmap <C-p> <Plug>MarkdownPreviewToggle
