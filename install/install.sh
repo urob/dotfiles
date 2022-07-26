@@ -112,8 +112,11 @@ curl -fLo "${VIMCONFIG}"/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim --headless +PlugInstall +qall
 
-# link contents of autoload folder
+# autoload folder
 ln -sf "$DOTFILES_CONFIG_HOME/nvim/autoload/general.vim" "$VIMCONFIG/site/autoload"
+
+# markdown.css
+ln -sf "$DOTFILES/ignore/markdown.css" "$XDG_DATA_HOME"
 
 # +-------------+
 # | WRAPPING UP |
