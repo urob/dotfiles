@@ -120,6 +120,9 @@ bindkey "$key[End]" end-of-line
 
 source $ZDOTDIR/completion.zsh
 
+unsetopt LIST_BEEP  # turn off autocomplete beeps
+# unsetopt BEEP     # turn off all beeps
+
 # +-----+
 # | FZF |
 # +-----+
