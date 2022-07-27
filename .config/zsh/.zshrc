@@ -7,6 +7,9 @@
 [[ -d "$XDG_BIN_HOME" ]] && [[ ! $PATH =~ "(^|:)$XDG_BIN_HOME(:|$)" ]] \
     && export PATH=$PATH:$XDG_BIN_HOME
 
+[[ -d "$HOME/bin" ]] && [[ ! $PATH =~ "(^|:)$HOME/bin(:|$)" ]] \
+    && export PATH=$PATH:$HOME/bin
+
 #fpath=($ZDOTDIR/plugins $fpath)
 
 # TODO: use zsh-defer to source slow plugins
