@@ -52,7 +52,7 @@
     reviewone = !nvim -p +\"tabdo Gdiff $GIT_REVIEW_BASE\" +\"let g:gitgutter_diff_base = '$GIT_REVIEW_BASE'\"
 
     # add all new/modified/deleted files and then commit
-    ac = !git add -A && git commit -m
+    ac = !git add -A && git commit
 
     # graph history
     tree = log --graph --abbrev-commit --oneline --decorate
