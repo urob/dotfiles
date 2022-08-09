@@ -34,7 +34,7 @@ function gitstatus_prompt_update() {
     # green:    6 / 14
     # white:    7 / 15
 
-    local      clean='%240F'   # gray foreground
+    local      clean='%F{white}'   # gray foreground
     local   upstream='%F{13}'
     local   modified='%F{15}'
     local  untracked='%F{12}'
@@ -114,12 +114,12 @@ setopt no_prompt_bang prompt_percent prompt_subst
 # %(?..) => prompt conditional - %(condition.true.false)
 
 # Set up the prompt
-PROMPT='%F{240}%2~%f %B%F{yellow}»%f%b '
+PROMPT='%F{white}%2~%f %B%F{yellow}»%f%b '
 RPROMPT='${GITSTATUS_PROMPT}'
 ZLE_RPROMPT_INDENT=0  # no space on right side of right prompt
 
 # Add users@host when in remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-    PROMPT='%F{240}[%n@%m]%f '$PROMPT
+    PROMPT='%F{white}[%n@%m]%f '$PROMPT
 fi
 

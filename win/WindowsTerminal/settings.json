@@ -1,7 +1,7 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions":
+    "actions": 
     [
         {
             "command": "find",
@@ -15,7 +15,7 @@
             "command": "paste"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "copy",
                 "singleLine": false
@@ -23,7 +23,7 @@
             "keys": "ctrl+c"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -36,7 +36,7 @@
             "keys": "f12"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
@@ -48,10 +48,10 @@
     "copyOnSelect": true,
     "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
     "launchMode": "default",
-    "profiles":
+    "profiles": 
     {
         "defaults": {},
-        "list":
+        "list": 
         [
             {
                 "colorScheme": "Gruvbox",
@@ -72,12 +72,13 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "colorScheme": "Gruvbox",
-                "font":
+                "colorScheme": "One Dark Customized",
+                "experimental.retroTerminalEffect": false,
+                "font": 
                 {
-                    "face": "Consolas",
-                    "size": 12,
-                    "weight": "thin"
+                    "face": "Source Code Pro",
+                    "size": 11,
+                    "weight": "normal"
                 },
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
@@ -100,7 +101,7 @@
             }
         ]
     },
-    "schemes":
+    "schemes": 
     [
         {
             "background": "#0C0C0C",
@@ -170,6 +171,29 @@
             "selectionBackground": "#EBDBB2",
             "white": "#A89984",
             "yellow": "#D79921"
+        },
+        {
+            "background": "#282C34",
+            "black": "#2C323C",
+            "blue": "#61AFEF",
+            "brightBlack": "#3E4452",
+            "brightBlue": "#61AFEF",
+            "brightCyan": "#56B6C2",
+            "brightGreen": "#98C379",
+            "brightPurple": "#C678DD",
+            "brightRed": "#E06C75",
+            "brightWhite": "#ABB2BF",
+            "brightYellow": "#E5C07B",
+            "cursorColor": "#ABB2BF",
+            "cyan": "#56B6C2",
+            "foreground": "#ABB2BF",
+            "green": "#98C379",
+            "name": "One Dark Customized",
+            "purple": "#C678DD",
+            "red": "#E06C75",
+            "selectionBackground": "#5C6370",
+            "white": "#5C6370",
+            "yellow": "#E5C07B"
         },
         {
             "background": "#282C34",
@@ -335,5 +359,6 @@
     ],
     "startOnUserLogin": true,
     "tabWidthMode": "equal",
+    "theme": "light",
     "useAcrylicInTabRow": false
 }
