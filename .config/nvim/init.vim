@@ -25,9 +25,11 @@ endif
 
 call plug#begin("$VIMCONFIG/plugged")
 
-Plug 'morhetz/gruvbox'                 " colorscheme
-Plug 'joshdick/onedark.vim'            " colorscheme
-Plug 'romainl/apprentice'              " colorscheme
+Plug 'morhetz/gruvbox'                 " colorschemes
+Plug 'sainnhe/gruvbox-material'                 " colorschemes
+" Plug 'luisiacc/gruvbox-baby'
+Plug 'joshdick/onedark.vim'
+Plug 'romainl/apprentice'
 
 Plug 'junegunn/fzf.vim'                " fzf wrapper
 Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
@@ -195,13 +197,14 @@ set laststatus=2
 set statusline=%<                        " truncate here if needed
 set statusline+=%f\                      " file + path relative to current dir
 set statusline+=%h%w%m%r                 " help, preview, modified, readonly
+set statusline+=\ \                      " space
+set statusline+=%P                       " top/bottom
+set statusline+=%=                       " hfill
+set statusline+=%{&fenc?&fenc:&enc},\    " file encoding
+set statusline+=%{&ff}\ \                " file format
+" set statusline+=%-12.(%l/%L%)\           " line/total, minimum width = 12
 set statusline+=%{%general#WordCount()%} " word count
 set statusline+=%{FugitiveStatusline()}  " git status
-set statusline+=%=                       " hfill
-set statusline+=%{&fenc?&fenc:&enc}\     " file encoding
-set statusline+=%-11.([%{&ff}]%)\        " [file format], minimum width = 11
-set statusline+=%-12.(%l/%L%)\           " line/total, minimum width = 12
-set statusline+=%P                       " top/bottom
 
 " +-----------------+
 " | General mapping |
