@@ -94,7 +94,7 @@ if (has("termguicolors"))
 endif
 syntax on
 
-silent! colorscheme gruvbox  " don't choke if colorscheme does not exist
+silent! colorscheme onedark  " don't choke if colorscheme does not exist
 
 set title mouse=a            " show title + terminal mouse support
 set number relativenumber    " show relative linenumbers
