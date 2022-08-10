@@ -1,0 +1,39 @@
+palette = {
+    # special
+    "foreground":    "#ebdbb2",
+    "background":    "#282828",
+    "cursorcolor":   "#ebdbb2",
+
+    # black
+    "black":         "#3c3836",
+    "brightblack":   "#504945",
+
+    # red
+    "red":           "#fb4934",
+    "brightred":     "#cc241d",
+
+    # green
+    "green":         "#b8bb26",
+    "brightgreen":   "#98971a",
+
+    # yellow
+    "yellow":        "#fabd2f",
+    "brightyellow":  "#d79921",
+
+    # blue
+    "blue":          "#83a598",
+    "brightblue":    "#458588",
+
+    # magenta
+    "magenta":       "#d1849b",
+    "brightmagenta": "#b16286",
+
+    # cyan
+    "cyan":          "#8ec07c",
+    "brightcyan":    "#689d6a",
+
+    # gray/white
+    "white":         "#a89984",
+    "brightwhite":   "#ebdbb2",
+}
+
