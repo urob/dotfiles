@@ -28,7 +28,7 @@ Format 24
 \fullscreen_scrollbar false
 \fullscreen_width 900
 \single_close_tab_button true
-\single_instance false
+\single_instance true
 \forward_search_pdf "SumatraPDF -reuse-instance -forward-search \"$$t\" $$n \"$$o\""
 
 #
