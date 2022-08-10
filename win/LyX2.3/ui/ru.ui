@@ -1,0 +1,103 @@
+# -*- text -*-
+
+# based on file default.ui
+
+# update 2016/06/01, changed to new lyx2.2 format
+Format 4
+
+Include "stdmenus.inc"
+
+Include "stdcontext.inc"
+
+# define custom toolbar
+
+ToolbarSet
+	Toolbar "ru" "MyToolbar"
+		Item "View" "buffer-view"
+		Item "Update" "buffer-update"
+		#Item "Enable Forward/Reverse Search" "buffer-toggle-output-sync"
+		Item "Search Forward" "forward-search"
+		Separator
+		Item "Save document" "buffer-write"
+		Item "Undo" "undo"
+		Item "Redo" "redo"
+		Separator
+		Item "Default" "layout"
+		Item "Numbered list" "layout Enumerate"
+		Item "Itemized list" "layout Itemize"
+		#Item "List" "layout List"
+		#Item "Description" "layout Description"
+		Item "Increase depth" "depth-increment"
+		Item "Decrease depth" "depth-decrement"
+		Separator
+		Item "Find and replace (advanced)" "dialog-toggle findreplaceadv"
+		Item "Toggle source" "dialog-toggle view-source"
+		Item "Toggle outline" "dialog-toggle toc"
+		Item "Toggle review" "toolbar-toggle review"
+		Separator
+		#Item "Navigate back" "bookmark-goto 0"
+		Item "Bookmark current position" "bookmark-save 1"
+		Item "Navigate to bookmark" "bookmark-goto 1"
+		#Separator
+		#Item "Insert figure float" "float-insert figure"
+		#Item "Insert table float" "float-insert table"
+		#Item "Insert graphics" "dialog-show-new-inset graphics"
+		#TableInsert "Insert table"
+		Separator
+		Item "Insert label" "label-insert"
+		Item "Insert cross-reference" "dialog-show-new-inset ref"
+		Item "Insert citation" "dialog-show-new-inset citation"
+		Separator
+		Item "Insert footnote" "footnote-insert"
+		Item "Insert LyX note" "note-insert"
+		Separator
+		Item "Paragraph settings" "layout-paragraph"
+		Item "Text style" "dialog-show character"
+		Item "Apply last" "textstyle-apply"
+		Separator
+		Item "Thesaurus" "thesaurus-entry"
+		Separator
+		Layouts
+	End
+End
+
+Include "stdtoolbars.inc"
+
+# Which toolbars to use.
+#
+# The second parameter are the flags :
+#
+# on: the toolbar is visible
+# off: the toolbar is not visible
+# auto: the toolbar is automatically shown and hidden depending on the
+#       next 3 flags.
+#
+# math: the toolbar is visible only when in math
+# mathmacrotemplate: the toolbar is visible only when in a macro definition
+# table: the toolbar is visible only when in a table
+# review: the toolbar is visible only when inside a tracked change
+# ipa: the toolbar is only visible when inside an ipa inset
+#
+# top: the toolbar should be at the top of the window
+# bottom: the toolbar should be at the bottom of the window
+# left: the toolbar should be at the left of the window
+# right: the toolbar should be at the right of the window
+#
+# samerow: do not create new line for this toolbar
+#        (note that order of toolbars is defined in stdtoolbars.inc)
+#
+Toolbars
+	"ru" "on,top"
+#	"standard" "off,top"
+#	"view/update" "off,top"
+#	"extra" "off,top,samerow"
+	"review" "auto,review,top"
+	"vcs" "off,top"
+	"table" "auto,table,bottom"
+	"math_panels" "auto,math,bottom"
+	"math" "auto,math,bottom"
+	"mathmacrotemplate" "auto,mathmacrotemplate,bottom"
+	"ipa" "auto,ipa,bottom"
+	"minibuffer" "auto,minibuffer,bottom"
+	"documentation" "off,top"
+End

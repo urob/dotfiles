@@ -1,0 +1,124 @@
+#\DeclareLyXModule{McExams}
+#DescriptionBegin
+#Provides mcquestions and mcanswerslist environments
+#DescriptionEnd
+
+Style Question
+  CopyStyle	Enumerate
+  Category	McExam
+  LatexType        Item_Environment
+  LatexName       mcquestions
+  ItemCommand	question
+  LabelType	Enumerate
+  LabelSep	xx
+  ResetArgs	1
+
+  Argument 	item:1
+    MenuString	"Follow"
+    Tooltip	"use 'follow' for question to follow previous one."
+    LabelString	"follow"
+  EndArgument
+End
+
+
+Style Answer
+  CopyStyle	Enumerate
+  Category	McExam
+  LatexType        Item_Environment
+  LatexName       mcanswerslist
+  ItemCommand	answer
+  LabelType	Enumerate
+  LabelSep	xx
+  ResetArgs	1
+
+  Argument 	1
+    MenuString	"Permutation options"
+    Tooltip	"Permutation choices: permuteall (default), ordinal, fixlast, permutenone."
+    LabelString	"Permute"
+  EndArgument
+
+  Argument 	item:1
+    MenuString	"Set correct"
+    Tooltip	"use 'correct' to mark correct answer."
+    LabelString	"✓"
+  EndArgument
+End
+
+Style HorizontalAnswer
+  CopyStyle	Enumerate
+  Category	McExam
+  LatexType        Item_Environment
+  LatexName       hormcanswerslist
+  ItemCommand	answer
+  LabelType	Enumerate
+  LabelSep	xx
+  ResetArgs	1
+
+  Argument 	1
+    MenuString	"Permutation options"
+    Tooltip	"Permutation choices: permuteall (default), ordinal, fixlast, permutenone."
+    LabelString	"Permute"
+  EndArgument
+
+  Argument 	item:1
+    MenuString	"Set correct"
+    Tooltip	"use 'correct' to mark correct answer."
+    LabelString	"✓"
+  EndArgument
+End
+
+
+Style SmartQuestion
+  CopyStyle	Enumerate
+  Category	McExam
+  LatexType        Item_Environment
+  LatexName       myquestions
+  ItemCommand	myquestion
+  LabelType	Enumerate
+  LabelSep	xx
+  ResetArgs	1
+
+  Argument 	1
+    MenuString	"Permutation options"
+    Tooltip	"Permutation choices (for answers): permuteall (default), ordinal, fixlast, permutenone."
+    LabelString	"PermuteOpts"
+  EndArgument
+
+  Argument 	item:1
+    MenuString	"Follow/Correct"
+    Tooltip	"set to 'follow' (for questions) or 'correct' (answers)."
+    LabelString	"ItemOpts"
+  EndArgument
+End
+
+
+Preamble
+
+\usepackage{multicol}
+\newenvironment{hormcanswerslist}%
+{\begin{multicols}{5}\begin{mcanswerslist}}%
+{\end{mcanswerslist}\end{multicols}}%
+
+
+%% Map the lyx-friendly SmartQuestion style to exam environments
+%% See http://tex.stackexchange.com/a/319996/17868
+\newcounter{mydepth}%
+\newcommand{\myenvironmentname}{%
+\ifnum\value{mydepth}=0notinquestion\fi%
+\ifnum\value{mydepth}=1mcquestions\fi%
+\ifnum\value{mydepth}=2mcanswerslist\fi%
+\ifnum\value{mydepth}>2undefinedenvironment\fi%
+}%
+\newcommand{\myitemname}{%
+\ifnum\value{mydepth}=0notinquestion\fi%
+\ifnum\value{mydepth}=1question\fi%
+\ifnum\value{mydepth}=2answer\fi%
+\ifnum\value{mydepth}>2undefineditem\fi%
+}%
+\newcommand{\myquestion}{\csname \myitemname\endcsname}%
+\newenvironment{myquestions}%
+  {\stepcounter{mydepth}\begin{\myenvironmentname}}%
+  {\end{\myenvironmentname}\addtocounter{mydepth}{-1}}%
+
+
+EndPreamble
