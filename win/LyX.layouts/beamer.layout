@@ -482,7 +482,7 @@ Style Frame
     RightDelim     }
     Decoration     conglomerate
     Font
-      Color        addedtext
+      Color        foreground
       Size         largest
     EndFont
     AutoInsert     1
@@ -578,7 +578,7 @@ Style FrameTitle
   Align            Block
   LabelType        No_Label
   Font
-    Color          addedtext
+    Color          foreground
     Size           Largest
   EndFont
   Argument 1
@@ -609,7 +609,7 @@ Style FrameSubtitle
   Align            Block
   LabelType        No_Label
   Font
-    Color          addedtext
+    Color          foreground
   EndFont
   Argument 1
     LabelString    "On Slide"
@@ -898,7 +898,7 @@ Style Block
     Mandatory      1
     Decoration     conglomerate
     Font
-      Color        addedtext
+      Color        foreground
       Size         large
     EndFont
     AutoInsert     1
@@ -953,7 +953,7 @@ Style Title
   Font
     Size           Huge
     Series         Bold
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 
@@ -986,7 +986,7 @@ Style Subtitle
   Font
     Size           Large
     Series         Bold
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 
@@ -1009,7 +1009,7 @@ Style Author
   EndArgument
   Font
     Size           Largest
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 
@@ -1032,7 +1032,7 @@ Style Institute
   EndArgument
   Font
     Size           Large
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 
@@ -1052,7 +1052,7 @@ InsetLayout "Flex:InstituteMark"
     Misc           No_Bar
   EndFont
   LabelFont
-    Color          addedtext
+    Color          foreground
     Size           Small
   EndFont
 End
@@ -1076,7 +1076,7 @@ Style Date
   EndArgument
   Font
     Size           Largest
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 
@@ -1096,7 +1096,7 @@ Style TitleGraphic
   Font
     Size           Huge
     Series         Bold
-    Color          addedtext
+    Color          foreground
   EndFont
 End
 

@@ -23,7 +23,7 @@
 \set_color "cursor" "#abb2bf"                       # FG: cursor
 \set_color "deletedtext" "#5c6370"
 \set_color "deletedtextmodifier" "#e06c75"
-\set_color "depthbar" "#c678dd"
+\set_color "depthbar" "#5c6370"                     # margin lines for nested environments
 \set_color "eolmarker" "#98c379"                    # FORMATTING: linebreak
 \set_color "error" "#e06c75"                        # spellcheck quirly lines
 \set_color "footlabel" "#98c379"                    # footnote label
