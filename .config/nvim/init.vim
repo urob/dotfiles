@@ -28,7 +28,8 @@ call plug#begin("$VIMCONFIG/plugged")
 Plug 'morhetz/gruvbox'                 " colorschemes
 Plug 'sainnhe/gruvbox-material'                 " colorschemes
 " Plug 'luisiacc/gruvbox-baby'
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+Plug 'navarasu/onedark.nvim'
 Plug 'romainl/apprentice'
 
 Plug 'junegunn/fzf.vim'                " fzf wrapper
