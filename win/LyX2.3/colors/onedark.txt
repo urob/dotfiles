@@ -1,5 +1,5 @@
 \set_color "added_space" "#98c379"                  # FORMATTING: horiztonal/vertical space
-\set_color "addedtext" "#e5c07b"
+\set_color "addedtext" "#e5c07b"                    # beamer arg to frame
 \set_color "appendix" "#98c379"                     # FORMATTING: appendix start
 \set_color "background" "#282c34"                   # BG
 \set_color "bottomarea" "#282c34"
@@ -29,7 +29,6 @@
 \set_color "footlabel" "#98c379"                    # footnote label
 \set_color "foreground" "#abb2bf"                   # FG: text
 \set_color "graphicsbg" "#282c34"
-\set_color "green" "#98c379"
 \set_color "greyedout" "#5c6370"                    # "greyed-out" note label
 \set_color "greyedoutbg" "#2c323c"                  # BG-NOTE
 \set_color "indexlabel" "#98c379"
@@ -66,3 +65,6 @@
 \set_color "tabularonoffline" "#3e4452"
 \set_color "urllabel" "#61afef"
 \set_color "urltext" "#61afef"
+\set_color "blue" "#61afef"                         # unofficial color, used by beamer
+\set_color "green" "#98c379"                        # unofficial color, used by beamer
+\set_color "red" "#e06c75"                          # unofficial color, used by beamer
