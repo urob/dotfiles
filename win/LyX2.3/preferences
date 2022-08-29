@@ -8,7 +8,7 @@ Format 24
 # MISC SECTION ######################################
 #
 
-\path_prefix "$LyXDir/bin;$LyXDir/Python;$LyXDir/Python/Lib;$LyXDir/Perl/bin;$LyXDir/imagemagick;C:/Users/rober/AppData/Local/Programs/MiKTeX 2.9/miktex/bin/x64;C:/Users/rober/AppData/Local/LyX 2.3/ghostscript/bin;C:/Users/rober/AppData/Local/SumatraPDF"
+\path_prefix "$LyXDir/bin;$LyXDir/Python;$LyXDir/Python/Lib;$LyXDir/Perl/bin;$LyXDir/imagemagick;C:/Users/rober/AppData/Local/Programs/MiKTeX 2.9/miktex/bin/x64;C:/Users/rober/AppData/Local/LyX 2.3/ghostscript/bin;C:/Users/rober/AppData/Local/SumatraPDF;C:\Program Files\SumatraPDF"
 \serverpipe "\\.\pipe\lyxpipe"
 \user_name "Robert"
 \user_email ""
