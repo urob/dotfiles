@@ -43,11 +43,11 @@ hl+:red"
 export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc, init.vim
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS="--height 60% \
---border sharp \
---color='$FZF_COLORS' \
---prompt '∷ ' \
---pointer ▶ \
---marker ⇒"
+    --border sharp \
+    --color='$FZF_COLORS' \
+    --prompt '∷ ' \
+    --pointer ▶ \
+    --marker ⇒"
 
 # git
 export GIT_REVIEW_BASE=main  # see gitconfig
