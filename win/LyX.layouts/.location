@@ -1,1 +1,7 @@
 %USERPROFILE%\AppData\Local\LyX 2.3\Resources\layouts
+
+may also work in:
+%USERPROFILE%\AppData\Roaming\LyX2.3\layouts
+which contains user layouts. Question is whether beamer.layout there takes precedence
+over default layout in the resources folder above. If this is case, can just move this
+folder into win/LyX/layouts in this repo
