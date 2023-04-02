@@ -21,7 +21,7 @@ export VISUAL="nvim"
 
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export HISTFILE="$XDG_STATE_HOME/zsh/history"  # fallback, overwritten in zshrc
 export HISTSIZE=15000  # Maximum events for internal history
 export SAVEHIST=10000  # Maximum events in history file, should be smaller
                        # than HISTSIZE to reliably prune duplicates
