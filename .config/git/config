@@ -34,7 +34,7 @@
     fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git rebase -i --autosquash $COMMIT~1' -"
 
     # list files which have changed since GIT_REVIEW_BASE
-    # (GIT_REVIEW_BASE defaults to 'master' in env file)
+    # (GIT_REVIEW_BASE defaults to 'main' in env file)
     files = !git diff --name-only $(git merge-base HEAD \"$GIT_REVIEW_BASE\")
 
     # Same as above, but with a diff stat instead of just names
@@ -55,7 +55,7 @@
     ac = !git add -A && git commit
 
     # graph history
-    tree = log --graph --abbrev-commit --oneline --decorate
+    graph = !git log --format=\"tformat:%<|(15)%C(auto)%h %Cgreen%<(15,trunc)%an %C(auto)%<(15,trunc)%ar %<($(($(tput cols)-48)),trunc)%s\" --graph
 
     # prune local branches that aren't found upstream
     prune = !git remote update --prune && git branch -vv | \
