@@ -102,13 +102,14 @@ set number relativenumber    " show relative linenumbers
 set keymodel=startsel        " shift + movement starts visual mode
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
 
-" set clipboard+=unnamedplus   " use global clipboard
+set clipboard+=unnamedplus   " use global clipboard
 set autowrite                " write automatically when quitting buffer
 set undofile                 " persistent undo
 set fileformats=unix,dos     " default to unix fileformat on all platforms
 
-set textwidth=88             " default textwidth of 88 columns
-set colorcolumn=+1           " color column at textwidth+1
+" set textwidth=88             " default textwidth of 88 columns
+" set colorcolumn=+1           " color column at textwidth+1
+set colorcolumn=89            " color column without linebreak
 
 set autoindent smartindent   " automatic indentation based on cinwords
 set et sw=4 ts=4 sts=4       " expand all tabs to spaces and set shift/tabwidth
