@@ -16,12 +16,16 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 
 # directory aliases
-hash -d box=$DROPBOX
+hash -d dbox=$DROPBOX
 hash -d win=$WINHOME
 hash -d git=/mnt/d/git_repos
+hash -d coloc=$DROPBOX/Uni/collaborations/Hanno/code
 
 # zcalc
 alias bc=zcalc
+
+# zmv
+alias mmv='noglob zmv -W'
 
 # +----+
 # | ls |
@@ -80,21 +84,33 @@ fi
 # | python |
 # +--------+
 
+if (( $+commands[micromamba] )); then
+    alias mamba='micromamba'
+fi
+
 # create virtual environment and add dependencies from requirements.txt (if exists)
 alias ve='python3 -m venv ./venv \
     && [[ -f "requirements.txt" ]] \
     && python -m pip install -r requirements.txt'
 alias va='source ./venv/bin/activate'  # activate venv in current shell
 
+# +--------+
+# | docker |
+# +--------+
+
+# start docker daemon without systemd
+alias dockerd_wsl='wsl.exe --distribution "${WSL_DISTRO_NAME}" \
+    --user root --exec /usr/sbin/service docker start > /dev/null 2>&1'
+
+# +-------+
+# | rsync |
+# +-------+
+
+alias rsync='rsync --include="**.gitignore" --exclude="/.git" --filter=":- .gitignore"'
+
 # +-----+
 # | wsl |
 # +-----+
 
 alias ee='explorer.exe .'  # run explorer in current directory
-
-# +-----+
-# | ssh |
-# +-----+
-
-alias sirius='ssh -p 22022 ulbricht@sirius.bc.edu'
 
