@@ -2,6 +2,10 @@
 
 # set dropbox directory on local machines
 [[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
+if [[ -n $DROPBOX ]]; then
+    export CLOUD="$DROPBOX/home/dotfiles_cloud/"
+    export HISTFILE="$CLOUD/zsh_history"
+fi
 
 # set path to include local bin if not yet included
 [[ -d "$XDG_BIN_HOME" ]] && [[ ! $PATH =~ "(^|:)$XDG_BIN_HOME(:|$)" ]] \
