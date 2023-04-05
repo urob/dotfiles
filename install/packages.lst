@@ -10,8 +10,11 @@ git
 man
 markdown
 neovim
+openvpn
 podman
 ripgrep
+rsync
+ssh
 tig
 tmux
 xsel
