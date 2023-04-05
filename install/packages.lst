@@ -17,5 +17,6 @@ rsync
 ssh
 tig
 tmux
+wget
 xsel
 zsh

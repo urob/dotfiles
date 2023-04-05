@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Run to bootstrap wsl config on a fresh Debian installation:
-#   curl https://raw.githubusercontent.com/urob/dotfiles/main/install/wsl_install.sh | bash
+#   bash <(https://raw.githubusercontent.com/urob/dotfiles/main/install/wsl_install.sh)
 
 # location of dotfiles
 DOTFILES=$HOME/dotfiles
