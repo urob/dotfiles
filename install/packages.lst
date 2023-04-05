@@ -1,6 +1,7 @@
 apt-listbugs
 apt-listchanges
 bat
+build-essential
 clang-format
 curl
 dos2unix
