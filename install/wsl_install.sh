@@ -30,6 +30,9 @@ sudo apt-get -y autoremove
 sudo apt-get -y install $(cat $DOTFILES/install/packages.lst)
 sudo apt-get clean
 
+# install latest neovim
+source $DOTFILES/install/nvim_install.sh
+
 # clean up existing dotfiles
 files=$(find $HOME -maxdepth 1 -name ".*" -print | sort)$
 for f in $files; do
