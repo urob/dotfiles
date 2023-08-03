@@ -52,6 +52,9 @@ export FZF_DEFAULT_OPTS="--height 60% \
 # git
 export GIT_REVIEW_BASE=main  # see gitconfig
 
+# ruby
+export GEM_HOME="$HOME/.local/gems"
+
 # other software
 export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # see zshprompt
 export VIMCONFIG="${XDG_DATA_HOME}/nvim"       # see vim-plug, sessions, etc

@@ -14,6 +14,8 @@ fi
 [[ -d "$HOME/bin" ]] && [[ ! $PATH =~ "(^|:)$HOME/bin(:|$)" ]] \
     && export PATH=$PATH:$HOME/bin
 
+[[ ! $PATH =~ "(^|:)$GEM_HOME/bin(:|$)" ]] && export PATH=$PATH:$GEM_HOME/bin
+
 #fpath=($ZDOTDIR/plugins $fpath)
 
 # TODO: use zsh-defer to source slow plugins
