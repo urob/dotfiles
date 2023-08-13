@@ -99,6 +99,12 @@ alias ve='python3 -m venv ./venv \
 alias va='source ./venv/bin/activate'  # activate venv in current shell
 
 # +--------+
+# | jekyll |
+# +--------+
+alias serve-site-eth="bundle exec jekyll serve --host=$(ifconfig eth0 | grep inet | grep -v inet6 | awk '{print $2}') --baseurl="
+alias serve-site-lo="bundle exec jekyll serve --host=$(ifconfig lo | grep inet | grep -v inet6 | awk '{print $2}') --baseurl="
+
+# +--------+
 # | docker |
 # +--------+
 
