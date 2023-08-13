@@ -80,6 +80,10 @@ if (( $+commands[exa] )); then
     alias svim='sudoedit'
 fi
 
+alias nvim-lazy="NVIM_APPNAME=nvim-lazy nvim"
+alias nvim-chad="NVIM_APPNAME=nvim-chad nvim"
+alias nvim-kick="NVIM_APPNAME=nvim-kickstart nvim"
+
 # +--------+
 # | python |
 # +--------+
