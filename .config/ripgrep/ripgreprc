@@ -1,8 +1,8 @@
 # Include hidden files
 --hidden
 
-# Include files in .gitignore etc files
---no-ignore
+# Ignore files in .gitignore etc files
+--ignore
 
 # Follow symbolic links
 --follow
