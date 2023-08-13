@@ -1,7 +1,4 @@
 " File location: ~/.config/nvim/ | %USERPROFILE%/Local/nvim/
-"set nocompatible           " be iMproved, default in neovim
-"filetype plugin indent on  " activate filetype detection, default in neovim
-
 " Path to Vimfiles, set by shell under unix
 if has("win32")
     let $VIMCONFIG=$USERPROFILE . '/AppData/Local/nvim'
@@ -25,14 +22,15 @@ endif
 
 call plug#begin("$VIMCONFIG/plugged")
 
-Plug 'morhetz/gruvbox'                 " colorschemes
-Plug 'sainnhe/gruvbox-material'                 " colorschemes
-" Plug 'luisiacc/gruvbox-baby'
-" Plug 'joshdick/onedark.vim'
+Plug 'sainnhe/gruvbox-material'         " colorschemes
+Plug 'sainnhe/everforest'
 Plug 'navarasu/onedark.nvim'
 Plug 'romainl/apprentice'
 
-Plug 'junegunn/fzf.vim'                " fzf wrapper
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
+
+Plug 'junegunn/fzf.vim'                " fzf wrapper [lua: telescope.nvim]
 Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
 Plug 'andymass/vim-matchup'            " match more stuff with %
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
@@ -43,14 +41,14 @@ Plug 'stefandtw/quickfix-reflector.vim' " make quickfix window editable
 
 " Git
 Plug 'tpope/vim-fugitive'              " git wrapper
-Plug 'mhinz/vim-signify'               " show git diff in the left gutter
+Plug 'mhinz/vim-signify'               " show git diff in the left gutter [lua: sigsigns]
 Plug 'rhysd/conflict-marker.vim'       " highlight and navigate conflicts
 
 " Navigate undo tree
 Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
 
 " File navigation
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}  " lua: neo-tree
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -58,7 +56,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " Plug 'preservim/vim-markdown'       " enhanced syntax + more
 
 " Python
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }    " semantic syntax highlighting
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }    " semantic syntax highlighting
 " Plug 'Vimjas/vim-python-pep8-indent'  " PEP8 compliant indenting
 " Plug 'neovim/nvim-lspconfig'          " native lsp server
 " Plug 'dense-analysis/ale'             " linting platform, note: nvim has new builtin support
@@ -132,7 +130,7 @@ set listchars+=nbsp:%        " non-breakable space character
 " set listchars+=eol:⏎         " end-of-line
 
 " language en                  " ignore system language
-" set spelllang=en_us          " always use English for spelling
+set spelllang=en_us            " always use English for spelling
 
 " Set ripgrep for grep program
 if executable('rg')
@@ -490,4 +488,74 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" +-----------------+
+" | NVIM-TREESITTER |
+" +-----------------+
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all"
+    -- ensure_installed = { "bash", "bibtex", "c", "cpp", "css", "devicetree", "dockerfile", "latex", "lua", "markdown", "python", "vim", "vimdoc", "query" },
+    ensure_installed = "all",
+
+    highlight = {
+        enable = true,
+        -- disable = { "devicetree" },
+        additional_vim_regex_highlighting = false,
+    },
+
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<C-space>", -- set to `false` to disable one of the mappings
+            node_incremental = "<C-space>",
+            scope_incremental = false,
+            node_decremental = "<bs>",
+        },
+    },
+
+    indent = {
+        enable = true,
+    },
+
+    refactor = {
+
+        enable = true,
+
+        highlight_definitions = { -- highlight definition & usage of symbol under cursor
+            enable = true,
+            -- Set to false if you have an `updatetime` of ~100.
+            clear_on_cursor_move = true,
+        },
+
+        highlight_current_scope = { enable = false }, -- highlight block from current scope
+
+        smart_rename = { -- renames symbol under cursor within current scope & file
+            enable = false,
+            -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
+            keymaps = {
+                smart_rename = "grr",
+            },
+        },
+
+        navigation = {
+            enable = true,
+            -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
+            keymaps = {
+                goto_definition = "<C-.>",
+                list_definitions = false,
+                list_definitions_toc = false,
+                goto_next_usage = "<C-n>",
+                goto_previous_usage = "<C-p>",
+            },
+        },
+    },
+
+}
+EOF
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable                     " Disable folding at startup.
 
