@@ -13,7 +13,10 @@
 [push]
     default = current
 [credential]
-    helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
+    # standalone version:
+	helper = /mnt/c/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe
+    # Git-for windows version:
+    # helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
 [interactive]
     diffFilter = diff-so-fancy --patch
 [color "diff-highlight"]
