@@ -1,0 +1,55 @@
+# this is just a bunch of random notes!!
+
+# https://dev.to/bowmanjd/chocolatey-vs-scoop-package-managers-for-windows-2kik
+# scoop: local installs (not true for packages in extras)
+
+# set execution policy (maybe not needed)
+Set-ExecutionPolicy AllSigned
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+
+# install scoop and add extras bucket
+iwr -useb get.scoop.sh | iex
+scoop bucket add extras
+
+7zip
+firefox
+fzf
+gsudo
+miktex
+lyx
+mamba
+neovim
+neovide
+notepadplusplus
+sumatrapdf
+powertoys
+# roundedtb
+wincompose
+zotero
+xmouse-controls [https://github.com/joelpurra/xmouse-controls/tree/develop/X-Mouse%20Controls]
+
+wsl
+windowsterminal
+git-credential-manager (standalone version) https://github.com/git-ecosystem/git-credential-manager/releases/tag/v2.1.2
+
+# choco
+sourcecodepro
+
+# custom
+win-11-virtual-desktop-helper
+cisco vpn
+crashplan
+dropbox
+darktable
+matlab
+stata
+microsoft office
+microsoft onenote
+pycharm
+pympress
+putty
+vncviewer
+tidal
+# winscp
+scansnap
+adobe reader or foxit
