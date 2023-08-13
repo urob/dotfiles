@@ -30,6 +30,14 @@ sudo apt-get -y autoremove
 sudo apt-get -y install $(cat $DOTFILES/install/packages.lst)
 sudo apt-get clean
 
+# make sure pipx is installed
+if ! command -v pipx &> /dev/null; then
+    sudo apt-get update
+    sudo apt-get -y install pipx
+fi
+pipx install blue
+pipx install conda-lock
+
 # install latest neovim
 source $DOTFILES/install/nvim_install.sh
 
