@@ -14,6 +14,7 @@ endif
 " +----------+
 
 " Brief help:
+" :source %         - reload config to update plugins
 " :PlugInstall      - install plugins
 " :PlugUpdate       - update plugins
 " :PlugClean[!]     - remove unlisted plugins (! will skip confirmation)
@@ -31,8 +32,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 
 Plug 'junegunn/fzf.vim'                " fzf wrapper [lua: telescope.nvim]
-Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
 Plug 'andymass/vim-matchup'            " match more stuff with %
+Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
+Plug 'tpope/vim-surround'              " surround text with deliminators. Eg ds( cs( ysiw(
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
 Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
@@ -73,7 +75,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " Plug 'lervag/vimtex'              " modern latex plugin
 
 " Misc
-" Plug 'tpope/vim-surround'         " surround text with paranthesis, quotes etc
 " Plug 'tpope/Vim-repeat'           " see http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
 " Plug 'w0rp/ale'                   " linting platform
 " Plug 'SirVer/ultisnips'           " snippets stuff
@@ -370,9 +371,9 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-" +------------+
+" +----------+
 " | FUGITIVE |
-" +------------+
+" +----------+
 
 " dummy func so statusline still works if fugititive isn't loaded
 if !exists('*FugitiveStatusline')
@@ -402,6 +403,13 @@ nnoremap <leader>u :MundoToggle<cr>
 
 " default updatetime 4000ms is not good for async update
 set updatetime=100
+
+" +--------------+
+" | VIM-SURROUND |
+" +--------------+
+
+" insert deliminator around inner word object; eg gs"
+map gs ysiw
 
 " +----------+
 " | NERDtree |
