@@ -163,8 +163,8 @@ autoload -Uz zmv
 # | STARTUP |
 # +---------+
 
-# start/reattach to tmux session if running locally
-if [[ -z $SSH_CONNECTION ]] && [ "$TMUX" = "" ]; then
+# start/reattach to tmux session if running locally on a login shell
+if [[ -z $SSH_CONNECTION ]] && [[ -o login ]] && [ "$TMUX" = "" ]; then
     if [ "$(tmux ls | grep -v attached | wc -l)" -gt "0" ]; then
         # attach to old session
         tmux a -t "$(tmux ls | grep -v attached | cut -d ":" -f1 | head -n 1)"
