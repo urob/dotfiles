@@ -579,3 +579,15 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable                     " Disable folding at startup.
 
+" +-----+
+" | Gui |
+" +-----+
+
+if exists("g:neovide")
+    let g:neovide_cursor_animation_length = 0
+    set linespace=2
+    set guifont=Source\ Code\ Pro:h11
+    " set guifont=Fira\ Code:h10
+    " set guifont=JetBrains\ Mono:h10
+endif
+
