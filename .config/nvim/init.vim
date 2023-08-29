@@ -35,6 +35,9 @@ Plug 'junegunn/fzf.vim'                " fzf wrapper [lua: telescope.nvim]
 Plug 'andymass/vim-matchup'            " match more stuff with %
 Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
 Plug 'tpope/vim-surround'              " surround text with deliminators. Eg ds( cs( ysiw(
+Plug 'tpope/Vim-repeat'                " make . work with plugins
+    " http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
+Plug 'svermeulen/vim-subversive'       " substitute text with yank register
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
 Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
@@ -75,7 +78,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " Plug 'lervag/vimtex'              " modern latex plugin
 
 " Misc
-" Plug 'tpope/Vim-repeat'           " see http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
 " Plug 'w0rp/ale'                   " linting platform
 " Plug 'SirVer/ultisnips'           " snippets stuff
 " Plug 'honza/vim-snippets'         " snippets stuff
@@ -410,6 +412,16 @@ set updatetime=100
 
 " insert deliminator around inner word object; eg gs"
 map gs ysiw
+
+" +----------------+
+" | VIM-SUBVERSIVE |
+" +----------------+
+
+" s for substitute
+nmap s <plug>(SubversiveSubstitute)
+vmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
 
 " +----------+
 " | NERDtree |
