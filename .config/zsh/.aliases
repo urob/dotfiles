@@ -124,3 +124,16 @@ alias rsync='rsync --include="**.gitignore" --exclude="/.git" --filter=":- .giti
 
 alias ee='explorer.exe .'  # run explorer in current directory
 
+# +-----+
+# | vpn |
+# +-----+
+
+ alias vpn-up='sudo openconnect --background \
+    --user ulbricht  \
+    --os=win \
+    --useragent="AnyConnect Windows 5.0.02075" \
+    eaglevpn.bc.edu'
+
+function vpn-down() {
+  sudo kill -2 `pgrep openconnect`
+}
