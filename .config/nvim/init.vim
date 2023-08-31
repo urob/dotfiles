@@ -226,8 +226,8 @@ noremap h k
 nnoremap <silent> <c-c> <Cmd>noh<cr>
 
 " Indent without killing the selection in VISUAL mode
-vmap < <gv
-vmap > >gv
+xnoremap < <gv
+xnoremap > >gv
 
 " location & quickfix
 " nnoremap <silent> <leader>l :call general#ToggleList("Location List", 'l')<CR>
@@ -252,7 +252,7 @@ nnoremap J mzJ`z
 
 " fix cursor position with . and apply to all selected lines in visual mode
 noremap . .`[
-vnoremap <silent> . :normal .<CR>
+xnoremap <silent> . :normal .<CR>
 
 " split windows vertically/horizontally
 nnoremap <leader>x <C-w>s<C-w>j
@@ -268,8 +268,8 @@ nnoremap E 3<c-e>
 " increment/decrement numbers
 nnoremap + <c-a>
 nnoremap - <c-x>
-vnoremap + g<c-a>
-vnoremap - g<c-x>
+xnoremap + g<c-a>
+xnoremap - g<c-x>
 
 " fix common typos
 " cnoremap W w
@@ -419,7 +419,7 @@ map gs ysiw
 
 " s for substitute
 nmap s <plug>(SubversiveSubstitute)
-vmap s <plug>(SubversiveSubstitute)
+xmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 nmap S <plug>(SubversiveSubstituteToEndOfLine)
 
