@@ -27,3 +27,32 @@ backup_dotfiles() {
   done
 }
 
+# +------+
+# | WHIM |
+# +------+
+
+WHIM_ROOT_DIR="$WINHOME/dev/Whim"
+WHIM_RUN_DIR="$WHIM_ROOT_DIR/src/Whim.Runner/bin/x64/Debug/net7.0-windows10.0.19041.0"
+
+whim_build() {
+    pushd $WHIM_ROOT_DIR
+    whim_stop &> /dev/null
+    powershell.exe -c 'dotnet build Whim.sln -p:Platform=x64'
+    popd
+}
+
+whim_format() {
+    pushd $WHIM_ROOT_DIR
+    powershell.exe -c 'dotnet tool restore'
+    powershell.exe -c 'dotnet tool run dotnet-csharpier .'
+    powershell.exe -c 'dotnet tool run xstyler --recursive --d . --config ./.xamlstylerrc'
+    popd
+}
+
+whim_start() {
+    "$WHIM_RUN_DIR/Whim.Runner.exe" &
+}
+
+whim_stop() {
+    powershell.exe -c 'Stop-Process -Name "Whim.Runner"'
+}
