@@ -56,3 +56,7 @@ whim_start() {
 whim_stop() {
     powershell.exe -c 'Stop-Process -Name "Whim.Runner"'
 }
+
+whim_cdrun() {
+    cd $WHIM_RUN_DIR
+}
