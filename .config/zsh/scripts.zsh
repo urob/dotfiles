@@ -27,6 +27,17 @@ backup_dotfiles() {
   done
 }
 
+# +------------------+
+# | Stop Win Process |
+# +------------------+
+
+winkill() {
+    powershell.exe -c "Get-Process -Name $1*"
+    if read -q '?Stop all matched processes (y/n)? '; then
+        powershell.exe -c "Stop-Process -Name $1*"
+    fi
+}
+
 # +------+
 # | WHIM |
 # +------+
