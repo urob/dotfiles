@@ -46,10 +46,10 @@ WHIM_ROOT_DIR="$WINHOME/dev/Whim"
 WHIM_RUN_DIR="$WHIM_ROOT_DIR/src/Whim.Runner/bin/x64/Debug/net7.0-windows10.0.19041.0"
 
 whim_build() {
-    pushd $WHIM_ROOT_DIR
+    cd $WHIM_ROOT_DIR
     whim_stop &> /dev/null
     powershell.exe -c 'dotnet build Whim.sln -p:Platform=x64'
-    popd
+    cd -1
 }
 
 whim_format() {
