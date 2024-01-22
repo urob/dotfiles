@@ -197,17 +197,15 @@ autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
 " +------------+
 
 set laststatus=2
-set statusline=%<                        " truncate here if needed
-set statusline+=%f\                      " file + path relative to current dir
-set statusline+=%h%w%m%r                 " help, preview, modified, readonly
-set statusline+=\ \                      " space
-set statusline+=%P                       " top/bottom
-set statusline+=%=                       " hfill
-set statusline+=%{&fenc?&fenc:&enc},\    " file encoding
-set statusline+=%{&ff}\ \                " file format
-" set statusline+=%-12.(%l/%L%)\           " line/total, minimum width = 12
-set statusline+=%{%general#WordCount()%} " word count
-set statusline+=%{FugitiveStatusline()}  " git status
+set statusline=%<                           " truncate here if needed
+set statusline+=%f\                         " file + path relative to current dir
+set statusline+=%h%w%m%r                    " help, preview, modified, readonly
+set statusline+=%{FugitiveStatusline()}     " git status
+set statusline+=%([%{&fenc=='utf-8'?'':&fenc.'>'.&enc}]%)   " file encoding if not utf-8
+set statusline+=%([%{&ff=='unix'?'':&ff}]%) " file format if not unix
+set statusline+=%=                          " hfill
+set statusline+=%-14.(%l,%c%)\              " line:column
+set statusline+=%P                          " top/bottom
 
 " +-----------------+
 " | General mapping |
@@ -351,8 +349,8 @@ let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
 let g:indentLine_concealcursor = 'n'
 
 " do not conceal markdown/json files (indent lines still work)
-" let g:markdown_syntax_conceal=0
-" let g:vim_json_conceal=0
+let g:markdown_syntax_conceal=0
+let g:vim_json_conceal=0
 
 " +------------------+
 " | MARKDOWN-PREVIEW |
