@@ -192,6 +192,9 @@ autocmd vimrc FileType gitcommit
 " ZMK keymaps
 autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
 
+" xaml
+autocmd vimrc BufNewFile,BufRead *.xaml set syntax=xml
+
 " +------------+
 " | statusline |
 " +------------+
