@@ -19,19 +19,6 @@
     # helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
 [interactive]
     diffFilter = diff-so-fancy --patch
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
-[color "diff"]
-    meta = 11
-    frag = magenta bold
-    func = 146 bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
 [alias]
     # commit a fixup and autosquash it in interactive rebase
     fixup = "!sh -c '(git diff-files --quiet || (echo Unstaged changes, please commit or stash with --keep-index; exit 1)) && COMMIT=$(git rev-parse $1) && git commit --fixup=$COMMIT && git rebase -i --autosquash $COMMIT~1' -"
@@ -58,7 +45,8 @@
     ac = !git add -A && git commit
 
     # graph history
-    graph = !git log --format=\"tformat:%<|(15)%C(auto)%h %Cgreen%<(15,trunc)%an %C(auto)%<(15,trunc)%ar %<($(($(tput cols)-48)),trunc)%s\" --graph
+    graph = !git -c core.pager='less -RS --mouse --quit-if-one-screen' log --graph \
+        --format=\"tformat:%C(dim green)%<|(15,trunc)%ar %C(auto)%h%d %s %C(white)(%aN)\"
 
     # prune local branches that aren't found upstream
     prune = !git remote update --prune && git branch -vv | \
