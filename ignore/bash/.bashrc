@@ -72,6 +72,13 @@ xterm*|rxvt*)
     ;;
 esac
 
+# TODO: outsource aliases. Maybe just one .aliases with shell-specific sections
+[[ -f ~/.aliases_bash ]] && . ~/.aliases_bash
+
+
+# Rehash executables in $PATH
+alias rehash='hash -r'
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
