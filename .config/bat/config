@@ -1,1 +1,2 @@
---theme="gruvbox-dark"
+# Set the theme
+--theme="base16"
