@@ -6,9 +6,11 @@ clang-format
 curl
 dos2unix
 exa
+fd-find
 fuse-overlayfs
 fzf
 git
+htop
 libfuse2
 man
 markdown
@@ -19,11 +21,15 @@ podman-docker
 pre-commit
 python3
 python-is-python3
+ranger
 ripgrep
 rsync
 ssh
 tig
+tldr
 tmux
+tree
 wget
 xsel
+zoxide
 zsh
