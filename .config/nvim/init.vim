@@ -23,9 +23,8 @@ endif
 
 call plug#begin("$VIMCONFIG/plugged")
 
-Plug 'sainnhe/gruvbox-material'         " colorschemes
+Plug 'navarasu/onedark.nvim'            " colorschemes
 Plug 'sainnhe/everforest'
-Plug 'navarasu/onedark.nvim'
 Plug 'romainl/apprentice'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -41,7 +40,9 @@ Plug 'svermeulen/vim-subversive'       " substitute text with yank register
 Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
 Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
 Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
-Plug 'Yggdroot/indentLine'             " display indentation lines
+" Plug 'Yggdroot/indentLine'             " display indentation lines
+Plug 'lukas-reineke/indent-blankline.nvim'  " display indentation lines
+Plug 'lukas-reineke/virt-column.nvim'  " display textwidth lines
 Plug 'stefandtw/quickfix-reflector.vim' " make quickfix window editable
 
 " Git
@@ -110,7 +111,7 @@ set fileformats=unix,dos     " default to unix fileformat on all platforms
 
 " set textwidth=88             " default textwidth of 88 columns
 " set colorcolumn=+1           " color column at textwidth+1
-set colorcolumn=89            " color column without linebreak
+" set colorcolumn=89           " color column without linebreak
 
 set autoindent smartindent   " automatic indentation based on cinwords
 set et sw=4 ts=4 sts=4       " expand all tabs to spaces and set shift/tabwidth
@@ -352,8 +353,8 @@ let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
 let g:indentLine_concealcursor = 'n'
 
 " do not conceal markdown/json files (indent lines still work)
-let g:markdown_syntax_conceal=0
-let g:vim_json_conceal=0
+" let g:markdown_syntax_conceal=0
+" let g:vim_json_conceal=0
 
 " +------------------+
 " | MARKDOWN-PREVIEW |
@@ -487,32 +488,30 @@ nnoremap <leader>: :History:<cr>
 nnoremap <leader>a :Rg<space>
 nnoremap <leader>A :exec "Rg ".expand("<cword>")<cr>
 
-" ripgrep command to search in multiple files
+" ripgrep command to search in multiple files TODO: delete?
 autocmd vimrc VimEnter * command! -nargs=* Rg call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-" Customize fzf colors to match the current color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Search'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Visual'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'StatusLineNC'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+" Show preview window on right if >70 cols, and on top otherwise
+let g:fzf_preview_window = ['right,50%,border-left,<70(up,40%)<70(up,40%,border-bottom)', 'ctrl-/']
+
+" Use tmux float for popup if possible
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': '-p80%,60%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'sharp' } }
+endif
+
 
 " +-----------------+
 " | NVIM-TREESITTER |
 " +-----------------+
+
+" if getting query error: invalid node type, see https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+" to remove additional parsers: simply rename the /lib/nvim/parser folder to e.g., /lib/nvim/parser~
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
@@ -573,6 +572,16 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 
+}
+
+require("ibl").setup {
+    -- indent = { char = "│", smart_indent_cap = false, highlight = "LineNr" },
+    indent = { char = "▏", smart_indent_cap = false, highlight = "Whitespace" },
+}
+
+require("virt-column").setup {
+    char = "▏",
+    virtcolumn = "+1,120",
 }
 EOF
 
