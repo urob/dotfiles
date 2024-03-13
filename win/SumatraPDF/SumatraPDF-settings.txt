@@ -1,26 +1,13 @@
-﻿# For documentation, see https://www.sumatrapdfreader.org/settings/settings3-3.html
-
-MainWindowBackground = #1d202100
-EscToExit = false
-ReuseInstance = false
-UseSysColors = false
-RestoreSession = true
-TabWidth = 300
-
+# For documentation, see https://www.sumatrapdfreader.org/settings/settings3-5-1.html
+Theme = Dark
 FixedPageUI [
-	TextColor = #d5c4a1
-	BackgroundColor = #282828
-	SelectionColor = #458588
+	TextColor = #ABB2BF
+	BackgroundColor = #282C34
+	SelectionColor = #5C6370
 	WindowMargin = 2 4 2 4
 	PageSpacing = 4 4
-	HideScrollbars = false
-]
-EbookUI [
-	FontName = Georgia
-	FontSize = 12.5
-	TextColor = #5f4b32
-	BackgroundColor = #fbf0d9
-	UseFixedPageUI = false
+	InvertColors = true
+	HideScrollbars = true
 ]
 ComicBookUI [
 	WindowMargin = 0 0 0 0
@@ -30,11 +17,12 @@ ComicBookUI [
 ChmUI [
 	UseFixedPageUI = false
 ]
+
+SelectionHandlers [
+]
 ExternalViewers [
 ]
-ShowMenubar = true
-ReloadModifiedDocuments = true
-FullPathInTitle = false
+
 ZoomLevels = 8.33 12.5 18 25 33.33 50 66.67 75 100 125 150 200 300 400 600 800 1000 1200 1600 2000 2400 3200 4800 6400
 ZoomIncrement = 0
 
@@ -49,34 +37,60 @@ ForwardSearch [
 ]
 Annotations [
 	HighlightColor = #ffff00
+	UnderlineColor = #00ff00
+	SquigglyColor = #ff00ff
+	StrikeOutColor = #ff0000
+	FreeTextColor =
+	FreeTextSize = 12
+	FreeTextBorderWidth = 1
+	TextIconColor = #ffff00
+	TextIconType =
+	DefaultAuthor =
 ]
-CustomScreenDPI = 0
 
-RememberStatePerDocument = true
-UiLanguage = en
-ShowToolbar = false
-ShowFavorites = false
-AssociateSilently = false
-CheckForUpdates = true
 RememberOpenedFiles = false
+RememberStatePerDocument = true
+RestoreSession = true
+UiLanguage = en
 InverseSearchCmdLine = CMD /C (ECHO LYXCMD:revdvi:server-goto-file-row:%f %l) > \\.\pipe\lyxpipe.in
 EnableTeXEnhancements = true
-DefaultDisplayMode = automatic
+DefaultDisplayMode = single page
 DefaultZoom = fit page
-WindowState = 1
-WindowPos = 3846 16 1462 2078
+Shortcuts [
+]
+EscToExit = false
+ReuseInstance = false
+ReloadModifiedDocuments = true
+
+MainWindowBackground = #1d2021
+FullPathInTitle = false
+ShowMenubar = true
+ShowToolbar = false
+ShowFavorites = false
 ShowToc = true
-SidebarDx = 411
+NoHomeTab = true
 TocDy = 0
+SidebarDx = 204
+ToolbarSize = 18
+TabWidth = 300
 TreeFontSize = 0
+TreeFontWeightOffset = 0
+TreeFontName = automatic
+SmoothScroll = true
 ShowStartPage = true
+CheckForUpdates = true
+WindowState = 1
+WindowPos = 5763 0 1924 1041
 UseTabs = true
+UseSysColors = false
+CustomScreenDPI = 0
 
 FileStates [
 ]
 SessionData [
 ]
-TimeOfLastUpdateCheck = 0 0
-OpenCountWeek = 603
+TimeOfLastUpdateCheck = 31072777 -54462487
+OpenCountWeek = 673
 
-# Settings after this line have not been recognized by the current version
+# Settings below are not recognized by the current version
+
