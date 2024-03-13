@@ -1,0 +1,23 @@
+.bundle
+.cmake
+.dropbox.cache
+.git
+.hg
+.npm
+.nuget
+.svn
+
+.local
+# .local/cache
+# .local/share
+# .local/state
+.vscode
+.vscode-server
+anaconda3
+micromamba
+AppData
+Backup
+
+*.bak
+
+# vim: set ft=gitignore:
