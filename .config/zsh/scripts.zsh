@@ -27,10 +27,16 @@ backup_dotfiles() {
   done
 }
 
-# +------------------+
-# | Stop Win Process |
-# +------------------+
+# +--------------+
+# | Wsl specific |
+# +--------------+
 
+# Start explorer in $1 (defaults to .)
+e() {
+    explorer.exe "${1:-.}";
+}
+
+# Stop win process
 winkill() {
     powershell.exe -c "Get-Process -Name $1*"
     if read -q '?Stop all matched processes (y/n)? '; then
@@ -46,10 +52,10 @@ WHIM_ROOT_DIR="$WINHOME/dev/Whim"
 WHIM_RUN_DIR="$WHIM_ROOT_DIR/src/Whim.Runner/bin/x64/Debug/net7.0-windows10.0.19041.0"
 
 whim_build() {
-    cd $WHIM_ROOT_DIR
+    pushd $WHIM_ROOT_DIR
     whim_stop &> /dev/null
     powershell.exe -c 'dotnet build Whim.sln -p:Platform=x64'
-    cd -1
+    popd
 }
 
 whim_format() {
@@ -57,6 +63,20 @@ whim_format() {
     powershell.exe -c 'dotnet tool restore'
     powershell.exe -c 'dotnet tool run dotnet-csharpier .'
     powershell.exe -c 'dotnet tool run xstyler --recursive --d . --config ./.xamlstylerrc'
+    popd
+}
+
+whim_docs_serve() {
+    pushd $WHIM_ROOT_DIR
+    powershell.exe -c 'dotnet tool restore'
+    pushd docs
+    powershell.exe -c 'dotnet docfx .\docfx.json --serve'
+    popd; popd
+}
+
+whim_docs_build() {
+    pushd $WHIM_ROOT_DIR/docs
+    powershell.exe -c 'dotnet docfx .\docfx.json'
     popd
 }
 

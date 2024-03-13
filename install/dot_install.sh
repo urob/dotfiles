@@ -91,6 +91,9 @@ get_git so-fancy/diff-so-fancy $XDG_LIB_HOME/diffsofancy
 chmod +x $XDG_LIB_HOME/diffsofancy/diff-so-fancy
 ln -sf $XDG_LIB_HOME/diffsofancy/diff-so-fancy $XDG_BIN_HOME/diff-so-fancy
 
+SRC=https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh
+curl -fLo $XDG_LIB_HOME/fzf-git/fzf-git.sh $SRC --create-dirs
+
 # +-----+
 # | ZSH |
 # +-----+

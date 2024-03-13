@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 # XDG
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_BIN_HOME=$HOME/.local/bin
@@ -18,8 +16,10 @@ fi
 # editor
 export EDITOR="nvim"
 export VISUAL="nvim"
+export PAGER="less -R --use-color --mouse"
 
 # zsh
+export KEYTIMEOUT=200
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"  # fallback, overwritten in zshrc
 export HISTSIZE=15000  # Maximum events for internal history
@@ -27,27 +27,39 @@ export SAVEHIST=10000  # Maximum events in history file, should be smaller
                        # than HISTSIZE to reliably prune duplicates
 
 # fzf
+export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc, init.vim
+
+export FZF_DEFAULT_COMMAND='fd --type f --type l --follow --hidden --min-depth 1 --strip-cwd-prefix'
+export FZF_CTRL_T_COMMAND='fd --follow --hidden --min-depth 1'
+export FZF_ALT_C_COMMAND='fd --type d --follow --hidden --min-depth 1'
+
 FZF_COLORS="bg+:-1,\
-fg:gray,\
-fg+:white,\
-border:black,\
-spinner:0,\
-hl:yellow,\
+fg:white,\
+fg+:-1,\
+hl:bright-yellow,\
+hl+:yellow:reverse,\
+border:gray,\
+label:gray,\
+spinner:green,\
 header:blue,\
 info:green,\
-pointer:red,\
-marker:red,\
-prompt:gray,\
-hl+:red"
+separator:gray,\
+pointer:yellow,\
+marker:yellow,\
+prompt:white"
 
-export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc, init.vim
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_DEFAULT_OPTS="--height 60% \
-    --border sharp \
     --color='$FZF_COLORS' \
+    --info inline-right \
     --prompt '∷ ' \
-    --pointer ▶ \
-    --marker ⇒"
+    --pointer » \
+    --marker ▎ \
+    --preview-window='right,50%,border-sharp' \
+    --bind='ctrl-/:change-preview-window(up,50%,border-bottom|hidden|)'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -n 50'"
+export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir tree ls"
+export FZF_TMUX_OPTS="-p80%,60% --border sharp --preview-window=border-left"
+export _ZO_FZF_OPTS="${FZF_DEFAULT_OPTS-} ${FZF_ALT_C_OPTS-} --preview 'tree -C {2} | head -n 50'"
 
 # git
 export GIT_REVIEW_BASE=main  # see gitconfig

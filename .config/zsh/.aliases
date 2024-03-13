@@ -19,7 +19,7 @@ alias -g .....='../../../..'
 hash -d dbox=$DROPBOX
 hash -d win=$WINHOME
 hash -d git=/mnt/d/git_repos
-hash -d coloc=$DROPBOX/Uni/collaborations/Hanno/code
+hash -d col=$DROPBOX/Uni/collaborations/
 
 # zcalc
 alias bc=zcalc
@@ -54,6 +54,12 @@ if (( $+commands[batcat] )); then
 elif (( $+commands[bat] )); then
     alias cat='bat --pager=never --style=plain'
 fi
+
+# +------+
+# | misc |
+# +------+
+
+alias top='htop'
 
 # +------+
 # | grep |
@@ -119,21 +125,15 @@ alias dockerd_wsl='wsl.exe --distribution "${WSL_DISTRO_NAME}" \
 alias rsync='rsync --include="**.gitignore" --exclude="/.git" --filter=":- .gitignore"'
 
 # +-----+
-# | wsl |
-# +-----+
-
-alias ee='explorer.exe .'  # run explorer in current directory
-
-# +-----+
 # | vpn |
 # +-----+
 
- alias vpn-up='sudo openconnect --background \
+alias vpn-up='sudo openconnect --background \
     --user ulbricht  \
     --os=win \
     --useragent="AnyConnect Windows 5.0.02075" \
     eaglevpn.bc.edu'
 
 function vpn-down() {
-  sudo kill -2 `pgrep openconnect`
+    sudo kill -2 `pgrep openconnect`
 }
