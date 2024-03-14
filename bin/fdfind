@@ -3,7 +3,7 @@
 # use native win-version of fd when on windows fs
 # TODO: replace $PWD with path argument if provided
 if [[ $(wslpath -w $PWD) == '\\wsl'* ]]; then
-    fdfind "$@"
+    fd "$@"
 else
     ignore=$(wslpath -w $XDG_CONFIG_HOME/fd/ignore)
     powershell.exe -c fd --path-separator '/' --ignore-file $ignore "$@"

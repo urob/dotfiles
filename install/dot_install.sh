@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# manually install dotfiles without nix
+
 # +---------------+
 # | PRELIMINARIES |
 # +---------------+
@@ -102,24 +104,21 @@ mkdir -p $XDG_STATE_HOME/zsh
 mkdir -p $XDG_CACHE_HOME/zsh
 
 # install gitstatus, used for prompt
-get_git romkatv/gitstatus $GITSTATUSDIR
+get_git romkatv/gitstatus $GITSTATUS_DIR
 
 # +------+
 # | NVIM |
 # +------+
 
-mkdir -p $VIMCONFIG/sessions
+mkdir -p $VIMDATA/sessions
 
 # install plugin manager
-curl -fLo "${VIMCONFIG}"/site/autoload/plug.vim --create-dirs \
+curl -fLo "${VIMDATA}"/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim --headless +PlugInstall +qall
 
 # autoload folder
-ln -sf "$DOTFILES_CONFIG_HOME/nvim/autoload/general.vim" "$VIMCONFIG/site/autoload"
-
-# markdown.css
-ln -sf "$DOTFILES/ignore/markdown.css" "$XDG_DATA_HOME"
+ln -sf "$DOTFILES_CONFIG_HOME/nvim/autoload/general.vim" "$VIMDATA/site/autoload"
 
 # +-------------+
 # | WRAPPING UP |

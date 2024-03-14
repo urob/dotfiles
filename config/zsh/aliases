@@ -31,13 +31,13 @@ alias mmv='noglob zmv -W'
 # | ls |
 # +----+
 
-# if [[ -x "$(command -v exa)" ]]; then  # bash compliant
-if (( $+commands[exa] )); then
-  alias exa='exa --color=auto --group-directories-first'
-  alias ls='exa'
-  alias ll='exa -la'
-  alias la='exa -a'
-  alias lt='exa -T'
+# if [[ -x "$(command -v eza)" ]]; then  # bash compliant
+if (( $+commands[eza] )); then
+  alias eza='eza --color=auto --group-directories-first'
+  alias ls='eza'
+  alias ll='eza -la'
+  alias la='eza -a'
+  alias lt='eza -T'
 else
   alias ls='ls --color=auto --group-directories-first'
   alias ll='ls -lah'
@@ -48,11 +48,11 @@ fi
 # | bat |
 # +-----+
 
-if (( $+commands[batcat] )); then
+if (( $+commands[bat] )); then
+    alias cat='bat --pager=never --style=plain'
+elif (( $+commands[batcat] )); then
     alias bat='batcat'
     alias cat='batcat --pager=never --style=plain'
-elif (( $+commands[bat] )); then
-    alias cat='bat --pager=never --style=plain'
 fi
 
 # +------+
@@ -80,7 +80,7 @@ alias du='du -h'  # make du human readable
 # | Neovim |
 # +--------+
 
-if (( $+commands[exa] )); then
+if (( $+commands[nvim] )); then
     alias vim='nvim'
     alias vi='nvim'
     alias svim='sudoedit'
@@ -107,8 +107,9 @@ alias va='source ./venv/bin/activate'  # activate venv in current shell
 # +--------+
 # | jekyll |
 # +--------+
-alias serve-site-eth="bundle exec jekyll serve --host=$(ifconfig eth0 | grep inet | grep -v inet6 | awk '{print $2}') --baseurl="
-alias serve-site-lo="bundle exec jekyll serve --host=$(ifconfig lo | grep inet | grep -v inet6 | awk '{print $2}') --baseurl="
+# https://serverfault.com/questions/195273/how-can-i-display-the-ip-address-of-an-interface
+alias serve-site-eth="bundle exec jekyll serve --host=$(ip -f inet addr show eth0 | sed -En -e 's/.*inet ([0-9.]+).*/\1/p') --baseurl="
+alias serve-site-lo="bundle exec jekyll serve --host=$(ip -f inet addr show lo | sed -En -e 's/.*inet ([0-9.]+).*/\1/p') --baseurl="
 
 # +--------+
 # | docker |
