@@ -9,11 +9,11 @@
 # fi
 
 _fzf_compgen_path() {
-    command fd --follow --hidden --min-depth 1 . "$1"
+    command fdfind --follow --hidden --min-depth 1 . "$1"
 }
 
 _fzf_compgen_dir() {
-    command fd --type d --follow --hidden --min-depth 1 . "$1"
+    command fdfind --type d --follow --hidden --min-depth 1 . "$1"
 }
 
 # instead of defining one completion function per command, can just put them all in comprun
@@ -22,7 +22,7 @@ _fzf_compgen_dir() {
 #     shift
 
 #     case "$command" in
-#         cd)     fd --type d --follow --hidden | fzf --preview 'tree -C {}' "$@";;
+#         cd)     fdfind --type d --follow --hidden | fzf --preview 'tree -C {}' "$@";;
 #         *)      fzf "$@" ;;
 #     esac
 # }
@@ -49,7 +49,7 @@ _fzf_git_fzf() {
 source $FZF_PLUG_DIR/key-bindings.zsh
 
 fzf-vim-widget() {
-  local cmd="${FZF_CTRL_V_COMMAND:-"command fd --type f --type l --follow --hidden --min-depth 1 \
+  local cmd="${FZF_CTRL_V_COMMAND:-"fdfind --type f --type l --follow --hidden --min-depth 1 \
       --exclude '*.png' --exclude '*.zip' \
       --strip-cwd-prefix "}"
   setopt localoptions pipefail no_aliases 2> /dev/null

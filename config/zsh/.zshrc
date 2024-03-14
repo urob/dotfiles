@@ -71,7 +71,7 @@ eval "$(dircolors -b)"
 # | ALIASES |
 # +---------+
 
-source $ZDOTDIR/.aliases
+source $ZDOTDIR/aliases
 
 # +---------+
 # | SCRIPTS |

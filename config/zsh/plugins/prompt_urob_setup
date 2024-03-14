@@ -9,7 +9,7 @@
 # - add python environment information
 
 # Location of https://github.com/romkatv/gitstatus
-source $GITSTATUSDIR/gitstatus.plugin.zsh
+source $GITSTATUS_DIR/gitstatus.plugin.zsh
 
 # Sets GITSTATUS_PROMPT to reflect the state of the current git repository.
 # Empty if not in a git repository. In addition, sets GITSTATUS_PROMPT_LEN to

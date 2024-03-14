@@ -1,12 +1,12 @@
 " File location: ~/.config/nvim/ | %USERPROFILE%/Local/nvim/
 " Path to Vimfiles, set by shell under unix
 if has("win32")
-    let $VIMCONFIG=$USERPROFILE . '/AppData/Local/nvim'
+    let $VIMDATA=$USERPROFILE . '/AppData/Local/nvim'
     " *** Setup steps on Windows:
     " * run in powershell: choco fzf
     " * create 'autoload', 'fzf_plugin', 'plugged' dirs in %USERPROFILE%/Local/nvim/
     " * save https://github.com/junegunn/fzf/blob/master/plugin/fzf.vim to fzf_plugin
-    let $FZF_PLUG_DIR=$VIMCONFIG . '/fzf_plugin'
+    let $FZF_VIM_DIR=$VIMDATA . '/fzf_plugin'
 endif
 
 " +----------+
@@ -21,7 +21,7 @@ endif
 " :PlugUpgrade      - upgrade vim-plug itself
 " :PlugStatus       - check status of plugins
 
-call plug#begin("$VIMCONFIG/plugged")
+call plug#begin("$VIMDATA/plugged")
 
 Plug 'navarasu/onedark.nvim'            " colorschemes
 Plug 'sainnhe/everforest'
@@ -288,9 +288,9 @@ nnoremap <leader>P "0P
 nnoremap <silent> <F3> :set spell!<cr>
 
 " Save session
-nnoremap <leader>ss :mksession! $VIMCONFIG/sessions/
+nnoremap <leader>ss :mksession! $VIMDATA/sessions/
 " Reload session
-nnoremap <leader>sl :source $VIMCONFIG/sessions/
+nnoremap <leader>sl :source $VIMDATA/sessions/
 
 " Add shebang with #!!
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
@@ -364,7 +364,7 @@ let g:indentLine_concealcursor = 'n'
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
 " file from: https://github.com/hyrious/github-markdown-css
 " edited to include: style content in https://github.com/sindresorhus/github-markdown-css#usage
-let g:mkdp_markdown_css = expand($XDG_DATA_HOME . '/markdown.css')
+let g:mkdp_markdown_css = expand($XDG_CONFIG_HOME . '/css/markdown.css')
 
 " Toggle browser preview
 nmap <C-p> <Plug>MarkdownPreviewToggle
@@ -467,7 +467,7 @@ nnoremap <silent> <M-o> :TmuxNavigatePrevious<cr>
 " +-----+
 
 " Location of fzf interface for vim (need both this and fzf.vim plugin)
-source $FZF_PLUG_DIR/fzf.vim
+source $FZF_VIM_DIR/fzf.vim
 
 " History of file opened
 nnoremap <leader>h :History<cr>

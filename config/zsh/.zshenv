@@ -4,7 +4,7 @@ export XDG_BIN_HOME=$HOME/.local/bin
 export XDG_LIB_HOME=$HOME/.local/lib
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
-export XDG_CACHE_HOME=$HOME/.local/cache
+export XDG_CACHE_HOME=$HOME/.local/cache # default is ~/.cache
 
 # Windows home path
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
@@ -27,11 +27,13 @@ export SAVEHIST=10000  # Maximum events in history file, should be smaller
                        # than HISTSIZE to reliably prune duplicates
 
 # fzf
-export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc, init.vim
+export FZF_PLUG_DIR="/usr/share/doc/fzf/examples"  # see .zshrc
+export FZF_GIT_DIR="XDG_LIB_HOME/fzf-git"          # see .zshrc
+export FZF_VIM_DIR="/usr/share/doc/fzf/examples"   # see init.vim
 
-export FZF_DEFAULT_COMMAND='fd --type f --type l --follow --hidden --min-depth 1 --strip-cwd-prefix'
-export FZF_CTRL_T_COMMAND='fd --follow --hidden --min-depth 1'
-export FZF_ALT_C_COMMAND='fd --type d --follow --hidden --min-depth 1'
+export FZF_DEFAULT_COMMAND='fdfind --type f --type l --follow --hidden --min-depth 1 --strip-cwd-prefix'
+export FZF_CTRL_T_COMMAND='fdfind --follow --hidden --min-depth 1'
+export FZF_ALT_C_COMMAND='fdfind --type d --follow --hidden --min-depth 1'
 
 FZF_COLORS="bg+:-1,\
 fg:white,\
@@ -68,9 +70,15 @@ export GIT_REVIEW_BASE=main  # see gitconfig
 export GEM_HOME="$HOME/.local/gems"
 
 # other software
-export GITSTATUSDIR="$XDG_LIB_HOME/gitstatus"  # see zshprompt
-export VIMCONFIG="${XDG_DATA_HOME}/nvim"       # see vim-plug, sessions, etc
+export GITSTATUS_DIR="$XDG_LIB_HOME/gitstatus"  # see zshprompt
+export VIMDATA="${XDG_DATA_HOME}/nvim"          # see vim-plug, sessions, etc
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 
+# fixes duplication of commands when using tab-completion
+# export LANG=C.UTF-8
+
+# source session variables managed by nix
+unset __HM_SESS_VARS_SOURCED
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
