@@ -114,7 +114,7 @@ set fileformats=unix,dos     " default to unix fileformat on all platforms
 " set colorcolumn=89           " color column without linebreak
 
 set autoindent smartindent   " automatic indentation based on cinwords
-set et sw=4 ts=4 sts=4       " expand all tabs to spaces and set shift/tabwidth
+set et sw=4 ts=4 sts=-1      " expand all tabs to spaces and set shift/tabwidth, dominated by editorconfig
 set shiftround               " > shifts to multiples of 4 spaces, not +4
 
 set ignorecase smartcase     " search ignores cases unless uppercase
