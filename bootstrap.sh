@@ -9,10 +9,15 @@ sudo apt-get -y upgrade
 sudo apt-get -y dist-upgrade
 sudo apt-get -y autoremove
 
-# Install dependencies. We need a native zsh to make it default shell
+# Install dependencies
 sudo apt-get -y install curl git sed zsh
 sudo apt-get clean
 #hash -r
+
+# Make native zsh default shell as nix-version can't be made default shell
+# (and requires NixOS to be made default shell declaratively)
+# https://discourse.nixos.org/t/why-does-chsh-not-work/7370
+chsh -s $(which zsh)
 
 # Clone the dotfiles repo
 rm -rf ${DOTFILES}
@@ -42,6 +47,3 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 # Initialize home manager
 nix run "$DOTFILES" -- init --switch "$DOTFILES" --impure
-
-# Make zsh the default shell
-chsh -s $(which zsh)
