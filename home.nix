@@ -73,7 +73,8 @@ in {
     "d ${vimData}/sessions 0755 ${username}"
   ];
 
-  xdg.cacheHome = "/home/urob/.local/cache";
+  # TODO: no effect unless xdg is enabled
+  xdg.cacheHome = "${homeDirectory}/.local/cache";
 
   home.sessionVariables = {
     # Fix locale, see https://nixos.wiki/wiki/Locales
