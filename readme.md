@@ -90,6 +90,15 @@ nix run . -- init --switch . --impure
         error: getting attributes of path '/nix/store/d5w0zqag0v8wkyab59aph7v9ypkr3h6y-hm_nvim': Permission denied
     ```
 
+    Workaround:
+    ```sh
+    # uninstall nix if already installed
+    /nix/nix-installer uninstall
+
+    # install old-stable version 2.18.1
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --nix-package-url https://releases.nixos.org/nix/nix-2.18.1/nix-2.18.1-x86_64-linux.tar.xz
+    ```
+
 - The following error occurs if `systemd` is _not_ enabled
 
     ```
