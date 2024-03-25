@@ -1,92 +1,14 @@
 " File location: ~/.config/nvim/ | %USERPROFILE%/Local/nvim/
 " Path to Vimfiles, set by shell under unix
 if has("win32")
-    let $VIMDATA=$USERPROFILE . '/AppData/Local/nvim'
     " *** Setup steps on Windows:
     " * run in powershell: choco fzf
     " * create 'autoload', 'fzf_plugin', 'plugged' dirs in %USERPROFILE%/Local/nvim/
     " * save https://github.com/junegunn/fzf/blob/master/plugin/fzf.vim to fzf_plugin
+    let $VIMDATA=$USERPROFILE . '/AppData/Local/nvim'
+    source $VIMDATA . '/plugins.vim'  # managed with nix in *nix
     let $FZF_VIM_DIR=$VIMDATA . '/fzf_plugin'
 endif
-
-" +----------+
-" | VIM-PLUG |
-" +----------+
-
-" Brief help:
-" :source %         - reload config to update plugins
-" :PlugInstall      - install plugins
-" :PlugUpdate       - update plugins
-" :PlugClean[!]     - remove unlisted plugins (! will skip confirmation)
-" :PlugUpgrade      - upgrade vim-plug itself
-" :PlugStatus       - check status of plugins
-
-call plug#begin("$VIMDATA/plugged")
-
-Plug 'navarasu/onedark.nvim'            " colorschemes
-Plug 'sainnhe/everforest'
-Plug 'romainl/apprentice'
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
-
-Plug 'junegunn/fzf.vim'                " fzf wrapper [lua: telescope.nvim]
-Plug 'andymass/vim-matchup'            " match more stuff with %
-Plug 'tpope/vim-commentary'            " easy commenting with gc(c)
-Plug 'tpope/vim-surround'              " surround text with deliminators. Eg ds( cs( ysiw(
-Plug 'tpope/Vim-repeat'                " make . work with plugins
-    " http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
-Plug 'svermeulen/vim-subversive'       " substitute text with yank register
-Plug 'dhruvasagar/vim-zoom'            " tmux-like zoom for splits
-Plug 'christoomey/vim-tmux-navigator'  " navigate btwn vim splits & tmux panes
-Plug 'editorconfig/editorconfig-vim'   " respect editorconfig defaults in vim
-" Plug 'Yggdroot/indentLine'             " display indentation lines
-Plug 'lukas-reineke/indent-blankline.nvim'  " display indentation lines
-Plug 'lukas-reineke/virt-column.nvim'  " display textwidth lines
-Plug 'stefandtw/quickfix-reflector.vim' " make quickfix window editable
-
-" Git
-Plug 'tpope/vim-fugitive'              " git wrapper
-Plug 'mhinz/vim-signify'               " show git diff in the left gutter [lua: sigsigns]
-Plug 'rhysd/conflict-marker.vim'       " highlight and navigate conflicts
-
-" Navigate undo tree
-Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}
-
-" File navigation
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}  " lua: neo-tree
-
-" Markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" if install error, run after installing :call mkdp#util#install()
-" Plug 'preservim/vim-markdown'       " enhanced syntax + more
-
-" Python
-" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }    " semantic syntax highlighting
-" Plug 'Vimjas/vim-python-pep8-indent'  " PEP8 compliant indenting
-" Plug 'neovim/nvim-lspconfig'          " native lsp server
-" Plug 'dense-analysis/ale'             " linting platform, note: nvim has new builtin support
-
-" Python integration
-" Plug 'jpalardy/vim-slime'         " send code to terminal
-" Plug 'dccsillag/magma-nvim'       " modern full integration of Jupyter
-
-" Latex
-" Use texlab-lsp server: https://github.com/latex-lsp/texlab
-" Checkout nvim's lsp config: https://github.com/neovim/nvim-lspconfig
-"                             https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
-" Give tectonic a try? https://tectonic-typesetting.github.io/en-US/
-" Plug 'lervag/vimtex'              " modern latex plugin
-
-" Misc
-" Plug 'w0rp/ale'                   " linting platform
-" Plug 'SirVer/ultisnips'           " snippets stuff
-" Plug 'honza/vim-snippets'         " snippets stuff
-" Plug 'godlygeek/tabular'          " align stuff (eg markdown tables)
-" Plug 'reedes/vim-wordy'           " verify quality of writting (see :Wordy)
-" Plug 'rhysd/vim-grammarous', { 'for': 'markdown' } " show grammar mistakes
-
-call plug#end()
 
 " +----------------+
 " | Global options |
@@ -95,7 +17,7 @@ call plug#end()
 if (has("termguicolors"))
     set termguicolors        " truecolor support
 endif
-syntax on
+" syntax on  " superseded by treesitter?
 
 silent! colorscheme onedark  " don't choke if colorscheme does not exist
 
@@ -104,17 +26,13 @@ set number relativenumber    " show relative linenumbers
 set keymodel=startsel        " shift + movement starts visual mode
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
 
-set clipboard+=unnamedplus   " use global clipboard
+" set clipboard+=unnamedplus   " use global clipboard (slows startup by 100ms if xclip or xsel are installed and 200ms with win32yank)
 set autowrite                " write automatically when quitting buffer
 set undofile                 " persistent undo
 set fileformats=unix,dos     " default to unix fileformat on all platforms
 
-" set textwidth=88             " default textwidth of 88 columns
-" set colorcolumn=+1           " color column at textwidth+1
-" set colorcolumn=89           " color column without linebreak
-
 set autoindent smartindent   " automatic indentation based on cinwords
-set et sw=4 ts=4 sts=-1      " expand all tabs to spaces and set shift/tabwidth, dominated by editorconfig
+set et sw=4 ts=4 sts=-1      " expand all tabs to spaces and set  shift/tabwidth (if no editorconfig is found)
 set shiftround               " > shifts to multiples of 4 spaces, not +4
 
 set ignorecase smartcase     " search ignores cases unless uppercase
@@ -200,6 +118,12 @@ autocmd vimrc BufNewFile,BufRead *.xaml set syntax=xml
 " | statusline |
 " +------------+
 
+" set laststatus=0
+" hi! link StatusLine Normal
+" hi! link StatusLineNC Normal
+" set statusline=%#WinSeparator#%{repeat('─',winwidth('.'))}
+" set rulerformat=%59(%f\ %h%w%m%r%=%l,%c\ %P%)
+
 set laststatus=2
 set statusline=%<                           " truncate here if needed
 set statusline+=%f\                         " file + path relative to current dir
@@ -250,7 +174,7 @@ nnoremap J mzJ`z
 "nnoremap <silent><s-cr> <Cmd>update<CR>
 
 " toggle folding
-" nnoremap <space> za
+nnoremap <space> za
 
 " fix cursor position with . and apply to all selected lines in visual mode
 noremap . .`[
@@ -280,9 +204,10 @@ xnoremap - g<c-x>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 
-" Paste from the yank buffer
-nnoremap <leader>p "0p
-nnoremap <leader>P "0P
+" Copy/paste from global clipboard
+noremap <leader>y "+y
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
 
 " toggle spelling
 nnoremap <silent> <F3> :set spell!<cr>
@@ -352,10 +277,6 @@ let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
 " do not conceal cursor line in insert mode
 let g:indentLine_concealcursor = 'n'
 
-" do not conceal markdown/json files (indent lines still work)
-" let g:markdown_syntax_conceal=0
-" let g:vim_json_conceal=0
-
 " +------------------+
 " | MARKDOWN-PREVIEW |
 " +------------------+
@@ -368,6 +289,9 @@ let g:mkdp_markdown_css = expand($XDG_CONFIG_HOME . '/css/markdown.css')
 
 " Toggle browser preview
 nmap <C-p> <Plug>MarkdownPreviewToggle
+
+autocmd vimrc FileType markdown
+    \ :packadd markdown-preview.nvim
 
 " +--------------+
 " | EDITORCONFIG |
@@ -399,14 +323,14 @@ nnoremap gdr :diffget //3<CR>
 let g:mundo_auto_preview=1
 
 " nnoremap <silent> <F3> :MundoToggle<CR>
-nnoremap <leader>u :MundoToggle<cr>
+nnoremap <leader>u :packadd vim-mundo<cr>:MundoToggle<cr>
 
 " +---------+
 " | SIGNIFY |
 " +---------+
 
 " default updatetime 4000ms is not good for async update
-set updatetime=100
+" set updatetime=100
 
 " +--------------+
 " | VIM-SURROUND |
@@ -419,7 +343,7 @@ map gs ysiw
 " | VIM-SUBVERSIVE |
 " +----------------+
 
-" s for substitute
+" like c but replace with yank buffer
 nmap s <plug>(SubversiveSubstitute)
 xmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
@@ -448,7 +372,7 @@ let NERDTreeMapOpenVSplit = 'v'
 let NERDTreeMapPreviewVSplit='gv'
 
 " nnoremap <silent> <F2> :call general#NERDTreeToggleInCurDir()<CR>
-nmap <leader>e :call general#NERDTreeToggleInCurDir()<CR>
+nmap <leader>e :packadd nerdtree<CR>:call general#NERDTreeToggleInCurDir()<CR>
 
 " +----------------+
 " | TMUX-NAVIGATOR |
@@ -515,15 +439,9 @@ endif
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all"
-    -- ensure_installed = { "bash", "bibtex", "c", "cpp", "css", "devicetree", "dockerfile", "latex", "lua", "markdown", "python", "vim", "vimdoc", "query" },
-    ensure_installed = "all",
-
-    highlight = {
-        enable = true,
-        -- disable = { "devicetree" },
-        additional_vim_regex_highlighting = false,
-    },
+    highlight = { enable = true },
+    indent = { enable = true },
+    ensure_installed = {},  -- let nix manage parsers
 
     incremental_selection = {
         enable = true,
@@ -535,13 +453,9 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 
-    indent = {
-        enable = true,
-    },
-
     refactor = {
 
-        enable = true,
+        enable = false,
 
         highlight_definitions = { -- highlight definition & usage of symbol under cursor
             enable = true,
@@ -572,19 +486,119 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 
+    textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true or false
+      include_surrounding_whitespace = true,
+    },
+  },
 }
 
 require("ibl").setup {
-    -- indent = { char = "│", smart_indent_cap = false, highlight = "LineNr" },
-    indent = { char = "▏", smart_indent_cap = false, highlight = "Whitespace" },
+    indent = { char = "│", smart_indent_cap = false, highlight = "WinSeparator" },
+    -- indent = { char = "▏", smart_indent_cap = false, highlight = "WinSeparator" },
 }
 
 require("virt-column").setup {
-    char = "▏",
-    virtcolumn = "+1,120",
+    char = "│", highlight = "WinSeparator", virtcolumn = "+1",
 }
+
+-- integrate ts_context_commentstring with comment.nvim
+vim.g.skip_ts_context_commentstring_module = true
+require('ts_context_commentstring').setup {
+    enable_autocmd = false,
+}
+require('Comment').setup {
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+}
+
+require('which-key').setup()
+
+require('gitsigns').setup{
+    -- current_line_blame = true,
+    on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+        end, {expr=true})
+
+        map('n', '[c', function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+        end, {expr=true})
+
+        -- Actions
+        map('n', '<leader>hs', gs.stage_hunk)
+        map('n', '<leader>hr', gs.reset_hunk)
+        map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('n', '<leader>hS', gs.stage_buffer)
+        map('n', '<leader>hu', gs.undo_stage_hunk)
+        map('n', '<leader>hR', gs.reset_buffer)
+        map('n', '<leader>hp', gs.preview_hunk)
+        map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+        map('n', '<leader>tb', gs.toggle_current_line_blame)
+        map('n', '<leader>hd', gs.diffthis)
+        map('n', '<leader>hD', function() gs.diffthis('~') end)
+        map('n', '<leader>td', gs.toggle_deleted)
+
+        -- Text object
+        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end
+}
+
 EOF
 
+" Enable folding
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable                     " Disable folding at startup.
@@ -600,4 +614,3 @@ if exists("g:neovide")
     " set guifont=Fira\ Code:h10
     " set guifont=JetBrains\ Mono:h10
 endif
-
