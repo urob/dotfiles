@@ -8,6 +8,7 @@
   config,
   pkgs,
   lib,
+  # username, # TODO: inherit username etc via inputs instead of model specs?
   ...
 }: let
   homeDirectory = config.home.homeDirectory;
