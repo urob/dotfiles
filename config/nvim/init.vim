@@ -34,6 +34,7 @@ set fileformats=unix,dos     " default to unix fileformat on all platforms
 set autoindent smartindent   " automatic indentation based on cinwords
 set et sw=4 ts=4 sts=-1      " expand all tabs to spaces and set  shift/tabwidth (if no editorconfig is found)
 set shiftround               " > shifts to multiples of 4 spaces, not +4
+set colorcolumn=+1           " display virt-column at tw+1 (see below)
 
 set ignorecase smartcase     " search ignores cases unless uppercase
 set completeopt+=longest     " completion insert longest common matched text
@@ -538,7 +539,7 @@ require("ibl").setup {
 }
 
 require("virt-column").setup {
-    char = "│", highlight = "WinSeparator", virtcolumn = "+1",
+    char = "│", highlight = "WinSeparator", -- virtcolumn = "+1",
 }
 
 -- integrate ts_context_commentstring with comment.nvim
