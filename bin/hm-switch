@@ -3,4 +3,4 @@
 # Build using ~/dotfiles/flake.nix if no input is provided
 SRC=${1:-"${HOME}/dotfiles"}
 
-home-manager switch --flake "$SRC"  --impure
+home-manager switch --flake "$SRC"
