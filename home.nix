@@ -8,14 +8,15 @@
   config,
   pkgs,
   lib,
-  # username, # TODO: inherit username etc via inputs instead of model specs?
+  inputs,
   ...
 }: let
   homeDirectory = config.home.homeDirectory;
   profileDirectory = config.home.profileDirectory;
   username = config.home.username;
+  # username = inputs.self.username;
 
-  utils = import ./utils.nix {inherit config pkgs lib;};
+  utils = import ./utils.nix {inherit config pkgs lib inputs;};
   dotfiles = "${homeDirectory}/dotfiles";
   vimData = "${homeDirectory}/.local/share/nvim";
 
@@ -27,38 +28,38 @@ in {
   home.stateVersion = "23.11";
 
   # Link dotfiles
-  home.file = utils.linkHomeFiles dotfiles {
+  home.file = utils.linkHomeFiles {
     "bin" = {
-      source = "bin";
+      source = ./bin;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".config" = {
-      source = "config";
+      source = ./config;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".ssh" = {
-      source = "config/ssh";
+      source = ./config/ssh;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     "${vimData}/site/autoload" = {
-      source = "config/nvim/autoload";
+      source = ./config/nvim/autoload;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".editorconfig" = {
-      source = "config/editorconfig/config";
+      source = ./config/editorconfig/config;
       outOfStoreSymlink = true;
     };
 
     ".zshenv" = {
-      source = "config/zsh/.zshenv";
+      source = ./config/zsh/.zshenv;
       outOfStoreSymlink = true;
     };
 

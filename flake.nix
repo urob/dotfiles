@@ -20,7 +20,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux"; # or aarch64-darwin for ARM-based macOS
       pkgs = nixpkgs.legacyPackages.${system};
@@ -47,7 +47,7 @@
       homeConfigurations.${username} =
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit username; };
+          extraSpecialArgs = { inherit inputs; };
           modules = [
             ./home.nix
             {
