@@ -268,16 +268,6 @@ nmap <leader>z <Plug>(zoom-toggle)
 
 let g:matchup_transmute_enabled = 1
 
-" +------------+
-" | INDENTLINE |
-" +------------+
-
-" more beautiful lines (only works with UTF-8 encoded files)
-let g:indentLine_char = '┊'  " alternatives: ┊ ┆ ╎ │ ⁞
-
-" do not conceal cursor line in insert mode
-let g:indentLine_concealcursor = 'n'
-
 " +------------------+
 " | MARKDOWN-PREVIEW |
 " +------------------+
@@ -326,12 +316,11 @@ let g:mundo_auto_preview=1
 " nnoremap <silent> <F3> :MundoToggle<CR>
 nnoremap <leader>u :packadd vim-mundo<cr>:MundoToggle<cr>
 
-" +---------+
-" | SIGNIFY |
-" +---------+
+" +-----------+
+" | FORMATTER |
+" +-----------+
 
-" default updatetime 4000ms is not good for async update
-" set updatetime=100
+nnoremap <leader>l :packadd formatter.nvim<cr>:Format<cr>
 
 " +--------------+
 " | VIM-SURROUND |
@@ -596,6 +585,19 @@ require('gitsigns').setup{
         map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
 }
+
+-- FORMATTER
+
+-- Utilities for creating configurations
+require("formatter").setup {
+    filetype = {
+        -- lua = { require("formatter.filetypes.lua").stylua },
+        python = { require("formatter.filetypes.python").ruff },
+        nix = { require("formatter.filetypes.nix").alejandra },
+        markdown = { require("formatter.filetypes.markdown").prettier },
+    },
+}
+
 
 EOF
 

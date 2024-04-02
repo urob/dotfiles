@@ -2,7 +2,7 @@
   description = "Urob's dotfiles";
 
   nixConfig = {
-    # requires adding user to trusted-users. Either in nixos-flake, or for standalone in /etc/nix/configuration.nix
+    # On non-NixOS systems, must add user to trusted-users in /etc/nix/configuration.nix
     # https://nixos-and-flakes.thiscute.world/nixos-with-flakes/add-custom-cache-servers
     extra-substituters = [
       "https://nix-community.cachix.org"
@@ -20,42 +20,49 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux"; # or aarch64-darwin for ARM-based macOS
-      pkgs = nixpkgs.legacyPackages.${system};
       username = "urob";
       homeDirectory = "/home/${username}";
-
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      formatter.${system} = pkgs.alejandra; # nixpkgs-fmt or alejandra
+      formatter.${system} = pkgs.nixpkgs-fmt; # nixpkgs-fmt or alejandra
+
+      cfg = {
+        inherit system username homeDirectory;
+        runtimeRoot = "${homeDirectory}/dotfiles";
+      };
+
+      utils = import ./lib {
+        inherit pkgs;
+        inherit (home-manager.lib) hm;
+        context = self;
+      };
 
       # Entrypoint for NixOS
       /*
-      nixosConfigurations = {
-        your-hostname = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit system;};
-          modules = [
-            ./nixos/configuration.nix
-          ];
-        };
+        nixosConfigurations = {
+      your-hostname = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit system;};
+        modules = [
+          ./nixos/configuration.nix
+          {
+            # permission to add to substituters
+            nix.settings.trusted-users = [ "${username}" ];
+          }
+        ];
       };
+        };
       */
 
       # Entrypoint for standalone home-manager
-      homeConfigurations.${username} =
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
-          modules = [
-            ./home.nix
-            {
-              # Let home-manager inherit username
-              home = { inherit username homeDirectory; };
-            }
-          ];
-        };
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { context = self; };
+        modules = [ ./home ];
+      };
 
       # Default `nix run .` to use home-manager, only used for initialization
       defaultPackage.${system} = home-manager.defaultPackage.${system};
