@@ -1,12 +1,13 @@
 { pkgs, ... }: {
   programs.neovim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
+    # package = pkgs.unstable.neovim-unwrapped;
+    plugins = with pkgs.unstable.vimPlugins; [
       # Colorscheme
       onedark-nvim
 
       # Core plugins
-      comment-nvim # or vim-commentary
+      # comment-nvim # native in nightly
       fzf-vim
       quickfix-reflector-vim
       indent-blankline-nvim
@@ -28,7 +29,7 @@
       nvim-treesitter.withAllGrammars
       # nvim-treesitter-refactor
       nvim-treesitter-textobjects
-      nvim-ts-context-commentstring
+      # nvim-ts-context-commentstring # native in nightly
 
       # Lazy-loaded plugins
       { optional = true; plugin = markdown-preview-nvim; }
