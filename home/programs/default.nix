@@ -37,7 +37,8 @@ in
     # Git
     diff-so-fancy
     git
-    gitstatus
+    # git-crypt # encrypt secrets inside repo, best used alongside gpg
+    gitstatus # fast git-status used in my prompt
     pre-commit
     tig
 
@@ -56,7 +57,7 @@ in
     micromamba
     # pipx
     python3
-    ruff
+    unstable.ruff
 
     # Nix tooling
     alejandra
@@ -65,11 +66,10 @@ in
     statix
   ];
 
+  # Export install paths referenced in dotfiles
   home.sessionVariables = {
-    # Install dir of gitstatus
     GITSTATUS_DIR = "${profileDirectory}/share/gitstatus";
 
-    # Install dir of fzf plugins
     FZF_PLUG_DIR = "${profileDirectory}/share/fzf";
     FZF_GIT_DIR = "${profileDirectory}/share/fzf-git-sh";
     FZF_VIM_DIR = "${profileDirectory}/share/nvim/site/plugin";

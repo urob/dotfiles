@@ -1,13 +1,12 @@
 # TODO
 # - check if need to create dirs: XDG_*, XDG_[CACHE|STATE]_HOME/zsh
 # - partially manage zsh?
-{ config, context, ... }:
+{ context, ... }:
 let
   inherit (context.cfg) username homeDirectory;
-  inherit (config.home) profileDirectory;
 in
 {
-  # Home-manager version
+  # Mostly version of auto-generated configs
   home.stateVersion = "23.11";
 
   # About me
@@ -15,6 +14,9 @@ in
 
   # Import sub modules
   imports = [ ./symlinks.nix ./programs ./wsl ];
+
+  # Options for non-nixOS linux
+  # targets.genericLinux = true;
 
   # TODO: no effect unless xdg is enabled
   # xdg.configFile = { ... } // (linkChildren ./dotConfig "${config.xdg.configHome}/lf");

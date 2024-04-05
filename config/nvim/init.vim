@@ -531,14 +531,14 @@ require("virt-column").setup {
     char = "│", highlight = "WinSeparator", -- virtcolumn = "+1",
 }
 
--- integrate ts_context_commentstring with comment.nvim
-vim.g.skip_ts_context_commentstring_module = true
-require('ts_context_commentstring').setup {
-    enable_autocmd = false,
-}
-require('Comment').setup {
-    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-}
+-- -- integrate ts_context_commentstring with comment.nvim
+-- vim.g.skip_ts_context_commentstring_module = true
+-- require('ts_context_commentstring').setup {
+--     enable_autocmd = false,
+-- }
+-- require('Comment').setup {
+--     pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+-- }
 
 require('which-key').setup()
 
