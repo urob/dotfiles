@@ -2,10 +2,16 @@ vim.api.nvim_command("packadd conform.nvim")
 
 require("conform").setup({
     formatters_by_ft = {
+        cs = { "csharpier" },
+        css = { { "prettierd", "prettier" } },
+        html = { { "prettierd", "prettier" } },
+        sh = { "shfmt" },
         lua = { "stylua" },
-        python = { "ruff_format" },
         markdown = { { "prettierd", "prettier" } },
         nix = { "alejandra" },
+        python = { "ruff_format" },
+        scss = { { "prettierd", "prettier" } },
+        yaml = { { "prettierd", "prettier" } },
     },
 })
 
