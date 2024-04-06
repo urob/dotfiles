@@ -64,6 +64,13 @@ in
     nixpkgs-fmt
     deadnix
     statix
+
+    # Other formatters and linters
+    csharpier
+    # matlab-formatter-vscode
+    prettierd
+    shfmt
+    stylua
   ];
 
   # Export install paths referenced in dotfiles
