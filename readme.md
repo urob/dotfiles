@@ -81,13 +81,17 @@ nix run . -- init --switch . --impure
 
 ## Troubleshooting
 
-- Permission errors when creating `outOfStoreSymlinks`: see issues [#4692](https://github.com/nix-community/home-manager/issues/4692), [#9579](https://github.com/NixOS/nix/issues/9579), and PR [#9723](https://github.com/NixOS/nix/pull/9723)
+- Permission errors when creating `outOfStoreSymlinks`: see issues
+  [#4692](https://github.com/nix-community/home-manager/issues/4692),
+  [#9579](https://github.com/NixOS/nix/issues/9579), and PR
+  [#9723](https://github.com/NixOS/nix/pull/9723)
 
   ```
   error:
       … while setting up the build environment
 
-      error: getting attributes of path '/nix/store/d5w0zqag0v8wkyab59aph7v9ypkr3h6y-hm_nvim': Permission denied
+      error: getting attributes of path '/nix/store/d5w0zqag0v8wkyab59aph7v9ypkr3h6y-hm_nvim':
+      Permission denied
   ```
 
   Workaround:
@@ -103,10 +107,12 @@ nix run . -- init --switch . --impure
 - The following error occurs if `systemd` is _not_ enabled
 
   ```
-  error: could not set permissions on '/nix/var/nix/profiles/per-user' to 755: Operation not permitted
+  error: could not set permissions on '/nix/var/nix/profiles/per-user' to 755:
+  Operation not permitted
   ```
 
-- See https://nixos.wiki/wiki/Locales on how to set locales. TLDR: add the following to `.zshenv` (done automatically in my config):
+- See https://nixos.wiki/wiki/Locales on how to set locales. TLDR: add the
+  following to `.zshenv` (done automatically in my config):
 
   ```sh
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
