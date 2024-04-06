@@ -2,7 +2,7 @@
 typeset -U path cdpath fpath manpath
 
 # Add user path dirs
-for dir in "$HOME/bin" "$XDG_BIN_HOME" "$GEM_HOME/bin"; do
+for dir in "$HOME/bin" "$XDG_BIN_HOME" "$GEM_HOME/bin" "$DROPBOX/bin"; do
     [[ -d $dir ]] && path+="$dir"
 done
 

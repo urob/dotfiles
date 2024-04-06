@@ -26,7 +26,7 @@ set number relativenumber    " show relative linenumbers
 set keymodel=startsel        " shift + movement starts visual mode
 set scrolloff=3              " keep cursor 3 lines of edge when scrolling
 
-" set clipboard+=unnamedplus   " use global clipboard (slows startup by 100ms if xclip or xsel are installed and 200ms with win32yank)
+"set clipboard+=unnamedplus   " use global clipboard
 set autowrite                " write automatically when quitting buffer
 set undofile                 " persistent undo
 set fileformats=unix,dos     " default to unix fileformat on all platforms
