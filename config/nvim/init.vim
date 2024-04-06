@@ -320,7 +320,7 @@ nnoremap <leader>u :packadd vim-mundo<cr>:MundoToggle<cr>
 " | FORMATTER |
 " +-----------+
 
-nnoremap <leader>l :packadd formatter.nvim<cr>:Format<cr>
+nnoremap <leader>l :lua require("plugins.conform")<cr>:Format<cr>
 
 " +--------------+
 " | VIM-SURROUND |
@@ -585,19 +585,6 @@ require('gitsigns').setup{
         map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
 }
-
--- FORMATTER
-
--- Utilities for creating configurations
-require("formatter").setup {
-    filetype = {
-        -- lua = { require("formatter.filetypes.lua").stylua },
-        python = { require("formatter.filetypes.python").ruff },
-        nix = { require("formatter.filetypes.nix").alejandra },
-        markdown = { require("formatter.filetypes.markdown").prettier },
-    },
-}
-
 
 EOF
 
