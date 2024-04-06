@@ -42,8 +42,8 @@ for f in $files; do
 done
 
 # Install Nix and start nix deamon without reloading shell
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix \
-    | sh -s -- install --no-confirm --extra-conf "trusted-users = root ${USER}"
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
+    sh -s -- install --no-confirm --extra-conf "trusted-users = root ${USER}"
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Initialize home manager
