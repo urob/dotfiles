@@ -35,7 +35,7 @@
       { optional = true; plugin = markdown-preview-nvim; }
       { optional = true; plugin = nerdtree; }
       { optional = true; plugin = vim-mundo; }
-      { optional = false; plugin = formatter-nvim; }
+      { optional = true; plugin = conform-nvim; }
     ];
   };
 }
