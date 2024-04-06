@@ -16,10 +16,10 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 
 # directory aliases
-hash -d dbox=$DROPBOX
-hash -d win=$WINHOME
-hash -d git=/mnt/d/git_repos
-hash -d col=$DROPBOX/Uni/collaborations/
+alias -g dbox=$DROPBOX
+alias -g win=$WINHOME
+# alias -g git=/mnt/d/git_repos
+alias -g col=$DROPBOX/Uni/collaborations/
 
 # zcalc
 alias bc=zcalc
