@@ -16,6 +16,7 @@ in
     fzf
     fzf-git-sh
     htop
+    just
     lf
     # man
     ripgrep
@@ -45,6 +46,7 @@ in
     # Development tools
     clang-tools # bundles clang-format, alternatively use clang
     direnv
+    # nix-direnv # replace built-in use_nix and use_flake with versions that persist garbage-collection
     glow
     # gcc # also clangStdenv? # similar to build-essentials in debian
     # some markdown driver? which?
@@ -59,18 +61,17 @@ in
     python3
     unstable.ruff
 
-    # Nix tooling
-    alejandra
-    nixpkgs-fmt
-    deadnix
-    statix
 
-    # Other formatters and linters
-    csharpier
-    # matlab-formatter-vscode
+    # Formatters and linters
+    # csharpier # pulls in all tooling
+    # matlab-formatter-vscode # n/a
+    alejandra # opinionated nix formatter
+    nixpkgs-fmt # default nix formatter for nixpkgs
+    deadnix # find unused nix attributes
+    statix # nix linter
     prettierd
-    shfmt
-    stylua
+    shfmt # shell formatter
+    stylua # lua formatter
   ];
 
   # Export install paths referenced in dotfiles
