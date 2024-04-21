@@ -56,7 +56,7 @@ in
     podman-compose
 
     # Python
-    micromamba
+    unstable.micromamba
     # pipx
     python3
     unstable.ruff
