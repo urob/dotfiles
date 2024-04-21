@@ -60,6 +60,7 @@ fi
 # +------+
 
 alias top='htop'
+alias killall='pkill -f -I'
 
 # +------+
 # | grep |
