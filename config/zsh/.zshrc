@@ -206,3 +206,5 @@ if [[ -z $SSH_CONNECTION ]] && [[ -o login ]] && [ "$TMUX" = "" ]; then
     fi
 fi
 
+# Initialize direnv
+eval "$(direnv hook zsh)"
