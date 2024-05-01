@@ -5,6 +5,6 @@
 if [[ $(wslpath -w $PWD) == '\\wsl'* ]]; then
     fd "$@"
 else
-    ignore=$(wslpath -w $XDG_CONFIG_HOME/fd/ignore)
-    powershell.exe -c fd --path-separator '/' --ignore-file $ignore "$@"
+    ignore=$(wslpath -aw $XDG_CONFIG_HOME/fd/ignore)
+    powershell.exe -c fd --path-separator '/' --ignore-file "$ignore" "$@"
 fi
