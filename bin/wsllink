@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+target="$(wslpath -aw $1)"
+link="$(wslpath -aw $2)"
+
+echo "Creating symlink from $link to $target"
+
+# cmd.exe /c sudo mklink /d "$link" "$src"
+powershell.exe -c sudo New-Item -ItemType SymbolicLink -Path \""$link"\" -Target \""${target}"\"
