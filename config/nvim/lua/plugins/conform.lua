@@ -5,6 +5,7 @@ require("conform").setup({
         cs = { "csharpier" },
         css = { { "prettierd", "prettier" } },
         html = { { "prettierd", "prettier" } },
+        javascript = { { "prettierd", "prettier" } },
         sh = { "shfmt" },
         lua = { "stylua" },
         markdown = { { "prettierd", "prettier" } },
