@@ -14,7 +14,7 @@ in
     # findutils
     fd
     fzf
-    fzf-git-sh
+    unstable.fzf-git-sh
     htop
     just
     lf
@@ -25,7 +25,7 @@ in
     tmux
     tree
     zip
-    zoxide
+    unstable.zoxide
     zsh
     # zsh-fzf-tab -- add manually or manage shell via nix
 
@@ -46,7 +46,7 @@ in
     # Development tools
     clang-tools # bundles clang-format, alternatively use clang
     direnv
-    # nix-direnv # replace built-in use_nix and use_flake with versions that persist garbage-collection
+    nix-direnv # replace built-in use_nix and use_flake with versions that persist garbage-collection
     glow
     # gcc # also clangStdenv? # similar to build-essentials in debian
     # some markdown driver? which?
