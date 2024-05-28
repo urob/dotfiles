@@ -36,7 +36,7 @@
     pkgs = import inputs.nixpkgs {inherit system overlays;};
     overlays = [
       (_: prev: {unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};})
-      inputs.neovim-nightly-overlay.overlay
+      inputs.neovim-nightly-overlay.overlays.default
     ];
   in {
     formatter.${system} = pkgs.nixpkgs-fmt; # nixpkgs-fmt or alejandra
