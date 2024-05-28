@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     enable = true;
-    # package = pkgs.unstable.neovim-unwrapped;
+    package = pkgs.unstable.neovim-unwrapped;
     plugins = with pkgs.unstable.vimPlugins; [
       # Colorscheme
       onedark-nvim
