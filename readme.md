@@ -5,8 +5,18 @@
 1. Enable `system.d`
 
    ```sh
-   sudo sh -c 'echo "[boot]" > /etc/resolv.conf'
-   sudo sh -c 'echo "systemd=true" >> /etc/resolv.conf'
+   sudo sh -c 'cat << EOF > /etc/wsl.conf
+   [boot]
+   systemd = true
+
+   [interop]
+   enabled = true
+
+   [automount]
+   enabled = true
+   options = "metadata,umask=022,fmask=011"
+
+   EOF'
    ```
 
 2. Fix name resolution on corporate networks
@@ -20,8 +30,8 @@
    sudo sh -c 'echo "nameserver 8.8.8.8" > /etc/resolv.conf'
 
    # Prevent WSL from auto-generating resolv.conf on reboot
-   sudo sh -c 'echo "[network]" >> /etc/resolv.conf'
-   sudo sh -c 'echo "generateResolvConf=false" >> /etc/resolv.conf'
+   sudo sh -c 'echo "[network]" >> /etc/wsl.conf'
+   sudo sh -c 'echo "generateResolvConf = false" >> /etc/wsl.conf'
    ```
 
 3. Reboot
