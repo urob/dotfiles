@@ -115,6 +115,9 @@ autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
 " xaml
 autocmd vimrc BufNewFile,BufRead *.xaml set syntax=xml
 
+" webc
+autocmd vimrc BufNewFile,BufRead *.webc set syntax=html ft=html
+
 " +------------+
 " | statusline |
 " +------------+
@@ -521,6 +524,7 @@ require'nvim-treesitter.configs'.setup {
     },
   },
 }
+-- vim.treesitter.language.register('html', 'webc')
 
 require("ibl").setup {
     indent = { char = "│", smart_indent_cap = false, highlight = "WinSeparator" },
