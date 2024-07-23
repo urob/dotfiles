@@ -20,11 +20,6 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # neovim-nightly-overlay = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
-    # };
   };
 
   outputs = {self, ...} @ inputs: let
@@ -36,7 +31,6 @@
     pkgs = import inputs.nixpkgs {inherit system overlays;};
     overlays = [
       (_: prev: {unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};})
-      # inputs.neovim-nightly-overlay.overlays.default
     ];
   in {
     formatter.${system} = pkgs.nixpkgs-fmt; # nixpkgs-fmt or alejandra
