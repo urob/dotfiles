@@ -52,22 +52,6 @@
       context = self;
     };
 
-    # Entrypoint for NixOS
-    /*
-    nixosConfigurations = {
-      your-hostname = nixpkgs.lib.nixosSystem {
-    specialArgs = {inherit system;};
-    modules = [
-      ./nixos/configuration.nix
-      {
-        # permission to add to substituters
-        nix.settings.trusted-users = [ "${username}" ];
-      }
-    ];
-      };
-    };
-    */
-
     # Entrypoint for standalone home-manager
     homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
