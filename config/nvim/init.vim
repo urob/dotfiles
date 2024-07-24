@@ -590,6 +590,8 @@ require('gitsigns').setup{
     end
 }
 
+require('colorizer').setup()
+
 EOF
 
 " Enable folding
