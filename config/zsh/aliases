@@ -102,7 +102,7 @@ fi
 # create virtual environment and add dependencies from requirements.txt (if exists)
 alias ve='python3 -m venv ./venv \
     && [[ -f "requirements.txt" ]] \
-    && python -m pip install -r requirements.txt'
+    && .venv/python -m pip install -r requirements.txt'
 alias va='source ./venv/bin/activate'  # activate venv in current shell
 
 # +--------+
