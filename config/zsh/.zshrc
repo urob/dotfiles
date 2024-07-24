@@ -206,5 +206,10 @@ if [[ -z $SSH_CONNECTION ]] && [[ -o login ]] && [ "$TMUX" = "" ]; then
     fi
 fi
 
-# Initialize direnv
+# Initialize direnv and suppress prining of environment variables
+# https://ianthehenry.com/posts/how-to-learn-nix/nix-direnv/
+export DIRENV_LOG_FORMAT="$(printf "\033[2mdirenv: %%s\033[0m")"
 eval "$(direnv hook zsh)"
+_direnv_hook() {
+  eval "$(direnv export zsh 2> >(egrep -v -e '^....direnv: export' >&2))"
+};
