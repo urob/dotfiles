@@ -59,6 +59,7 @@ in
     unstable.micromamba
     # pipx
     python3
+    poetry
     unstable.ruff
 
 

@@ -13,7 +13,7 @@ in
   home = { inherit username homeDirectory; };
 
   # Import sub modules
-  imports = [ ./symlinks.nix ./programs ./wsl ];
+  imports = [ ./file.nix ./packages.nix ./vim.nix ];
 
   # Options for non-nixOS linux
   # targets.genericLinux = true;
