@@ -9,7 +9,7 @@ require("conform").setup({
         sh = { "shfmt" },
         lua = { "stylua" },
         markdown = { { "prettierd", "prettier" } },
-        nix = { "alejandra" },
+        nix = { "nixfmt", "alejandra" },
         python = { "ruff_format" },
         scss = { { "prettierd", "prettier" } },
         yaml = { { "prettierd", "prettier" } },
