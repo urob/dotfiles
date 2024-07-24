@@ -3,7 +3,7 @@ default:
 
 # rebuild home-manager
 build:
-    home-manager switch --flake .
+    home-manager switch --flake .#$(nix eval --raw --impure --expr "builtins.currentSystem")
 
 # run garbage-collector
 clean:

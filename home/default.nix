@@ -1,9 +1,11 @@
 # TODO
 # - check if need to create dirs: XDG_*, XDG_[CACHE|STATE]_HOME/zsh
 # - partially manage zsh?
-{ context, ... }:
+{ cfg, ... }:
+
 let
-  inherit (context.cfg) username homeDirectory;
+  inherit (cfg) username homeDirectory;
+
 in
 {
   # Mostly version of auto-generated configs
