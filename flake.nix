@@ -28,12 +28,6 @@
       runtimeRoot = "${homeDirectory}/dotfiles";
     };
 
-    utils = import ./lib {
-      inherit pkgs;
-      inherit (inputs.home-manager.lib) hm;
-      context = self;
-    };
-
     # Entrypoint for standalone home-manager
     homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
