@@ -67,6 +67,7 @@ in
     # csharpier # pulls in all tooling
     # matlab-formatter-vscode # n/a
     alejandra # opinionated nix formatter
+    unstable.nixfmt-rfc-style
     nixpkgs-fmt # default nix formatter for nixpkgs
     deadnix # find unused nix attributes
     statix # nix linter
