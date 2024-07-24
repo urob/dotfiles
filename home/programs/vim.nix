@@ -20,6 +20,8 @@
       virt-column-nvim
       which-key-nvim
 
+      nvim-colorizer-lua
+
       # Git
       conflict-marker-vim
       vim-fugitive
