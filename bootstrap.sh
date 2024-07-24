@@ -41,9 +41,13 @@ for f in $files; do
     [[ $key =~ ^[Yy]$ ]] && rm -rf ${f}
 done
 
-# Install Nix and start nix deamon without reloading shell
+# Install Nix
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
+    sh -s -- install --no-confirm
+
+# Start nix daemon without reloading shell
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Initialize home manager
-nix run "$DOTFILES" -- init --switch "$DOTFILES" --impure
+SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
+nix run "$DOTFILES" -- init --switch "${DOTFILES}#${SYSTEM}"

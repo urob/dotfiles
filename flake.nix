@@ -1,5 +1,5 @@
 {
-  description = "Urob's dotfiles";
+  description = "Home-manager configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -11,31 +11,43 @@
     };
   };
 
-  outputs = {self, ...} @ inputs: let
-    system = "x86_64-linux";
-    username = "urob";
-    homeDirectory = "/home/${username}";
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+    let
+      defaultCfg = rec {
+        username = "urob";
+        homeDirectory = "/home/${username}";
+        runtimeRoot = "${homeDirectory}/dotfiles";
+        context = self;
+      };
 
-    # pkgs = inputs.nixpkgs.legacyPackages.${system}.extend unstable;
-    pkgs = import inputs.nixpkgs {inherit system overlays;};
-    overlays = [
-      (_: prev: {unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};})
-    ];
-  in {
+      overlays = [
+        (_: prev: { unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system}; })
+      ];
 
-    cfg = {
-      inherit system username homeDirectory;
-      runtimeRoot = "${homeDirectory}/dotfiles";
+      pkgsForSystem = system: import nixpkgs { inherit system overlays; };
+
+      mkHomeConfiguration = args:
+        home-manager.lib.homeManagerConfiguration {
+          modules = [ ./home ];
+          pkgs = pkgsForSystem (args.system or "x86_64-linux");
+          # Could add cfg.currentSystem = system if needed
+          extraSpecialArgs = { cfg = defaultCfg // args.config or { }; };
+        };
+
+    in
+    {
+      homeConfigurations = rec {
+        # TODO: add lib function to loop over systems
+        x86_64-linux = mkHomeConfiguration { };
+
+        aarch64-linux = mkHomeConfiguration {
+          system = "aarch64-linux";
+        };
+
+        ${defaultCfg.username} = x86_64-linux;
+      };
+
+      # Make `home-manager` default action for `nix run .`
+      inherit (home-manager) packages;
     };
-
-    # Entrypoint for standalone home-manager
-    homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {context = self;};
-      modules = [./home];
-    };
-
-    # Default `nix run .` to use home-manager, only used for initialization
-    defaultPackage.${system} = inputs.home-manager.defaultPackage.${system};
-  };
 }

@@ -5,13 +5,12 @@
 #     .foo = { source = "foo"; outOfStoreSymlink = true; recursive = true; };
 #     .bar = { source = "foo/bar"; outOfStoreSymlink = true; };
 #   };
-{ pkgs, hm, context, ... }:
+{ pkgs, hm, context, runtimeRoot, ... }:
 
 let
   inherit (pkgs) lib;
 
   # Swap a path inside the nix store with the same path in runtimeRoot
-  inherit (context.cfg) runtimeRoot;
   runtimePath = path:
     let
       rootStr = toString context; # context is the `self` passed to flake outputs

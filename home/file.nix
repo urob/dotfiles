@@ -1,12 +1,13 @@
-{ config, pkgs, context, ... }:
+{ config, pkgs, cfg, ... }:
 
 let
   inherit (config.home) username homeDirectory;
   vimData = "${homeDirectory}/.local/share/nvim";
 
   mkSymlinkAttrs = import ../lib/mkSymlinkAttrs.nix {
-    inherit context pkgs;
-    hm = config.lib; # same as: inherit (context.inputs.home-manager.lib) hm;
+    inherit pkgs;
+    inherit (cfg) context runtimeRoot;
+    hm = config.lib; # same as: inherit (cfg.context.inputs.home-manager.lib) hm;
   };
 
 in
