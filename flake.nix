@@ -33,7 +33,6 @@
       (_: prev: {unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};})
     ];
   in {
-    formatter.${system} = pkgs.nixpkgs-fmt; # nixpkgs-fmt or alejandra
 
     cfg = {
       inherit system username homeDirectory;
