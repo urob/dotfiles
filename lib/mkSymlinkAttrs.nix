@@ -1,4 +1,12 @@
+# This function adds and interpretes outOfStoreSymlink option to home.file attribute sets.
+#
+# Usage:
+#   home.file = mkSymlinkAttrs {
+#     .foo = { source = "foo"; outOfStoreSymlink = true; recursive = true; };
+#     .bar = { source = "foo/bar"; outOfStoreSymlink = true; };
+#   };
 { pkgs, hm, context, ... }:
+
 let
   inherit (pkgs) lib;
 
@@ -43,29 +51,19 @@ let
   # Remove custom attributes from attribute set.
   rmopts = attrs: builtins.removeAttrs attrs [ "source" "recursive" "outOfStoreSymlink" ];
 
-in
-{
-  # Adds and interpretes outOfStoreSymlink option to home.file attribute sets.
-  # Usage:
-  #   home.file = mkSymlinkAttrs {
-  #     .foo = { source = "foo"; outOfStoreSymlink = true; recursive = true; };
-  #     .bar = { source = "foo/bar"; outOfStoreSymlink = true; };
-  #   };
-  mkSymlinkAttrs = fileAttrs:
-    lib.attrsets.concatMapAttrs
-      (
-        name: value:
-          # Make outOfStoreSymlinks
-          if value.outOfStoreSymlink or false
-          then
-            if value.recursive or false
-            then
-              lib.attrsets.mapAttrs
-                (_: attrs: attrs // rmopts value)
-                (mkRecursiveOutOfStoreSymlink value.source name)
-            else { "${name}" = { source = mkOutOfStoreSymlink value.source; } // rmopts value; }
-          # Handle all other cases as usual
-          else { "${name}" = value; }
-      )
-      fileAttrs;
-}
+in fileAttrs: lib.attrsets.concatMapAttrs
+  (
+    name: value:
+    # Make outOfStoreSymlinks
+    if value.outOfStoreSymlink or false
+    then
+      if value.recursive or false
+      then
+        lib.attrsets.mapAttrs
+          (_: attrs: attrs // rmopts value)
+          (mkRecursiveOutOfStoreSymlink value.source name)
+      else { "${name}" = { source = mkOutOfStoreSymlink value.source; } // rmopts value; }
+    # Handle all other cases as usual
+    else { "${name}" = value; }
+  )
+  fileAttrs
