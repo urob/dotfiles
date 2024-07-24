@@ -60,14 +60,16 @@
 
 ```sh
 # Install Nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | 
+  sh -s -- install --no-confirm
 
 # Start nix daemon without reloading shell
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Initialize home manager in current directory
 cd <path/to/flake.nix>
-nix run . -- init --switch . --impure
+SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
+nix run . -- init --switch ".#$SYSTEM"
 ```
 
 ## Maintainance
@@ -75,8 +77,7 @@ nix run . -- init --switch . --impure
 - Rebuild config
 
   ```sh
-  # outOfStoreSymlinks require impure
-  home-manager switch --flake <path/to/flake.nix> --impure
+  home-manager switch --flake <path/to/flake.nix>#<configuration>
   ```
 
 - Update all packages
