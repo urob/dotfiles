@@ -20,11 +20,18 @@
         context = self;
       };
 
+      config = { allowUnfree = true; };
+
       overlays = [
-        (_: prev: { unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system}; })
+        (_: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (prev) system;
+            inherit config;
+          };
+        })
       ];
 
-      pkgsForSystem = system: import nixpkgs { inherit system overlays; };
+      pkgsForSystem = system: import nixpkgs { inherit system config overlays; };
 
       mkHomeConfiguration = args:
         home-manager.lib.homeManagerConfiguration {
