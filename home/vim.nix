@@ -33,6 +33,8 @@
       nvim-treesitter-textobjects
       # nvim-ts-context-commentstring # native in nightly
 
+      copilot-vim
+
       # Lazy-loaded plugins
       { optional = true; plugin = markdown-preview-nvim; }
       { optional = true; plugin = nerdtree; }
