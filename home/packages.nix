@@ -10,6 +10,7 @@ in
     bat
     broot
     # coreutils
+    # uutils-coreutils-noprefix # rust reimplementation of coreutils
     eza
     # findutils
     fd
@@ -44,22 +45,22 @@ in
     tig
 
     # Development tools
-    clang-tools # bundles clang-format, alternatively use clang
+    # clang-tools # bundles clang-format, alternatively use clang
     direnv
     nix-direnv # replace built-in use_nix and use_flake with versions that persist garbage-collection
-    glow
+    # glow
     # gcc # also clangStdenv? # similar to build-essentials in debian
     # some markdown driver? which?
     # fuse # or fuse3? or is this part of fuse-overlayfs?
     # fuse-overlayfs # TODO: is this automatically installed by podman?
-    podman
-    podman-compose
+    # podman
+    # podman-compose
 
     # Python
-    unstable.micromamba
+    # unstable.micromamba
     # pipx
     python3
-    poetry
+    # poetry
     unstable.ruff
 
 
