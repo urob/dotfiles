@@ -23,12 +23,15 @@
       config = { allowUnfree = true; };
 
       overlays = [
+        # Attach nixpkgs-unstable at pkgs.unstable
         (_: prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit (prev) system;
             inherit config;
           };
         })
+        # Force home-manager to use same nix version as on system
+        (_: prev: {nix = prev.nixVersions.nix_2_23;})
       ];
 
       pkgsForSystem = system: import nixpkgs { inherit system config overlays; };
