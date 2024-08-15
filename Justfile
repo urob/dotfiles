@@ -8,6 +8,8 @@ build:
 # run garbage-collector
 clean:
     nix-collect-garbage --delete-old
+    # nix-collect-garbage
+    # nix-store --gc
 
 # list installed packages
 list:
@@ -20,3 +22,7 @@ upgrade:
     @just build
     @just list > /tmp/installed
     @git diff --word-diff --unified=0 --no-index /tmp/installed.bak /tmp/installed || true
+
+# upgrade nix
+upgrade-nix:
+    sudo -i nix upgrade-nix
