@@ -1,4 +1,4 @@
 [global]
 
-warn_timeout = "1m"
+warn_timeout = "2m"
 hide_env_diff = true
