@@ -3,16 +3,16 @@ vim.api.nvim_command("packadd conform.nvim")
 require("conform").setup({
     formatters_by_ft = {
         cs = { "csharpier" },
-        css = { { "prettierd", "prettier" } },
+        css = { "prettierd", "prettier", stop_after_first = true },
         html = { "prettier" }, -- prettierd doesn't support options below
-        javascript = { { "prettierd", "prettier" } },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
         sh = { "shfmt" },
         lua = { "stylua" },
-        markdown = { { "prettierd", "prettier" } },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
         nix = { "nixfmt", "alejandra" },
         python = { "ruff_format" },
-        scss = { { "prettierd", "prettier" } },
-        yaml = { { "prettierd", "prettier" } },
+        scss = { "prettierd", "prettier", stop_after_first = true },
+        yaml = { "prettierd", "prettier", stop_after_first = true },
         webc = { "prettier" }, -- prettierd doesn't support options below
     },
 })
@@ -37,6 +37,7 @@ require("conform").formatters.prettier = {
     },
 }
 
+-- Format command
 vim.api.nvim_create_user_command("Format", function(args)
     local range = nil
     if args.count ~= -1 then
