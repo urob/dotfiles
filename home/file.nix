@@ -2,7 +2,7 @@
 
 let
   inherit (config.home) username homeDirectory;
-  vimData = "${homeDirectory}/.local/share/nvim";
+  vimData = ".local/share/nvim";
 
   mkSymlinkAttrs = import ../lib/mkSymlinkAttrs.nix {
     inherit pkgs;
@@ -14,7 +14,7 @@ in
 {
   # Create directories that are expected by dotfiles
   systemd.user.tmpfiles.rules = [
-    "d ${vimData}/sessions 0755 ${username}"
+    "d ${homeDirectory}/${vimData}/sessions 0755 ${username}"
   ];
 
   # Symlink dotfiles
