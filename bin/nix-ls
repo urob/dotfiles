@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-# readlink -f ~/.nix-profile/*/* |
-#     sed 's|^/nix/store/[a-z0-9]*-||' |
-#     sed 's|/.*$||' |
-#     sort -u
+readlink -f /nix/store/* |
+    grep '/nix/store/' |    # filter out non-store paths
+    # grep -v '.drv$' |       # filter out derivation sources
+    grep -v -e '-man$' |    # filter out man pages
+    # sed 's/[^-]*-//' |      # remove hash prefix
+    # sed 's|/.*$||' |      # remove subpaths (not needed when only listing toplevel)
+    sort -u
 
 # if  [[ -e $HOME/.nix-profile/manifest.json \
 #     || -e ${XDG_STATE_HOME:-$HOME/.local/state}/nix/profile/manifest.json ]] ; then
@@ -20,5 +23,3 @@
 #     echo 'No home-manager packages seem to be installed.'
 # fi
 
-# list all packages, excluding man pages
-home-manager packages | grep -v -e '-man$'
