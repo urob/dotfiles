@@ -2,19 +2,19 @@
 
 let
   inherit (config.home) username homeDirectory;
-  vimData = ".local/share/nvim";
+  vimData = "${homeDirectory}/.local/share/nvim";
 
   mkSymlinkAttrs = import ../lib/mkSymlinkAttrs.nix {
     inherit pkgs;
     inherit (cfg) context runtimeRoot;
-    hm = config.lib; # same as: inherit (cfg.context.inputs.home-manager.lib) hm;
+    hm = config.lib; # same as: cfg.context.inputs.home-manager.lib.hm;
   };
 
 in
 {
   # Create directories that are expected by dotfiles
   systemd.user.tmpfiles.rules = [
-    "d ${homeDirectory}/${vimData}/sessions 0755 ${username}"
+    "d ${vimData}/sessions 0755 ${username}"  # TODO: do this from within vim config
   ];
 
   # Symlink dotfiles
@@ -33,12 +33,6 @@ in
 
     ".ssh" = {
       source = ../config/ssh;
-      outOfStoreSymlink = true;
-      recursive = true;
-    };
-
-    "${vimData}/site/autoload" = {
-      source = ../config/nvim/autoload;
       outOfStoreSymlink = true;
       recursive = true;
     };
