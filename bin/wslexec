@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Run a Windows executable from WSL without enabling appendWindowsPath
+
+# Use powershell to get full path of executable
+winpath=$(powershell.exe -noprofile -nologo -noninteractive -command "(Get-Command ${1}).Path")
+
+# Convert Windows path to Linux path
+nixpath=$(wslpath -u "${winpath%$'\r'}")
+
+# Run the executable and pass all remaining arguments
+"$nixpath" "${@:2}"
