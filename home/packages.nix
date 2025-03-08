@@ -6,20 +6,24 @@ in
   imports = [ ./vim.nix ];
 
   home.packages = with pkgs; [
+    # Core packages, provided by Debian
+    # coreutils # or uutils-coreutils-noprefix for rust version
+    # findutils
+    # man
+    # curl
+    # rsync
+    # ssh
+
     # General packages for development and system management
     bat
-    broot
-    # coreutils
-    # uutils-coreutils-noprefix # rust reimplementation of coreutils
+    # broot
     eza
-    # findutils
     fd
-    fzf
+    unstable.fzf
     unstable.fzf-git-sh
     htop
     just
-    lf
-    # man
+    yazi
     ripgrep
     sd
     tldr
@@ -31,28 +35,27 @@ in
     # zsh-fzf-tab -- add manually or manage shell via nix
 
     # Basic network tools
-    # curl
     openvpn3
-    # rsync
-    # ssh
 
     # Git
     diff-so-fancy
     git
-    # git-crypt # encrypt secrets inside repo, best used alongside gpg
     gitstatus # fast git-status used in my prompt
+    git-absorb
     pre-commit
     tig
+    # git-crypt # encrypt secrets inside repo, best used alongside gpg
 
     # Development tools
     # clang-tools # bundles clang-format, alternatively use clang
     direnv
-    nix-direnv # replace built-in use_nix and use_flake with versions that persist garbage-collection
+    nix-direnv
     # glow
     # gcc # also clangStdenv? # similar to build-essentials in debian
     # some markdown driver? which?
+
     # fuse # or fuse3? or is this part of fuse-overlayfs?
-    # fuse-overlayfs # TODO: is this automatically installed by podman?
+    # fuse-overlayfs # is this automatically installed by podman?
     # podman
     # podman-compose
 
@@ -62,6 +65,7 @@ in
     python3
     # poetry
     unstable.ruff
+    unstable.uv
 
 
     # Formatters and linters
@@ -75,6 +79,9 @@ in
     prettierd
     shfmt # shell formatter
     stylua # lua formatter
+    clang-tools # c/c++ formatter
+    yamlfix
+    yamlfmt
   ];
 
   # Export install paths referenced in dotfiles
