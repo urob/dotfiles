@@ -58,6 +58,8 @@
 
 ## Manually Set Up Home Manager
 
+(Not needed if using the installer script.)
+
 ```sh
 # Install Nix
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | 
