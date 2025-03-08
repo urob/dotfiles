@@ -6,6 +6,7 @@ candidate_paths=(
   "${HOME}/Dropbox"
   "${WINHOME}/Dropbox"
   "/mnt/d/Dropbox"
+  "/mnt/e/Dropbox"
 )
 
 # loop over candidate paths
