@@ -5,8 +5,9 @@ if has("win32")
     " * run in powershell: choco fzf
     " * create 'autoload', 'fzf_plugin', 'plugged' dirs in %USERPROFILE%/Local/nvim/
     " * save https://github.com/junegunn/fzf/blob/master/plugin/fzf.vim to fzf_plugin
-    let $VIMDATA=$USERPROFILE . '/AppData/Local/nvim'
-    source $VIMDATA . '/plugins.vim'  # managed with nix in *nix
+    let $VIMDATA=stdpath("data")
+    "let $VIMDATA=$USERPROFILE . '/AppData/Local/nvim'
+    source $VIMDATA . '/plugins.vim'
     let $FZF_VIM_DIR=$VIMDATA . '/fzf_plugin'
 endif
 
@@ -15,11 +16,16 @@ endif
 " +----------------+
 
 if (has("termguicolors"))
-    set termguicolors        " truecolor support
+    set termguicolors        " truecolor support, disable for ANSI colorschemes
 endif
-" syntax on  " superseded by treesitter?
 
-silent! colorscheme onedark  " don't choke if colorscheme does not exist
+"silent! colorscheme onedark  " don't choke if colorscheme does not exist
+set background=light
+let g:zenbones_compat = 1
+let g:zenbones_lightness = 'bright'
+silent! colorscheme zenbones  " don't choke if colorscheme does not exist
+"silent! colorscheme PaperColor  " don't choke if colorscheme does not exist
+"silent! colorscheme jb
 
 set title mouse=a            " show title + terminal mouse support
 set number relativenumber    " show relative linenumbers
@@ -76,6 +82,31 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 "     autocmd QuickFixCmdPost lgetexpr lwindow
 " augroup END
 
+" +-----------+
+" | clipboard |
+" +-----------+
+
+set clipboard+=unnamedplus   " use global clipboard
+lua << EOF
+vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+         -- Requires 'set -s set-clipboard on' in tmux.conf config. Useful for
+         -- yanking from SSH, but see security concerns:
+         -- https://github.com/tmux/tmux/wiki/Clipboard
+        -- ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+        -- ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+        ["+"] = "clip.exe",
+        ["*"] = "clip.exe",
+    },
+    paste = {
+        ["+"] = "win32yank.exe -o --lf",
+        ["*"] = "win32yank.exe -o --lf",
+    },
+    cache_enabled = 0,
+}
+EOF
+
 " +---------+
 " | autocmd |
 " +---------+
@@ -116,7 +147,7 @@ autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
 autocmd vimrc BufNewFile,BufRead *.xaml set syntax=xml
 
 " webc
-autocmd vimrc BufNewFile,BufRead *.webc set syntax=html ft=html
+"autocmd vimrc BufNewFile,BufRead *.webc set syntax=html ft=html
 
 " +------------+
 " | statusline |
@@ -128,11 +159,14 @@ autocmd vimrc BufNewFile,BufRead *.webc set syntax=html ft=html
 " set statusline=%#WinSeparator#%{repeat('─',winwidth('.'))}
 " set rulerformat=%59(%f\ %h%w%m%r%=%l,%c\ %P%)
 
+" set cmdheight=0 " don't show command line
+
 set laststatus=2
 set statusline=%<                           " truncate here if needed
 set statusline+=%f\                         " file + path relative to current dir
+set statusline+=%(on\ %{get(b:,'gitsigns_head','')}%) " git head
+set statusline+=%([%{get(b:,'gitsigns_status','')}]%) " git status
 set statusline+=%h%w%m%r                    " help, preview, modified, readonly
-set statusline+=%{FugitiveStatusline()}     " git status
 set statusline+=%([%{&fenc=='utf-8'?'':&fenc.'>'.&enc}]%)   " file encoding if not utf-8
 set statusline+=%([%{&ff=='unix'?'':&ff}]%) " file format if not unix
 set statusline+=%=                          " hfill
@@ -217,6 +251,8 @@ nnoremap <leader>P "+P
 nnoremap <silent> <F3> :set spell!<cr>
 
 " Save session
+call mkdir(stdpath("data") . "/sessions", "p")
+let $VIMDATA=stdpath("data")
 nnoremap <leader>ss :mksession! $VIMDATA/sessions/
 " Reload session
 nnoremap <leader>sl :source $VIMDATA/sessions/
@@ -234,28 +270,6 @@ nnoremap <C-Tab> :tabnext<CR>
 nnoremap <C-S-Tab> :tabprev<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-d> :tabclose<CR>
-
-"" in visual mode, use "((" etc, to enclose selection
-"vnoremap (( <esc>`>a)<esc>`<i(<esc>
-"vnoremap [[ <esc>`>a]<esc>`<i[<esc>
-"vnoremap {{ <esc>`>a}<esc>`<i{<esc>
-"vnoremap "" <esc>`>a"<esc>`<i"<esc>
-"vnoremap '' <esc>`>a'<esc>`<i'<esc>
-
-" Pasting blockwise and linewise selections is not possible in Insert and
-" Visual mode without the +virtualedit feature.  They are pasted as if they
-" were characterwise instead.
-" Uses the paste.vim autoload script
-
-"exe 'inoremap <script> <S-Insert>' paste#paste_cmd['i']
-"exe 'vnoremap <script> <S-Insert>' paste#paste_cmd['v']
-
-" CTRL-F does Find-Replace dialog instead of page forward
-"noremap <C-F> :promptrepl<CR>
-"vnoremap <C-F> y:promptrepl <C-R>"<CR>
-"onoremap <C-F> <C-C>:promptrepl<CR>
-"inoremap <C-F> <C-O>:promptrepl<CR>
-"cnoremap <C-F> <C-C>:promptrepl<CR>
 
 " +----------+
 " | VIM-ZOOM |
@@ -275,10 +289,9 @@ let g:matchup_transmute_enabled = 1
 " | MARKDOWN-PREVIEW |
 " +------------------+
 
-" use a custom markdown style must be absolute path
-" like '/Users/username/markdown.css' or expand('~/markdown.css')
-" file from: https://github.com/hyrious/github-markdown-css
-" edited to include: style content in https://github.com/sindresorhus/github-markdown-css#usage
+" markdown style based on:
+" https://github.com/hyrious/github-markdown-css
+" https://github.com/sindresorhus/github-markdown-css#usage
 let g:mkdp_markdown_css = expand($XDG_CONFIG_HOME . '/css/markdown.css')
 
 " Toggle browser preview
@@ -323,7 +336,14 @@ nnoremap <leader>u :packadd vim-mundo<cr>:MundoToggle<cr>
 " | FORMATTER |
 " +-----------+
 
-nnoremap <leader>l :lua require("plugins.conform")<cr>:Format<cr>
+noremap <leader>l :lua require("plugins.conform")<cr>:Format<cr>
+
+" +----+
+" | AI |
+" +----+
+
+noremap <silent> <leader>A :lua require("plugins.codecompanion")<cr>:CodeCompanionActions<cr>
+noremap <silent> <leader>a :lua require("plugins.codecompanion")<cr>:CodeCompanionChat Toggle<cr>
 
 " +--------------+
 " | VIM-SURROUND |
@@ -402,15 +422,15 @@ nnoremap <leader>c :Commands<cr>
 " Ex command history. <C-e> to modify the command
 nnoremap <leader>: :History:<cr>
 
-nnoremap <leader>a :Rg<space>
-nnoremap <leader>A :exec "Rg ".expand("<cword>")<cr>
+nnoremap <leader>r :Rg<space>
+nnoremap <leader>R :exec "Rg ".expand("<cword>")<cr>
 
 " ripgrep command to search in multiple files TODO: delete?
 autocmd vimrc VimEnter * command! -nargs=* Rg call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+  \ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
+  \ <bang>0 ? fzf#vim#with_preview('up:60%')
+  \         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \ <bang>0)
 
 " Show preview window on right if >70 cols, and on top otherwise
 let g:fzf_preview_window = ['right,50%,border-left,<70(up,40%)<70(up,40%,border-bottom)', 'ctrl-/']
@@ -423,14 +443,70 @@ else
 endif
 
 
-" +-----------------+
-" | NVIM-TREESITTER |
-" +-----------------+
+" +-----+
+" | LUA |
+" +-----+
 
-" if getting query error: invalid node type, see https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-" to remove additional parsers: simply rename the /lib/nvim/parser folder to e.g., /lib/nvim/parser~
+nnoremap <leader>z :ZenMode<CR>
 
 lua << EOF
+-- require('lualine').setup {
+--     options = {
+--         section_separators = '',
+--         component_separators = '',
+--     },
+--     sections = {
+--         lualine_a = { },
+--         lualine_b = { },
+--         lualine_c = {
+--             { 'filetype', padding = { left = 1, right = 0}, icon_only = true },
+--             { 'filename', path = 4 },
+--             { 'branch' },
+--         },
+--         -- { 'diff', 'encoding', 'fileformat', 'filetype' },
+--         -- { 'searchcount', 'selectioncount' },
+--         lualine_x = { 'searchcount', 'diagnostics', 'location', 'progress' },
+--         lualine_y = { },
+--         lualine_z = { 'mode' },
+--     },
+-- }
+
+require('colorizer').setup()
+require('which-key').setup()
+
+require("zen-mode").setup {
+    window = {
+        backdrop = 0.95,
+        width = 120,
+        options = {
+            signcolumn = "no", -- "no" disables signcolumn
+            number = true, -- false disables number column
+            relativenumber = true, -- false disables relative numbers
+            foldcolumn = "0", -- "0" disables fold column
+            list = true, -- false disables whitespace characters
+        },
+    },
+    plugins = {
+        options = {
+            enabled = true,
+            ruler = true,
+            showcmd = true,
+            -- cmdheight = 0,
+        },
+        tmux = { enabled = true },
+    },
+}
+
+require("ibl").setup {
+    indent = { char = "│", smart_indent_cap = false, },
+    -- indent = { char = "│", smart_indent_cap = false, highlight = "WinSeparator" },
+}
+
+require("virt-column").setup {
+    char = "│", -- highlight = "WinSeparator", virtcolumn = "+1",
+}
+
+-- Treesitter
 require'nvim-treesitter.configs'.setup {
     highlight = { enable = true },
     indent = { enable = true },
@@ -446,152 +522,83 @@ require'nvim-treesitter.configs'.setup {
         },
     },
 
-    refactor = {
-
-        enable = false,
-
-        highlight_definitions = { -- highlight definition & usage of symbol under cursor
-            enable = true,
-            -- Set to false if you have an `updatetime` of ~100.
-            clear_on_cursor_move = true,
-        },
-
-        highlight_current_scope = { enable = false }, -- highlight block from current scope
-
-        smart_rename = { -- renames symbol under cursor within current scope & file
-            enable = false,
-            -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
-            keymaps = {
-                smart_rename = "grr",
-            },
-        },
-
-        navigation = {
-            enable = true,
-            -- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
-            keymaps = {
-                goto_definition = "<C-.>",
-                list_definitions = false,
-                list_definitions_toc = false,
-                goto_next_usage = "<C-n>",
-                goto_previous_usage = "<C-p>",
-            },
-        },
-    },
-
     textobjects = {
-    select = {
-      enable = true,
+        select = {
+            enable = true,
 
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
+            -- Automatically jump forward to textobj, similar to targets.vim
+            lookahead = true,
 
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["aa"] = "@parameter.outer",
-        ["ia"] = "@parameter.inner",
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        -- You can optionally set descriptions to the mappings (used in the desc parameter of
-        -- nvim_buf_set_keymap) which plugins like which-key display
-        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-        -- You can also use captures from other query groups like `locals.scm`
-        ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-      },
-      -- You can choose the select mode (default is charwise 'v')
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * method: eg 'v' or 'o'
-      -- and should return the mode ('v', 'V', or '<c-v>') or a table
-      -- mapping query_strings to modes.
-      selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
-      },
-      -- If you set this to `true` (default is `false`) then any textobject is
-      -- extended to include preceding or succeeding whitespace. Succeeding
-      -- whitespace has priority in order to act similarly to eg the built-in
-      -- `ap`.
-      --
-      -- Can also be a function which gets passed a table with the keys
-      -- * query_string: eg '@function.inner'
-      -- * selection_mode: eg 'v'
-      -- and should return true or false
-      include_surrounding_whitespace = true,
+            keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                -- You can optionally set descriptions to the mappings (used in the desc parameter of
+                -- nvim_buf_set_keymap) which plugins like which-key display
+                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+                },
+                selection_modes = {
+                ['@parameter.outer'] = 'v', -- charwise
+                ['@function.outer'] = 'V', -- linewise
+                ['@class.outer'] = '<c-v>', -- blockwise
+                },
+                include_surrounding_whitespace = true,
+        },
     },
-  },
 }
--- vim.treesitter.language.register('html', 'webc')
-
-require("ibl").setup {
-    indent = { char = "│", smart_indent_cap = false, highlight = "WinSeparator" },
-    -- indent = { char = "▏", smart_indent_cap = false, highlight = "WinSeparator" },
-}
-
-require("virt-column").setup {
-    char = "│", highlight = "WinSeparator", -- virtcolumn = "+1",
-}
-
--- -- integrate ts_context_commentstring with comment.nvim
--- vim.g.skip_ts_context_commentstring_module = true
--- require('ts_context_commentstring').setup {
---     enable_autocmd = false,
--- }
--- require('Comment').setup {
---     pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
--- }
-
-require('which-key').setup()
+vim.filetype.add({ extension = {webc = 'webc'} })
+vim.treesitter.language.register('html', 'webc')
 
 require('gitsigns').setup{
-    -- current_line_blame = true,
-    on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+  on_attach = function(bufnr)
+    local gitsigns = require('gitsigns')
 
-        local function map(mode, l, r, opts)
-        opts = opts or {}
-        opts.buffer = bufnr
-        vim.keymap.set(mode, l, r, opts)
-        end
-
-        -- Navigation
-        map('n', ']c', function()
-        if vim.wo.diff then return ']c' end
-        vim.schedule(function() gs.next_hunk() end)
-        return '<Ignore>'
-        end, {expr=true})
-
-        map('n', '[c', function()
-        if vim.wo.diff then return '[c' end
-        vim.schedule(function() gs.prev_hunk() end)
-        return '<Ignore>'
-        end, {expr=true})
-
-        -- Actions
-        map('n', '<leader>hs', gs.stage_hunk)
-        map('n', '<leader>hr', gs.reset_hunk)
-        map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-        map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-        map('n', '<leader>hS', gs.stage_buffer)
-        map('n', '<leader>hu', gs.undo_stage_hunk)
-        map('n', '<leader>hR', gs.reset_buffer)
-        map('n', '<leader>hp', gs.preview_hunk)
-        map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-        map('n', '<leader>tb', gs.toggle_current_line_blame)
-        map('n', '<leader>hd', gs.diffthis)
-        map('n', '<leader>hD', function() gs.diffthis('~') end)
-        map('n', '<leader>td', gs.toggle_deleted)
-
-        -- Text object
-        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
     end
+
+    -- Navigation
+    map('n', ']h', function()
+      if vim.wo.diff then
+        vim.cmd.normal({']h', bang = true})
+      else
+        gitsigns.nav_hunk('next')
+      end
+    end)
+
+    map('n', '[h', function()
+      if vim.wo.diff then
+        vim.cmd.normal({'[h', bang = true})
+      else
+        gitsigns.nav_hunk('prev')
+      end
+    end)
+
+    -- Actions
+    map('n', '<leader>hs', gitsigns.stage_hunk)
+    map('n', '<leader>hr', gitsigns.reset_hunk)
+    map('v', '<leader>hs', function() gitsigns.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    map('v', '<leader>hr', function() gitsigns.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+    map('n', '<leader>hS', gitsigns.stage_buffer)
+    map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+    map('n', '<leader>hR', gitsigns.reset_buffer)
+    map('n', '<leader>hp', gitsigns.preview_hunk)
+    map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
+    map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
+    map('n', '<leader>hd', gitsigns.diffthis)
+    map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
+    map('n', '<leader>td', gitsigns.toggle_deleted)
+
+    -- Text object
+    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end
 }
-
-require('colorizer').setup()
-
 EOF
 
 " Enable folding
