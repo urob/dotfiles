@@ -2,11 +2,11 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -31,7 +31,7 @@
           };
         })
         # Force home-manager to use same nix version as on system
-        (_: prev: {nix = prev.nixVersions.nix_2_23;})
+        (_: prev: {nix = prev.nixVersions.nix_2_25;})
       ];
 
       pkgsForSystem = system: import nixpkgs { inherit system config overlays; };
