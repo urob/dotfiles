@@ -71,7 +71,6 @@ export GEM_HOME="$HOME/.local/gems"
 
 # other software
 export GITSTATUS_DIR="$XDG_LIB_HOME/gitstatus"  # see zshprompt
-export VIMDATA="${XDG_DATA_HOME}/nvim"          # see vim-plug, sessions, etc
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"

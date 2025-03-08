@@ -210,13 +210,13 @@ fi
 # +---------+
 
 # start/reattach to tmux session if running locally on a login shell
-if [[ -z $SSH_CONNECTION ]] && [[ -o login ]] && [ "$TMUX" = "" ]; then
+if [[ -z $SSH_CONNECTION ]] && [[ -o login ]] && [ -z "$TMUX" ]; then
     if [ "$(tmux ls | grep -v attached | wc -l)" -gt "0" ]; then
         # attach to old session
-        tmux a -t "$(tmux ls | grep -v attached | cut -d ":" -f1 | head -n 1)"
+        tmux attach-session -t "$(tmux ls | grep -v attached | cut -d ":" -f1 | head -n 1)"
     else
         # dont use exec so it's possible to run without tmux
-        tmux
+        tmux new-session
     fi
 fi
 
