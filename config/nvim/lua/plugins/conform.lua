@@ -2,17 +2,24 @@ vim.api.nvim_command("packadd conform.nvim")
 
 require("conform").setup({
     formatters_by_ft = {
+        c = { "clang-format" },
+        cpp = { "clang-format" },
         cs = { "csharpier" },
+        just = { "just" },
+        lua = { "stylua" },
+        -- markdown = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "prettierd", "injected" },
+        nix = { "nixfmt", "alejandra" },
+        python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
+        sh = { "shfmt" },
+        -- yaml = { "prettierd", "prettier", stop_after_first = true },
+        yaml = { "prettierd", "injected" },
+
+        -- TODO: replace prettierd with biome
         css = { "prettierd", "prettier", stop_after_first = true },
         html = { "prettier" }, -- prettierd doesn't support options below
         javascript = { "prettierd", "prettier", stop_after_first = true },
-        sh = { "shfmt" },
-        lua = { "stylua" },
-        markdown = { "prettierd", "prettier", stop_after_first = true },
-        nix = { "nixfmt", "alejandra" },
-        python = { "ruff_format" },
         scss = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "prettierd", "prettier", stop_after_first = true },
         webc = { "prettier" }, -- prettierd doesn't support options below
     },
 })
@@ -29,12 +36,21 @@ require("conform").setup({
 --     },
 -- }
 
-require("conform").formatters.prettier = {
-    options = {
-        ext_parsers = {
-            webc = "html",
+require("conform").formatters = {
+    prettier = {
+        options = {
+            ext_parsers = {
+                webc = "html",
+            },
         },
     },
+
+    -- Replaced by yamlfmt
+    -- yamlfix = {
+    --     env = {
+    --         YAMLFIX_WHITELINES = 1,
+    --     },
+    -- },
 }
 
 -- Format command
