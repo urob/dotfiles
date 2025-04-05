@@ -27,6 +27,20 @@ backup_dotfiles() {
   done
 }
 
+# +--------+
+# | Python |
+# +--------+
+
+ve() {
+    venv="${1:-.venv}"
+    if [[ ! -d "${venv}" ]]; then
+        uv venv "${venv}"
+        export VIRTUAL_ENV="${venv}"
+        [[ -f "requirements.txt" ]] && uv pip install -r requirements.txt
+    fi
+    source "${venv}/bin/activate"
+}
+
 # +--------------+
 # | Wsl specific |
 # +--------------+
