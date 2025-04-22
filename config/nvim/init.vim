@@ -47,7 +47,7 @@ set completeopt+=longest     " completion insert longest common matched text
 
 set diffopt+=vertical        " use vertical splits for diff
 
-set pastetoggle=<F2>         " use F2 to toggle pastemode
+"set pastetoggle=<F2>         " use F2 to toggle pastemode
 
 " Formatting symbols
 set list
@@ -89,13 +89,8 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 set clipboard+=unnamedplus   " use global clipboard
 lua << EOF
 vim.g.clipboard = {
-    name = "OSC 52",
+    name = "WslClipboard",
     copy = {
-         -- Requires 'set -s set-clipboard on' in tmux.conf config. Useful for
-         -- yanking from SSH, but see security concerns:
-         -- https://github.com/tmux/tmux/wiki/Clipboard
-        -- ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-        -- ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
         ["+"] = "clip.exe",
         ["*"] = "clip.exe",
     },
