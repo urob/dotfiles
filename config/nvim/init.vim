@@ -102,6 +102,10 @@ vim.g.clipboard = {
 }
 EOF
 
+" Automatically yank mouse selection to system clipboard
+vnoremap <LeftRelease> "*ygv
+vnoremap <2-LeftRelease> "*ygv
+
 " +---------+
 " | autocmd |
 " +---------+
