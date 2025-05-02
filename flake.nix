@@ -30,7 +30,8 @@
             inherit config;
           };
         })
-        # Force home-manager to use same nix version as on system
+        # Pin the nix input to the home-manager configuration.
+        # (The CLI version doesn't affect home-manager.)
         (_: prev: {nix = prev.nixVersions.nix_2_25;})
       ];
 
