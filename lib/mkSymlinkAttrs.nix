@@ -23,8 +23,7 @@ let
   # Make outOfStoreSymlink against runtimeRoot. This replicates
   # config.lib.file.mkOutOfStoreSymlink as_mkOutOfStoreSymlink and wraps it to
   # replace the target path in the nix store with the original target path
-  # inside runtimeRoot. This is necessary because flakes always live in the nix
-  # store.
+  # inside runtimeRoot. This is necessary because flakes live in the nix store.
   mkOutOfStoreSymlink =
     let
       _mkOutOfStoreSymlink = path:

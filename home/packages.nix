@@ -67,7 +67,6 @@ in
     unstable.ruff
     unstable.uv
 
-
     # Formatters and linters
     # csharpier # pulls in all tooling
     # matlab-formatter-vscode # n/a
