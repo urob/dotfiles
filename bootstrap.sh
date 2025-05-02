@@ -1,28 +1,35 @@
 #!/usr/bin/env bash
 
 DOTFILES=$HOME/dotfiles
-DOTFILES_REMOTE=https://github.com/urob/dotfiles
+REMOTE=https://github.com/urob/dotfiles
 
-# Update Debian
-sudo apt-get update
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
-sudo apt-get -y autoremove
+if [[ "$*" == *"--rh"* ]]; then
+    # RedHat family.
+    sudo dnf upgrade -y
+    sudo dnf install -y git util-linux-user zsh
+    # TODO: Set up automatic updates.
+    # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_automating-software-updates-in-rhel-9_managing-software-with-the-dnf-tool
 
-# Install dependencies
-sudo apt-get -y install curl git sed zsh
-sudo apt-get clean
+else
+    # Debian family.
+    sudo apt-get update
+    sudo apt-get -y upgrade
+    sudo apt-get -y full-upgrade
+    sudo apt-get -y autoremove
+
+    sudo apt-get -y install curl git sed zsh
+    sudo apt-get clean
+fi
 #hash -r
 
-# Make native zsh default shell as nix-version can't be made default shell
-# (and requires NixOS to be made default shell declaratively)
+# Default to native zsh, because nix shells can't be made default on standalone installs.
 # https://discourse.nixos.org/t/why-does-chsh-not-work/7370
 chsh -s $(which zsh)
 
-# Clone the dotfiles repo
+# Fetch the dotfiles.
 rm -rf ${DOTFILES}
 mkdir -p ${DOTFILES}
-git clone ${DOTFILES_REMOTE} ${DOTFILES}
+git clone ${REMOTE} ${DOTFILES}
 
 # Activate systemd
 sudo cp "$DOTFILES/config/wsl/wsl.conf" /etc/wsl.conf
@@ -41,11 +48,9 @@ for f in $files; do
     [[ $key =~ ^[Yy]$ ]] && rm -rf ${f}
 done
 
-# Install Nix
+# Install Nix and start nix daemon
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
     sh -s -- install --no-confirm
-
-# Start nix daemon without reloading shell
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Initialize home manager
