@@ -44,6 +44,9 @@ require("conform").formatters = {
             },
         },
     },
+    shfmt = {
+        prepend_args = { "-s", "-i", "2", "-ci" , "-bn" },
+    },
 
     -- Replaced by yamlfmt
     -- yamlfix = {
