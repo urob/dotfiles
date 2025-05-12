@@ -505,6 +505,18 @@ require("virt-column").setup {
     char = "│", -- highlight = "WinSeparator", virtcolumn = "+1",
 }
 
+vim.lsp.enable('ruff')
+-- vim.lsp.config('harper_ls', {
+--     settings = {
+--         ["harper-ls"] = {
+--             userDictPath = "~/dict.txt"
+--         },
+--         diagnosticSeverity = "error",
+--     }
+-- })
+-- vim.lsp.enable('harper_ls')
+-- vim.lsp.enable('gh_actions_ls')
+
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
     highlight = { enable = true },
