@@ -13,7 +13,14 @@ in
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.unstable.neovim-unwrapped;
+    # TODO: drop override when bumping to 25.05
+    # https://github.com/NixOS/nixpkgs/issues/402998
+    # package = pkgs.unstable.neovim-unwrapped;
+    package = pkgs.unstable.neovim-unwrapped.overrideAttrs (old: {
+      meta = old.meta or { } // {
+        maintainers = [ ];
+      };
+    });
     plugins = with pkgs.unstable.vimPlugins; [
       # Colorschemes
       catppuccin-nvim
@@ -46,6 +53,9 @@ in
       conflict-marker-vim
       vim-fugitive
       gitsigns-nvim
+
+      # Lsp
+      nvim-lspconfig
 
       # Treesitter
       nvim-treesitter.withAllGrammars
