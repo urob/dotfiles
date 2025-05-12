@@ -32,6 +32,7 @@
         })
         # Pin the nix input to the home-manager configuration.
         # (The CLI version doesn't affect home-manager.)
+        # TODO: Bump to 2_28 when upgrading to 25.05
         (_: prev: {nix = prev.nixVersions.nix_2_25;})
       ];
 
