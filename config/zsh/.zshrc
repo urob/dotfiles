@@ -95,23 +95,25 @@ bindkey -e
 
 typeset -gA key
 
-key[Backspace]="^?"
-key[Ctrl+Backspace]="^H"
-key[Home]="${terminfo[khome]}"
-key[End]="${terminfo[kend]}"
-key[Insert]="${terminfo[kich1]}"
-key[Delete]="${terminfo[kdch1]}"
-key[PageUp]="${terminfo[kpp]}"
-key[PageDown]="${terminfo[knp]}"
-key[Up]="${terminfo[kcuu1]}"
-key[Down]="${terminfo[kcud1]}"
-key[Left]="${terminfo[kcub1]}"
-key[Right]="${terminfo[kcuf1]}"
-key[Ctrl+Left]="${terminfo[kLFT5]}"
-key[Ctrl+Right]="${terminfo[kRIT5]}"
-key[Shift-Tab]="${terminfo[kcbt]}"
+key=(
+    BackSpace  "${terminfo[kbs]}"
+    Home       "${terminfo[khome]}"
+    End        "${terminfo[kend]}"
+    Insert     "${terminfo[kich1]}"
+    Delete     "${terminfo[kdch1]}"
+    Up         "${terminfo[kcuu1]}"
+    Down       "${terminfo[kcud1]}"
+    Left       "${terminfo[kcub1]}"
+    Right      "${terminfo[kcuf1]}"
+    PageUp     "${terminfo[kpp]}"
+    PageDown   "${terminfo[knp]}"
+    Ctrl+Backspace  "^H"
+    Ctrl+Left       "${terminfo[kLFT5]}"
+    Ctrl+Right      "${terminfo[kRIT5]}"
+    Shift+Tab       "${terminfo[kcbt]}"
+)
 
-# Bind up/down to incremental history-search
+# Bind up/down to incremental history-search and place cursor at end of line
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -124,6 +126,26 @@ bindkey "$key[Ctrl+Left]" backward-word
 bindkey "$key[Ctrl+Right]" forward-word
 bindkey "$key[Home]" beginning-of-line
 bindkey "$key[End]" end-of-line
+
+# Make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+    function zle-line-init () {
+        emulate -L zsh
+        printf '%s' ${terminfo[smkx]}
+    }
+    function zle-line-finish () {
+        emulate -L zsh
+        printf '%s' ${terminfo[rmkx]}
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+else
+    for i in {s,r}mkx; do
+        (( ${+terminfo[$i]} )) || debian_missing_features+=($i)
+    done
+    unset i
+fi
 
 # +------------+
 # | COMPLETION |
