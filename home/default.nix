@@ -9,7 +9,7 @@ let
 in
 {
   # Mostly version of auto-generated configs.
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 
   # About me
   home = { inherit username homeDirectory; };
