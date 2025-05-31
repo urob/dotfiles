@@ -2,11 +2,11 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -32,8 +32,7 @@
         })
         # Pin the nix input to the home-manager configuration.
         # (The CLI version doesn't affect home-manager.)
-        # TODO: Bump to 2_28 when upgrading to 25.05
-        (_: prev: {nix = prev.nixVersions.nix_2_25;})
+        (_: prev: {nix = prev.nixVersions.nix_2_29;})
       ];
 
       pkgsForSystem = system: import nixpkgs { inherit system config overlays; };
