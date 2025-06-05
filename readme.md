@@ -71,7 +71,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 # Initialize home manager in current directory
 cd <path/to/flake.nix>
 SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
-nix run . -- init --switch ".#$SYSTEM"
+nix run . -- switch --flake ".#$SYSTEM"
 ```
 
 ## Maintainance

@@ -52,4 +52,4 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 # Initialize home manager.
 SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
-nix run "$DOTFILES" -- init --switch "${DOTFILES}#${SYSTEM}"
+nix run "$DOTFILES" -- switch --flake "${DOTFILES}#${SYSTEM}"
