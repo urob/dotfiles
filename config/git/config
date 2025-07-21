@@ -1,7 +1,7 @@
 [color]
     ui = true
 [core]
-    autocrlf = true
+    # autocrlf = true
     editor = nvim
     pager = diff-so-fancy | less --tabs=4 -RFX
 [merge]
@@ -15,7 +15,7 @@
     default = current
 [credential]
     # standalone version:
-	# helper = /mnt/c/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe
+    # helper = /mnt/c/Program\\ Files\\ \\(x86\\)/Git\\ Credential\\ Manager/git-credential-manager.exe
     # Git-for windows version:
     helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
 [interactive]
