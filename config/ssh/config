@@ -7,6 +7,6 @@ Host sirius
     User ulbricht
     # Port 22022
 Host andromeda
-    HostName andromeda.bc.edu
+    HostName a002.bc.edu
     User ulbricht
     # Port 22022
