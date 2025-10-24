@@ -30,6 +30,7 @@ in
     git
     gitstatus # fast git-status used in my prompt
     git-absorb
+    gh
     pre-commit
     tig
     # git-crypt # encrypt secrets inside repo, best used alongside gpg
