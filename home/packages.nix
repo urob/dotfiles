@@ -46,8 +46,7 @@ in
     # csharpier # pulls in all tooling
     # matlab-formatter-vscode # n/a
     alejandra # opinionated nix formatter
-    unstable.nixfmt-rfc-style
-    nixpkgs-fmt # default nix formatter for nixpkgs
+    unstable.nixfmt-rfc-style # official nixpkgs formatter
     deadnix # find unused nix attributes
     harper # grammar checker
     statix # nix linter
