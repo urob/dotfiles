@@ -46,8 +46,10 @@ for f in $files; do
 done
 
 # Install Nix and start the daemon.
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
-    sh -s -- install --no-confirm
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install \
+    --determinate \
+    --extra-conf "eval-cores = 0" \
+    --no-confirm
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Initialize home manager.
