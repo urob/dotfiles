@@ -84,7 +84,8 @@ alias du='du -h'  # make du human readable
 if (( $+commands[nvim] )); then
     alias vim='nvim'
     alias vi='nvim'
-    alias svim='sudoedit'
+    # alias svim='sudoedit'
+    alias svim='sudo -E -s "PATH=$PATH" nvim'
 fi
 
 alias nvim-lazy="NVIM_APPNAME=nvim-lazy nvim"
