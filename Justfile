@@ -25,5 +25,6 @@ upgrade:
 
 # upgrade nix
 upgrade-nix:
-    sudo -i nix upgrade-nix  # /root/.nix-profile/bin/nix (the daemon?)
+    sudo env "PATH=$PATH" determinate-nixd upgrade
+    # sudo -i nix upgrade-nix  # /root/.nix-profile/bin/nix (the daemon?)
     # sudo nix upgrade-nix   # /nix/var/nix/profiles/system/bin/nix (the cli?)
