@@ -21,14 +21,13 @@ in
     tree
     zip
     unstable.zoxide
-    # zsh
     # zsh-fzf-tab -- add manually or manage shell via nix
 
     openvpn3
 
     diff-so-fancy
     git
-    gitstatus # fast git-status used in my prompt
+    gitstatus # for my zsh prompt
     git-absorb
     gh
     pre-commit
@@ -42,18 +41,18 @@ in
     unstable.ruff
     unstable.uv
 
-    # Formatters and linters
-    # csharpier # pulls in all tooling
-    # matlab-formatter-vscode # n/a
-    alejandra # opinionated nix formatter
-    unstable.nixfmt-rfc-style # official nixpkgs formatter
-    deadnix # find unused nix attributes
-    harper # grammar checker
-    statix # nix linter
+    # Nix formatter and linter.
+    alejandra
+    unstable.nixfmt-rfc-style
+    deadnix
+    statix
+
+    # Other formatter and linter.
+    harper
     prettierd
-    shfmt # shell formatter
-    stylua # lua formatter
-    clang-tools # c/c++ formatter
+    shfmt
+    stylua
+    clang-tools
     yamlfix
     yamlfmt
   ];
