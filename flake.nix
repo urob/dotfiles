@@ -2,11 +2,11 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -30,9 +30,8 @@
             inherit config;
           };
         })
-        # Pin the nix input to the home-manager configuration.
-        # (The CLI version doesn't affect home-manager.)
-        (_: prev: {nix = prev.nixVersions.nix_2_29;})
+        # Pin the nix version used by home-manager.
+        # (_: prev: {nix = prev.nixVersions.nix_2_29;})
       ];
 
       pkgsForSystem = system: import nixpkgs { inherit system config overlays; };
