@@ -26,8 +26,10 @@
         # Attach nixpkgs-unstable at pkgs.unstable
         (_: prev: {
           unstable = import inputs.nixpkgs-unstable {
-            inherit (prev) system;
-            inherit config;
+            inherit (prev) config;
+            # Inheriting system from pkgs is deprecated. Either inherit from
+            # pkgs.stdenv.hostPlatform or even better specify localSystem.
+            localSystem = prev.stdenv.hostPlatform;
           };
         })
         # Pin the nix version used by home-manager.
