@@ -133,11 +133,11 @@ autocmd vimrc InsertLeave * set nocursorline
 
 " Writing
 autocmd vimrc FileType markdown,latex,text
-    \ setlocal spell spelllang=en_us norelativenumber
+    \ setlocal spell spelllang=en_us
 
 " Git commits
 autocmd vimrc FileType gitcommit
-    \ setlocal spell spelllang=en_us norelativenumber textwidth=72 colorcolumn=51,+1
+    \ setlocal spell spelllang=en_us textwidth=72 colorcolumn=51,+1
 
 " ZMK keymaps
 autocmd vimrc BufNewFile,BufRead *.keymap set syntax=c
