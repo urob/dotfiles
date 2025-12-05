@@ -33,8 +33,8 @@ in
       which-key-nvim
       zen-mode-nvim
 
-      lualine-nvim
-      nvim-web-devicons
+      # lualine-nvim
+      # nvim-web-devicons
 
       # Indent and virtual column guides
       indent-blankline-nvim
