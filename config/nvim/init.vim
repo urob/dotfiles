@@ -182,8 +182,7 @@ let maplocalleader = ","
 
 " better movements with Colemak DH
 noremap j h
-noremap k j
-noremap h k
+noremap h j
 
 " turn off highlighting of search results
 nnoremap <silent> <c-c> <Cmd>noh<cr>
