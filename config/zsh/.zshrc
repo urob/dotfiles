@@ -172,12 +172,6 @@ autoload -Uz zcalc  # zcalc calculator
 autoload -Uz zmv
 
 # +---------+
-# | PYTHON  |
-# +---------+
-
-[[ -d "$HOME/micromamba" ]] && source $ZDOTDIR/python.zsh
-
-# +---------+
 # | DIRENV  |
 # +---------+
 
