@@ -398,7 +398,7 @@ nnoremap <silent> <C-n> :<C-U>TmuxNavigateLeft<cr>
 nnoremap <silent> <C-e> :<C-U>TmuxNavigateDown<cr>
 nnoremap <silent> <C-u> :<C-U>TmuxNavigateUp<cr>
 nnoremap <silent> <C-i> :<C-U>TmuxNavigateRight<cr>
-nnoremap <silent> <C-o> :<C-U>TmuxNavigatePrevious<cr>
+nnoremap <silent> <C-b> :<C-U>TmuxNavigatePrevious<cr>
 
 " +-----+
 " | FZF |
