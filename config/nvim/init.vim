@@ -86,21 +86,24 @@ cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'L
 " | clipboard |
 " +-----------+
 
-set clipboard+=unnamedplus   " use global clipboard
+" Set custom clipboard provider BEFORE enabling unnamedplus, otherwise
+" neovim 0.12 triggers clipboard detection (probing win32yank.exe) before
+" the custom provider is registered, causing a ~2s WSL cold-start delay.
 lua << EOF
 vim.g.clipboard = {
     name = "WslClipboard",
     copy = {
-        ["+"] = "clip.exe",
-        ["*"] = "clip.exe",
+        ["+"] = "win32yank.exe -i --crlf",
+        ["*"] = "win32yank.exe -i --crlf",
     },
     paste = {
         ["+"] = "win32yank.exe -o --lf",
         ["*"] = "win32yank.exe -o --lf",
     },
-    cache_enabled = 0,
+    cache_enabled = 1,
 }
 EOF
+set clipboard+=unnamedplus   " use global clipboard
 
 " Automatically yank mouse selection to system clipboard
 vnoremap <LeftRelease> "*ygv
@@ -517,7 +520,7 @@ vim.lsp.enable('ruff')
 -- vim.lsp.enable('gh_actions_ls')
 
 -- Treesitter
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter'.setup {
     highlight = { enable = true },
     indent = { enable = true },
     ensure_installed = {},  -- let nix manage parsers
@@ -611,10 +614,10 @@ require('gitsigns').setup{
 }
 EOF
 
-" Enable folding
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable                     " Disable folding at startup.
+" Enable folding — deferred to avoid triggering treesitter fold reparse
+" on VimEnter (neovim 0.12 clears the fold cache via a VimEnter autocmd
+" which forces indent-blankline's VimEnter refresh to reparse the buffer).
+autocmd vimrc VimEnter * ++once set foldmethod=expr foldexpr=v:lua.vim.treesitter.foldexpr() nofoldenable
 
 " +-----+
 " | Gui |
