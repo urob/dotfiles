@@ -37,6 +37,12 @@ in
       recursive = true;
     };
 
+    ".claude" = {
+      source = ../config/claude;
+      outOfStoreSymlink = true;
+      recursive = true;
+    };
+
     ".editorconfig" = {
       source = ../config/editorconfig/config;
       outOfStoreSymlink = true;
