@@ -25,6 +25,8 @@ in
 
     openvpn3
 
+    jq
+
     diff-so-fancy
     git
     gitstatus # for my zsh prompt
