@@ -1,5 +1,5 @@
-# Only keep unique entries in $PATH, $CDPATH etc
-typeset -U path cdpath fpath manpath
+# Export dropbox path
+[[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
 
 # Add user path dirs
 for dir in "$HOME/bin" "$XDG_BIN_HOME" "$GEM_HOME/bin" "$DROPBOX/bin"; do
@@ -8,8 +8,8 @@ done
 
 #fpath+="$ZDOTDIR"/plugins
 
-# Export dropbox path
-[[ -z $SSH_CONNECTION ]] && source $ZDOTDIR/plugins/set_dropbox_path.sh
+# Only keep unique entries in $PATH, $CDPATH etc
+typeset -U path cdpath fpath manpath
 
 # Sync histfile via dropbox
 if [[ -n $DROPBOX ]]; then
