@@ -5,6 +5,7 @@ export XDG_LIB_HOME=$HOME/.local/lib
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.local/cache # default is ~/.cache
+export XDG_RUNTIME_DIR=/tmp # Work around https://github.com/microsoft/WSL/issues/10498
 
 # Windows home path
 if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
