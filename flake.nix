@@ -40,7 +40,7 @@
 
       mkHomeConfiguration = args:
         home-manager.lib.homeManagerConfiguration {
-          modules = [ ./home ];
+          modules = [ ./nix/home ];
           pkgs = pkgsForSystem (args.system or "x86_64-linux");
           # Could add cfg.currentSystem = system if needed
           extraSpecialArgs = { cfg = defaultCfg // args.config or { }; };

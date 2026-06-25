@@ -3,8 +3,6 @@ let
   inherit (config.home) profileDirectory;
 in
 {
-  imports = [ ./vim.nix ];
-
   home.packages = with pkgs; [
     bat
     eza
@@ -45,7 +43,7 @@ in
 
     # Nix formatter and linter.
     alejandra
-    unstable.nixfmt-rfc-style
+    unstable.nixfmt
     deadnix
     statix
 

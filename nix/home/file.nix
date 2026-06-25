@@ -20,36 +20,36 @@ in
   # Symlink dotfiles
   home.file = mkSymlinkAttrs {
     "bin" = {
-      source = ../bin;
+      source = ../../bin;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".config" = {
-      source = ../config;
+      source = ../../config;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".ssh" = {
-      source = ../config/ssh;
+      source = ../../config/ssh;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".claude" = {
-      source = ../config/claude;
+      source = ../../config/claude;
       outOfStoreSymlink = true;
       recursive = true;
     };
 
     ".editorconfig" = {
-      source = ../config/editorconfig/config;
+      source = ../../config/editorconfig/config;
       outOfStoreSymlink = true;
     };
 
     ".zshenv" = {
-      source = ../config/zsh/.zshenv;
+      source = ../../config/zsh/.zshenv;
       outOfStoreSymlink = true;
     };
 
