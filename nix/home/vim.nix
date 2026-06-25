@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   jb-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "jb-nvim";
@@ -11,6 +11,14 @@ let
   };
 in
 {
+  # We manage neovim's rc ourselves via a symlinked ~/.config/nvim/init.vim.
+  # Since home-manager 26.05 (wrapRc = false), the neovim module writes its
+  # generated lua rc to ~/.config/nvim/init.lua, which collides with our
+  # init.vim (neovim aborts with "E5422: Conflicting configs" and loads
+  # neither). Plugins are wired through the wrapper independently, so drop the
+  # generated init.lua and let neovim load our init.vim.
+  xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
+
   programs.neovim = {
     enable = true;
     package = pkgs.unstable.neovim-unwrapped;
