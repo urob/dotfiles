@@ -2,11 +2,11 @@
   description = "Home-manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -27,9 +27,11 @@
         (_: prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit (prev) config;
-            # Inheriting system from pkgs is deprecated. Either inherit from
-            # pkgs.stdenv.hostPlatform or even better specify localSystem.
-            localSystem = prev.stdenv.hostPlatform;
+            # Pass only the bare system string so unstable elaborates the
+            # platform with its own lib.systems. Inheriting the fully
+            # elaborated prev.stdenv.hostPlatform leaks stable's schema (e.g.
+            # the now-removed `linux-kernel` attr) and breaks across channels.
+            localSystem = { inherit (prev.stdenv.hostPlatform) system; };
           };
         })
         # Pin the nix version used by home-manager.
