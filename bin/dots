@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Commit & push the private submodule, then bump & push the pointer in the parent repo.
+# Usage:  dots [-m "message"]   (args are forwarded to the submodule commit;
+#                                defaults to -m "update private" when none given)
+set -euo pipefail
+
+super="$HOME/dotfiles"
+sub="$super/private"
+
+if [ "$#" -eq 0 ]; then
+    set -- -m "update private"
+fi
+
+if [ -n "$(git -C "$sub" status --porcelain)" ]; then
+    git -C "$sub" add -A
+    git -C "$sub" commit "$@"
+    git -C "$sub" push
+else
+    echo "private: nothing to commit"
+fi
+
+if [ -n "$(git -C "$super" status --porcelain -- private)" ]; then
+    git -C "$super" add private
+    git -C "$super" commit -m "Bump private"
+    git -C "$super" push
+else
+    echo "parent: pointer already up to date"
+fi

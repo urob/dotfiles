@@ -26,13 +26,37 @@ fi
 # https://discourse.nixos.org/t/why-does-chsh-not-work/7370
 chsh -s $(which zsh)
 
-# Fetch the dotfiles.
+# Fetch the dotfiles (public "engine"), then the private content as a submodule.
 rm -rf ${DOTFILES}
 mkdir -p ${DOTFILES}
 git clone ${REMOTE} ${DOTFILES}
 
+# Authenticate the private submodule. On WSL we reuse the Windows Git Credential
+# Manager: the gitconfig that normally configures it lives inside the private repo,
+# so it isn't available yet. Otherwise fall back to an SSH or PAT clone.
+. "${DOTFILES}/bin/_wsl-gcm.sh"
+if gcm=$(detect_gcm); then
+    echo "Using Windows credential manager: ${gcm}"
+    git -C "${DOTFILES}" -c credential.helper="\"${gcm}\"" submodule update --init --recursive
+else
+    read -e -p "No WSL credential store found. Clone private repo via [s]sh or [p]at? " auth
+    case "${auth}" in
+        s | S)
+            git -C "${DOTFILES}" -c url."git@github.com:".insteadOf="https://github.com/" \
+                submodule update --init --recursive
+            ;;
+        *)
+            read -rs -p "GitHub PAT: " pat
+            echo
+            git -C "${DOTFILES}" \
+                -c credential.helper="!f(){ echo username=urob; echo password=${pat}; };f" \
+                submodule update --init --recursive
+            ;;
+    esac
+fi
+
 # Activate systemd
-sudo cp "$DOTFILES/config/wsl/wsl.conf" /etc/wsl.conf
+sudo cp "$DOTFILES/private/config/wsl/wsl.conf" /etc/wsl.conf
 
 # Disable auto-generating resolv.conf if needed.
 read -e -p "Disable auto-generating resolv.conf? [y/N] " key
@@ -54,4 +78,7 @@ curl -fsSL https://install.determinate.systems/nix | sh -s -- install \
 
 # Initialize home manager.
 SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
-nix run "$DOTFILES" -- switch --flake "${DOTFILES}#${SYSTEM}"
+# ?submodules=1 is required so the private submodule's files are copied into the
+# nix store at eval time (where the symlink list is built).
+nix run "git+file://$DOTFILES?submodules=1" -- \
+    switch --flake "git+file://$DOTFILES?submodules=1#${SYSTEM}"

@@ -1,9 +1,9 @@
 default:
     @just --list --unsorted
 
-# rebuild home-manager
+# rebuild home-manager (?submodules=1 pulls the private submodule into the eval)
 build:
-    home-manager switch --flake .#$(nix eval --raw --impure --expr "builtins.currentSystem")
+    home-manager switch --flake ".?submodules=1#$(nix eval --raw --impure --expr "builtins.currentSystem")"
 
 # run garbage-collector
 clean:

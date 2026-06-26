@@ -70,16 +70,31 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 # Initialize home manager in current directory
 cd <path/to/flake.nix>
+git submodule update --init --recursive   # fetch private content (see below)
 SYSTEM=$(nix eval --raw --impure --expr "builtins.currentSystem")
-nix run . -- switch --flake ".#$SYSTEM"
+nix run "git+file://$PWD?submodules=1" -- switch --flake "git+file://$PWD?submodules=1#$SYSTEM"
 ```
+
+## Private content
+
+`bin/` keeps only a couple of helper scripts; the actual dotfile content
+(`bin/`, `win/`, `config/`) lives in the private repo
+[`dotfiles-private`](https://github.com/urob/dotfiles-private), mounted as a git
+submodule at `private/`. Because the symlink list is built from the flake's copy in
+the nix store, **every build must pass `?submodules=1`** (`just build` and
+`bootstrap.sh` already do) so the submodule's files are present at eval time.
+
+Edit dotfiles in place as usual — the out-of-store symlinks point at the live working
+tree, so no rebuild is needed (only adding a brand-new file requires `git add` + rebuild).
+To sync both repos in one step, run `dots` (aliased as `git save`): it commits & pushes
+the submodule, then bumps & pushes the pointer in the parent.
 
 ## Maintainance
 
-- Rebuild config
+- Rebuild config (or just `just build`)
 
   ```sh
-  home-manager switch --flake <path/to/flake.nix>#<configuration>
+  home-manager switch --flake "<path/to/flake.nix>?submodules=1#<configuration>"
   ```
 
 - Update all packages
