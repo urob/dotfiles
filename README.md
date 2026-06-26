@@ -97,10 +97,12 @@ the submodule, then bumps & pushes the pointer in the parent.
   git -C ~/dotfiles pull && git -C ~/dotfiles submodule update --init --recursive
   ```
 
-  Run `git config -f ~/dotfiles/.git/config submodule.recurse true` once to make a plain
-  `git pull` update the submodule automatically (then the second command is unneeded).
-  Use `git -C ~/dotfiles submodule update --remote --merge private` to follow the
-  submodule's branch tip instead of the pinned commit.
+  `bootstrap.sh` sets `submodule.recurse true`, so on a bootstrapped install a plain
+  `git pull` already updates the submodule (the second command is only needed once, to
+  initialize it). On an existing clone, enable the same with
+  `git -C ~/dotfiles config submodule.recurse true`. Use
+  `git -C ~/dotfiles submodule update --remote --merge private` to follow the submodule's
+  branch tip instead of the pinned commit.
 
 - Rebuild config (or just `just build`)
 

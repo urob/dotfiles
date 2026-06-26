@@ -55,6 +55,9 @@ else
     esac
 fi
 
+# Keep the submodule in sync automatically on future `git pull`s.
+git -C "${DOTFILES}" config submodule.recurse true
+
 # Activate systemd
 sudo cp "$DOTFILES/private/config/wsl/wsl.conf" /etc/wsl.conf
 
