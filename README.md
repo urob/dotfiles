@@ -91,6 +91,17 @@ the submodule, then bumps & pushes the pointer in the parent.
 
 ## Maintainance
 
+- Pull the latest config, including the private submodule
+
+  ```sh
+  git -C ~/dotfiles pull && git -C ~/dotfiles submodule update --init --recursive
+  ```
+
+  Run `git config -f ~/dotfiles/.git/config submodule.recurse true` once to make a plain
+  `git pull` update the submodule automatically (then the second command is unneeded).
+  Use `git -C ~/dotfiles submodule update --remote --merge private` to follow the
+  submodule's branch tip instead of the pinned commit.
+
 - Rebuild config (or just `just build`)
 
   ```sh
