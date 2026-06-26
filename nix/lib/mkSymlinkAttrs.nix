@@ -5,6 +5,9 @@
 #     .foo = { source = "foo"; outOfStoreSymlink = true; recursive = true; };
 #     .bar = { source = "foo/bar"; outOfStoreSymlink = true; };
 #   };
+#
+# For recursive entries, `source` may be a list of paths; they are expanded
+# file-by-file and merged under the same key (e.g. merge two bin/ dirs).
 { pkgs, hm, context, runtimeRoot, ... }:
 
 let
@@ -49,6 +52,10 @@ let
   # Remove custom attributes from attribute set.
   rmopts = attrs: builtins.removeAttrs attrs [ "source" "recursive" "outOfStoreSymlink" ];
 
+  # Normalize `source` to a list so a single key can merge several sources.
+  toSourceList = s: if builtins.isList s then s else [ s ];
+  mergeAttrs = builtins.foldl' (a: b: a // b) { };
+
 in fileAttrs: lib.attrsets.concatMapAttrs
   (
     name: value:
@@ -59,7 +66,9 @@ in fileAttrs: lib.attrsets.concatMapAttrs
       then
         lib.attrsets.mapAttrs
           (_: attrs: attrs // rmopts value)
-          (mkRecursiveOutOfStoreSymlink value.source name)
+          (mergeAttrs (map
+            (src: mkRecursiveOutOfStoreSymlink src name)
+            (toSourceList value.source)))
       else { "${name}" = { source = mkOutOfStoreSymlink value.source; } // rmopts value; }
     # Handle all other cases as usual
     else { "${name}" = value; }
