@@ -1,3 +1,51 @@
+# Personal dotfiles
+
+Mostly a standard standalone nix setup with two noteworthy features:
+
+- Nix [implementation](nix/lib/mkSymlinkAttrs.nix) of chezmoi-like dotfile linking (no more
+  rebuilding to apply changes...). The following links the _content_ of `$DOTFILES/bin` and
+  `$DOTFILES/.config` to `~/bin` and `~/.config`. Crucially, the directories themselves aren't
+  linked, preventing auto-generated content in the destinations from cluttering the dotfiles repo.
+
+```nix
+# ./nix/home/file.nix
+{
+  config,
+  pkgs,
+  cfg,
+  ...
+}:
+
+let
+  mkSymlinkAttrs = import ../lib/mkSymlinkAttrs.nix {
+    inherit pkgs;
+    inherit (cfg) context runtimeRoot;
+    hm = config.lib;
+  };
+
+in
+{
+  home.file = mkSymlinkAttrs {
+    # Recursively link content of $DOTFILES/bin to $HOME/bin.
+    "bin" = {
+      source = ../bin;
+      outOfStoreSymlink = true;
+      recursive = true;
+    };
+
+    # Recursively link content of $DOTFILES/.config to $HOME/.config.
+    ".config" = {
+      source = ../config;
+      outOfStoreSymlink = true;
+      recursive = true;
+    };
+  };
+}
+```
+
+- Private submodule containing most config files for privacy (no actual secrets, I wouldn't trust
+  git with that).
+
 ## Bootstrap config
 
 ### Preliminaries (WSL only)
@@ -62,7 +110,7 @@
 
 ```sh
 # Install Nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | 
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
   sh -s -- install --no-confirm
 
 # Start nix daemon without reloading shell
@@ -77,19 +125,18 @@ nix run "git+file://$PWD?submodules=1" -- switch --flake "git+file://$PWD?submod
 
 ## Private content
 
-`bin/` keeps only a couple of helper scripts; the actual dotfile content
-(`bin/`, `win/`, `config/`) lives in the private repo
-[`dotfiles-private`](https://github.com/urob/dotfiles-private), mounted as a git
-submodule at `private/`. Because the symlink list is built from the flake's copy in
-the nix store, **every build must pass `?submodules=1`** (`just build` and
-`bootstrap.sh` already do) so the submodule's files are present at eval time.
+`bin/` keeps only a couple of helper scripts; the actual dotfile content (`bin/`, `win/`, `config/`)
+lives in the private repo [`dotfiles-private`](https://github.com/urob/dotfiles-private), mounted as
+a git submodule at `private/`. Because the symlink list is built from the flake's copy in the nix
+store, **every build must pass `?submodules=1`** (`just build` and `bootstrap.sh` already do) so the
+submodule's files are present at eval time.
 
-Edit dotfiles in place as usual — the out-of-store symlinks point at the live working
-tree, so no rebuild is needed (only adding a brand-new file requires `git add` + rebuild).
-To sync both repos in one step, run `dots` (aliased as `git save`): it commits & pushes
-the submodule, then bumps & pushes the pointer in the parent.
+Edit dotfiles in place as usual — the out-of-store symlinks point at the live working tree, so no
+rebuild is needed (only adding a brand-new file requires `git add` + rebuild). To sync both repos in
+one step, run `dots` (aliased as `git save`): it commits & pushes the submodule, then bumps & pushes
+the pointer in the parent.
 
-## Maintainance
+## Maintenance
 
 - Pull the latest config, including the private submodule
 
@@ -97,12 +144,11 @@ the submodule, then bumps & pushes the pointer in the parent.
   git -C ~/dotfiles pull && git -C ~/dotfiles submodule update --init --recursive
   ```
 
-  `bootstrap.sh` sets `submodule.recurse true`, so on a bootstrapped install a plain
-  `git pull` already updates the submodule (the second command is only needed once, to
-  initialize it). On an existing clone, enable the same with
-  `git -C ~/dotfiles config submodule.recurse true`. Use
-  `git -C ~/dotfiles submodule update --remote --merge private` to follow the submodule's
-  branch tip instead of the pinned commit.
+  `bootstrap.sh` sets `submodule.recurse true`, so on a bootstrapped install a plain `git pull`
+  already updates the submodule (the second command is only needed once, to initialize it). On an
+  existing clone, enable the same with `git -C ~/dotfiles config submodule.recurse true`. Use
+  `git -C ~/dotfiles submodule update --remote --merge private` to follow the submodule's branch tip
+  instead of the pinned commit.
 
 - Rebuild config (or just `just build`)
 
@@ -152,8 +198,8 @@ the submodule, then bumps & pushes the pointer in the parent.
   Operation not permitted
   ```
 
-- See https://nixos.wiki/wiki/Locales on how to set locales. TLDR: add the
-  following to `.zshenv` (done automatically in my config):
+- See https://nixos.wiki/wiki/Locales on how to set locales. TLDR: add the following to `.zshenv`
+  (done automatically in my config):
 
   ```sh
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
