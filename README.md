@@ -134,7 +134,9 @@ submodule's files are present at eval time.
 Edit dotfiles in place as usual — the out-of-store symlinks point at the live working tree, so no
 rebuild is needed (only adding a brand-new file requires `git add` + rebuild). To sync both repos in
 one step, run `dots` (aliased as `git save`): it commits & pushes the submodule, then bumps & pushes
-the pointer in the parent.
+the pointer in the parent. Prefer `just push` when you want to stage and commit inside
+`private/` yourself: it publishes only what you have already committed, then bumps and
+pushes the pointer.
 
 ## Maintenance
 

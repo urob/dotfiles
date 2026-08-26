@@ -5,6 +5,30 @@ default:
 build:
     home-manager switch --flake ".?submodules=1#$(nix eval --raw --impure --expr "builtins.currentSystem")"
 
+# publish work: push what's already committed in private/, then bump the pointer
+push:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -n "$(git -C private status --porcelain)" ]; then
+        echo "note: private/ has uncommitted changes; these are NOT published:"
+        git -C private status --short | sed 's/^/  /'
+    fi
+    # Submodules sit on a detached HEAD, so a bare push has no upstream.
+    git -C private push origin HEAD:main
+    pinned=$(git ls-tree HEAD -- private | awk '{print $3}')
+    current=$(git -C private rev-parse HEAD)
+    if [ "$pinned" != "$current" ]; then
+        git add private
+        git commit -m "Bump private"
+    else
+        echo "parent: pointer already up to date"
+    fi
+    if [ -n "$(git log @{u}..HEAD --oneline)" ]; then
+        git push
+    else
+        echo "parent: nothing to push"
+    fi
+
 # run garbage-collector
 clean:
     nix-collect-garbage --delete-old
