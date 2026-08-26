@@ -14,7 +14,9 @@ fi
 if [ -n "$(git -C "$sub" status --porcelain)" ]; then
     git -C "$sub" add -A
     git -C "$sub" commit "$@"
-    git -C "$sub" push
+    # Submodules are checked out detached, so a bare `push` has no upstream and
+    # fails with "git push origin HEAD:<name-of-remote-branch>". Be explicit.
+    git -C "$sub" push origin HEAD:main
 else
     echo "private: nothing to commit"
 fi
