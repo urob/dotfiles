@@ -206,3 +206,16 @@ pushes the pointer.
   ```sh
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
   ```
+
+- `exec format error` when running Windows executables (`cmd.exe`, Git Credential Manager) on WSL
+  with `systemd` enabled. WSL relies on `systemd-binfmt.service` to re-register its `WSLInterop`
+  handler after boot, but some distros (e.g., AlmaLinux 9) don't ship it, so interop stays broken.
+  Check with `ls /proc/sys/fs/binfmt_misc/` (should list `WSLInterop`). Fix: install
+  [`wsl-interop.service`](https://github.com/urob/dotfiles-private/blob/main/config/wsl/wsl-interop.service),
+  which re-registers the handler at boot:
+
+  ```sh
+  sudo install -m 644 ~/dotfiles/private/config/wsl/wsl-interop.service /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now wsl-interop.service
+  ```
