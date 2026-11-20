@@ -39,11 +39,44 @@ list:
 
 # upgrade all packages
 upgrade:
-    @just list > /tmp/installed.bak
+    #!/usr/bin/env bash
+    set -euo pipefail
+    before=$(mktemp) after=$(mktemp)
+    trap 'rm -f "$before" "$after"' EXIT
+    home-manager packages > "$before"
     nix flake update --flake .
-    @just build
-    @just list > /tmp/installed
-    @git diff --word-diff --unified=0 --no-index /tmp/installed.bak /tmp/installed || true
+    just build
+    home-manager packages > "$after"
+    echo
+    # Split "name-version[-output]" like builtins.parseDrvName (version starts
+    # at the first '-' followed by a non-letter) and strip output suffixes.
+    awk '
+        function parse(s) {
+            if (match(s, /-[^a-zA-Z]/)) { name = substr(s, 1, RSTART - 1); ver = substr(s, RSTART + 1) }
+            else { name = s; ver = "" }
+            sub(/-(bin|out|lib|dev|man|doc|info)$/, "", ver)
+        }
+        FNR == 1 { file++ }
+        {
+            parse($0)
+            seen[name] = 1
+            if (file == 1) { old[name] = ver; inold[name] = 1 }
+            else           { new[name] = ver; innew[name] = 1 }
+        }
+        END {
+            for (n in seen) {
+                if (inold[n] && innew[n] && old[n] == new[n]) continue
+                note = !inold[n] ? "(new)" : !innew[n] ? "(deleted)" : ""
+                rows[++k] = n; o[k] = old[n]; v[k] = new[n]; t[k] = note
+                if (length(n) > wn) wn = length(n)
+                if (length(old[n]) > wo) wo = length(old[n])
+                if (length(new[n]) > wv) wv = length(new[n])
+            }
+            if (!k) { print "No package changes."; exit }
+            for (i = 1; i <= k; i++)
+                printf "%-" wn "s  %-" wo "s -> %-" wv "s  %s\n", rows[i], o[i], v[i], t[i]
+        }
+    ' "$before" "$after" | sed 's/ *$//' | sort
 
 # upgrade nix
 upgrade-nix:
